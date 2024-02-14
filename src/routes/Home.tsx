@@ -1,7 +1,11 @@
-import { Box, Grid, Skeleton, SkeletonText } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import Store from "../components/Store";
+import { useQuery } from "@tanstack/react-query";
+import StoreSkeleton from "../components/StoreSkeleton";
+import { getStores } from "../api";
 
 export default function Home() {
+    const { isLoading, data } = useQuery<IStore[]>(["stores"], getStores);
     return (
         <Grid
             mt={10}
@@ -9,7 +13,7 @@ export default function Home() {
                 base: 10,
                 lg: 40,
             }}
-            columnGap={8}
+            columnGap={16}
             rowGap={20}
             templateColumns={{
                 sm: "1fr",
@@ -17,15 +21,34 @@ export default function Home() {
                 lg: "repeat(3, 1fr)",
             }}
         >
-            <Box>
-                <Skeleton
-                    rounded="3xl"
-                    h={{ sm: "255.61px", md: "230.23px", lg: "324.72px" }}
-                    mb={5}
+            {isLoading ? (
+                <>
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                    <StoreSkeleton />
+                </>
+            ) : null}
+            {data?.map((store) => (
+                <Store
+                    key={store.id}
+                    pk={store.pk}
+                    img_url={store.img_url}
+                    p_name={store.p_name}
+                    rating={store.rating}
+                    p_location={store.p_location}
+                    p_hashtag={store.p_hashtag}
+                    p_startdate={store.p_startdate}
+                    p_enddate={store.p_enddate}
+                    status={store.status}
                 />
-                <SkeletonText w="30%" noOfLines={3} spacing={4} />
-            </Box>
-            <Store />
+            ))}
         </Grid>
     );
 }

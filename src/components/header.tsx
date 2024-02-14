@@ -12,6 +12,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import customLogo from "../sources/poppin_logo.png";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignUpModal";
+import { Link } from "react-router-dom";
 export default function Header() {
     const {
         isOpen: isLoginOpen,
@@ -41,13 +42,15 @@ export default function Header() {
             }}
             borderBottomWidth={1}
         >
-            <Box
-                as="img"
-                src={customLogo}
-                alt="Custom Logo"
-                w="auto"
-                h="48px"
-            />
+            <Link to={`/`}>
+                <Box
+                    as="img"
+                    src={customLogo}
+                    alt="Custom Logo"
+                    w="auto"
+                    h="48px"
+                />
+            </Link>
             <HStack spacing={2}>
                 <IconButton
                     onClick={toggleColorMode}
