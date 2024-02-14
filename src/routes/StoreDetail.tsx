@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getStore } from "../api";
+import { getStore, getStoreReviews } from "../api";
 import {
     AspectRatio,
     Box,
@@ -21,11 +21,12 @@ import {
     List,
     ListItem,
     ListIcon,
-    OrderedList,
-    UnorderedList,
+    Avatar,
+    Container,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
+import { FaStar } from "react-icons/fa";
 import KakaoMap from "../components/KakaoMap";
 
 export default function StoreDetail() {
@@ -34,6 +35,9 @@ export default function StoreDetail() {
         [`stores`, storePk],
         getStore,
     );
+    const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<
+        IReview[]
+    >([`stores`, storePk, `reviews`], getStoreReviews);
     const getBadgeStyle = () => {
         switch (data?.status) {
             case "진행중":
@@ -45,6 +49,16 @@ export default function StoreDetail() {
         }
     };
     const { bg, color } = getBadgeStyle();
+    function formatDate(date: Date | undefined): string {
+        if (!date) return "";
+        const options: Intl.DateTimeFormatOptions = {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        };
+        return new Date(date).toLocaleDateString("ko-KR", options);
+    }
 
     return (
         <Box mt={10} px={{ base: 10, lg: 40 }}>
@@ -102,29 +116,81 @@ export default function StoreDetail() {
                 </TabList>
 
                 <TabPanels>
-                    <TabPanel>
+                    <TabPanel mt={10}>
                         <List spacing={3}>
                             <ListItem>
-                                <ListIcon
-                                    as={MdCheckCircle}
-                                    color="green.500"
-                                />
-                                <Text as="b">
-                                    {data?.p_startdate.toLocaleString()} ~{" "}
-                                    {data?.p_enddate.toLocaleString()}
-                                </Text>
+                                <HStack>
+                                    <ListIcon
+                                        as={MdCheckCircle}
+                                        color="green.500"
+                                    />
+                                    <Text fontSize={"lg"}>
+                                        {formatDate(data?.p_startdate)} ~{" "}
+                                        {formatDate(data?.p_enddate)}
+                                    </Text>
+                                </HStack>
                             </ListItem>
                             <ListItem>
-                                <ListIcon
-                                    as={MdCheckCircle}
-                                    color="green.500"
-                                />
-                                <Text as="b">{data?.p_location}</Text>
+                                <HStack>
+                                    <ListIcon
+                                        as={MdCheckCircle}
+                                        color="green.500"
+                                    />
+                                    <Text fontSize={"lg"}>
+                                        {data?.p_location}
+                                    </Text>
+                                </HStack>
                             </ListItem>
                         </List>
                     </TabPanel>
                     <TabPanel>
-                        <p>여기다가 리뷰 만들거임</p>
+                        <Box mt={10}>
+                            <Heading mb={5} fontSize={"2xl"}>
+                                <HStack>
+                                    <FaStar /> <Text>{data?.rating} ·</Text>
+                                    <Text>후기 {reviewsData?.length}개</Text>
+                                </HStack>
+                            </Heading>
+                            <Container
+                                mt={10}
+                                maxW="container.lg"
+                                marginX="none"
+                            >
+                                <Grid
+                                    gap={40}
+                                    templateColumns={"1fr 1fr"}
+                                >
+                                    {reviewsData?.map((review, index) => (
+                                        <VStack
+                                            alignItems={"flex-start"}
+                                            key={index}
+                                        >
+                                            <HStack spacing={3}>
+                                                <Avatar
+                                                    name={review.user.name}
+                                                    src={review.user.avatar}
+                                                    size="md"
+                                                />
+                                                <VStack
+                                                    alignItems={"flex-start"}
+                                                >
+                                                    <Heading fontSize={"md"}>
+                                                        {review.user.name}
+                                                    </Heading>
+                                                    <HStack spacing={1}>
+                                                        <FaStar size="12px" />
+                                                        <Text>
+                                                            {review.rating}
+                                                        </Text>
+                                                    </HStack>
+                                                </VStack>
+                                            </HStack>
+                                            <Text>{review.payload}</Text>
+                                        </VStack>
+                                    ))}
+                                </Grid>
+                            </Container>
+                        </Box>
                     </TabPanel>
                     <TabPanel></TabPanel>
                 </TabPanels>

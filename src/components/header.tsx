@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Box,
     Button,
     HStack,
@@ -13,7 +14,9 @@ import customLogo from "../sources/poppin_logo.png";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignUpModal";
 import { Link } from "react-router-dom";
+import useUser from "../lib/useUser";
 export default function Header() {
+    const { userLoading, isLoggedIn, user } = useUser();
     const {
         isOpen: isLoginOpen,
         onClose: onLoginClose,
@@ -57,11 +60,23 @@ export default function Header() {
                     variant={"ghost"}
                     aria-label="Toggle dark mode"
                     icon={<Icon />}
-                ></IconButton>
-                <Button onClick={onLoginOpen}>Log in</Button>
-                <Button onClick={onSignUpOpen} colorScheme="pink">
-                    Sign up
-                </Button>
+                />
+                {!userLoading ? (
+                    !isLoggedIn ? (
+                        <>
+                            <Button onClick={onLoginOpen}>Log in</Button>
+                            <Button onClick={onSignUpOpen} colorScheme="pink">
+                                Sign up
+                            </Button>
+                        </>
+                    ) : (
+                        <Avatar
+                            name={user?.name}
+                            src={user?.avatar}
+                            size={"md"}
+                        />
+                    )
+                ) : null}
             </HStack>
             <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
             <SignupModal isOpen={isSignUpOpen} onClose={onSignUpClose} />

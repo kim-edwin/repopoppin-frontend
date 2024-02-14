@@ -35,3 +35,18 @@ interface IStoreDetail {
     rating: number;
     status: string;
 }
+
+interface IUser {
+    last_login: string;
+    date_joined: string;
+    email: string;
+    name: string;
+    avatar: string;
+    username: string;
+}
+
+interface IReview {
+    payload: string;
+    rating: number;
+    user: IUser;
+}
