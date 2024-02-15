@@ -1,6 +1,7 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, useEditable } from "@chakra-ui/react";
 import Store from "../components/Store";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import StoreSkeleton from "../components/StoreSkeleton";
 import { getStores } from "../api";
 

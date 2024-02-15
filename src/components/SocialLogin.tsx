@@ -18,9 +18,10 @@ export default function SocialLogin() {
             </HStack>
             <VStack>
                 <Button
+                    as="a"
+                    href="https://github.com/login/oauth/authorize?client_id=60d345cd98fcc45c5bda&scope=read:user,user:email"
                     w="100%"
                     leftIcon={<FaGithub />}
-                    colorScheme={"telegram"}
                 >
                     Continue with Github
                 </Button>
