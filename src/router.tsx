@@ -5,6 +5,7 @@ import NotFound from "./routes/NotFound";
 import StoreDetail from "./routes/StoreDetail";
 import GithubConfirm from "./routes/GithubConfirm";
 import KakaoConfirm from "./routes/KakaoConfirm";
+import Wishlists from "./routes/Wishlists";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
                     { path: "github", element: <GithubConfirm /> },
                     { path: "kakao", element: <KakaoConfirm /> },
                 ],
+            },
+            {
+                path: "wishlist",
+                element: <Wishlists />,
             },
         ],
     },

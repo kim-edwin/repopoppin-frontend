@@ -116,7 +116,10 @@ export default function Header() {
                                 />
                             </MenuButton>
                             <MenuList>
-                                <MenuItem onClick={onlogout}>Log out</MenuItem>
+                                <Link to="/wishlist">
+                                    <MenuItem>Wishlist</MenuItem>
+                                </Link>
+                                <MenuItem bg={"pink"} onClick={onlogout}>Log out</MenuItem>
                             </MenuList>
                         </Menu>
                     )
