@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 interface StoreProps {
     pk: number;
-    img_url: string;
+    thumbnail: string;
     p_name: string;
     rating: number;
     p_location: string;
@@ -27,7 +27,7 @@ interface StoreProps {
 
 export default function Store({
     pk,
-    img_url,
+    thumbnail,
     p_name,
     rating,
     p_location,
@@ -59,7 +59,7 @@ export default function Store({
                         rounded="3xl"
                     >
                         <AspectRatio ratio={4 / 3}>
-                            <Image src={img_url} objectFit="cover" />
+                            <Image src={thumbnail} objectFit="cover" />
                         </AspectRatio>
                         <Button
                             variant={"unstyled"}

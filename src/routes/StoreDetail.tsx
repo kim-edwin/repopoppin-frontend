@@ -74,7 +74,7 @@ export default function StoreDetail() {
                 >
                     <AspectRatio ratio={14 / 9}>
                         <Image
-                            src={data?.img_url}
+                            src={data?.thumbnail}
                             alt={data?.p_name}
                             objectFit="cover"
                             maxHeight="550px"
@@ -156,10 +156,7 @@ export default function StoreDetail() {
                                 maxW="container.lg"
                                 marginX="none"
                             >
-                                <Grid
-                                    gap={40}
-                                    templateColumns={"1fr 1fr"}
-                                >
+                                <Grid gap={40} templateColumns={"1fr 1fr"}>
                                     {reviewsData?.map((review, index) => (
                                         <VStack
                                             alignItems={"flex-start"}
