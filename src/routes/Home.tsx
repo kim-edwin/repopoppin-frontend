@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import StoreSkeleton from "../components/StoreSkeleton";
 import { getStores } from "../api";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { FaHome } from "react-icons/fa";
 
 export default function Home() {
     const [page, setPage] = useState(1);
@@ -26,6 +27,10 @@ export default function Home() {
         }
     };
 
+    const handle1stPage = () => {
+        setPage(1); // 페이지 번호를 1로 만듦
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             await refetch();
@@ -37,6 +42,7 @@ export default function Home() {
     return (
         <VStack>
             <Grid
+                w="100%"
                 mt={10}
                 mb={20}
                 px={{
@@ -50,6 +56,7 @@ export default function Home() {
                     md: "1fr 1fr",
                     lg: "repeat(3, 1fr)",
                 }}
+                style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
                 {isLoading ? (
                     <>
@@ -81,9 +88,17 @@ export default function Home() {
             </Grid>
             <Stack direction="row" spacing={4} mb={30}>
                 <Button
+                    onClick={handle1stPage}
+                    leftIcon={<FaHome />}
+                    colorScheme="pink"
+                    variant="outline"
+                >
+                    Home
+                </Button>
+                <Button
                     onClick={handlePreviousPage}
                     leftIcon={<ArrowBackIcon />}
-                    colorScheme="teal"
+                    colorScheme="pink"
                     variant="outline"
                     display={page === 1 ? "none" : "block"} // 페이지가 1일 때는 버튼을 숨김
                 >
@@ -92,7 +107,7 @@ export default function Home() {
                 <Button
                     onClick={handleNextPage}
                     rightIcon={<ArrowForwardIcon />}
-                    colorScheme="teal"
+                    colorScheme="pink"
                     variant="solid"
                 >
                     Next

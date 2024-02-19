@@ -51,7 +51,7 @@ export default function Store({
     return (
         <Link to={`/stores/${pk}`}>
             <VStack spacing={1} alignItems={"flex-start"}>
-                <Box w="100%">
+                <Box w="100%" height="100%">
                     <Box
                         position={"relative"}
                         overflow="hidden"

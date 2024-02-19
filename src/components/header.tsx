@@ -26,6 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 
 export default function Header() {
+    
     const { userLoading, isLoggedIn, user } = useUser();
     const {
         isOpen: isLoginOpen,
