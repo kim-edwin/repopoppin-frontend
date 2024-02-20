@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getStore, getStoreReviews } from "../api";
+import { getStore, getStoreReviews, } from "../api";
 import {
     AspectRatio,
     Box,
-    Grid,
     HStack,
     Heading,
     Skeleton,
     Image,
-    VStack,
     Link,
     Badge,
     Tabs,
@@ -21,15 +19,15 @@ import {
     List,
     ListItem,
     ListIcon,
-    Avatar,
-    Container,
+
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
-import { FaStar } from "react-icons/fa";
 import KakaoMap from "../components/KakaoMap";
+import ReviewModal from "../components/ReviewModal";
 
 export default function StoreDetail() {
+    
     const { storePk } = useParams();
     const { isLoading, data } = useQuery<IStoreDetail>(
         [`stores`, storePk],
@@ -59,6 +57,8 @@ export default function StoreDetail() {
         };
         return new Date(date).toLocaleDateString("ko-KR", options);
     }
+    
+
 
     return (
         <Box mt={10} px={{ base: 10, lg: 40 }}>
@@ -144,50 +144,7 @@ export default function StoreDetail() {
                         </List>
                     </TabPanel>
                     <TabPanel>
-                        <Box mt={10}>
-                            <Heading mb={5} fontSize={"2xl"}>
-                                <HStack>
-                                    <FaStar /> <Text>{data?.rating} ·</Text>
-                                    <Text>후기 {reviewsData?.length}개</Text>
-                                </HStack>
-                            </Heading>
-                            <Container
-                                mt={10}
-                                maxW="container.lg"
-                                marginX="none"
-                            >
-                                <Grid gap={40} templateColumns={"1fr 1fr"}>
-                                    {reviewsData?.map((review, index) => (
-                                        <VStack
-                                            alignItems={"flex-start"}
-                                            key={index}
-                                        >
-                                            <HStack spacing={3}>
-                                                <Avatar
-                                                    name={review.user.name}
-                                                    src={review.user.avatar}
-                                                    size="md"
-                                                />
-                                                <VStack
-                                                    alignItems={"flex-start"}
-                                                >
-                                                    <Heading fontSize={"md"}>
-                                                        {review.user.name}
-                                                    </Heading>
-                                                    <HStack spacing={1}>
-                                                        <FaStar size="12px" />
-                                                        <Text>
-                                                            {review.rating}
-                                                        </Text>
-                                                    </HStack>
-                                                </VStack>
-                                            </HStack>
-                                            <Text>{review.payload}</Text>
-                                        </VStack>
-                                    ))}
-                                </Grid>
-                            </Container>
-                        </Box>
+                        <ReviewModal data={data} reviewsData={reviewsData} />
                     </TabPanel>
                     <TabPanel></TabPanel>
                 </TabPanels>
