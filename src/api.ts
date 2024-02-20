@@ -129,3 +129,10 @@ export const postReview = ({ pk, rating, payload }: IpostReviewVariables) =>
 
 export const getWishlists = () =>
     instance.get(`wishlists/`).then((response) => response.data);
+
+export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
+    const [_, wishlistPk] = queryKey;
+    return instance
+        .get(`wishlists/${wishlistPk}`)
+        .then((response) => response.data);
+};
