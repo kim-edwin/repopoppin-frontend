@@ -25,6 +25,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
 import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
+import { useState } from "react";
 
 export default function StoreDetail() {
     
@@ -33,9 +34,15 @@ export default function StoreDetail() {
         [`stores`, storePk],
         getStore,
     );
-    const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<
-        IReview[]
-    >([`stores`, storePk, `reviews`], getStoreReviews);
+    const {
+        data: reviewsData,
+        isLoading: isReviewsLoading,
+        refetch,
+    } = useQuery<IReview[]>([`stores`, storePk, `reviews`], getStoreReviews);
+    const reloadReviewsData = async () => {
+        // refetch 메서드를 호출하여 useQuery를 다시 실행합니다.
+        await refetch();
+    };
     const getBadgeStyle = () => {
         switch (data?.status) {
             case "진행중":
@@ -144,7 +151,11 @@ export default function StoreDetail() {
                         </List>
                     </TabPanel>
                     <TabPanel>
-                        <ReviewModal data={data} reviewsData={reviewsData} />
+                        <ReviewModal
+                            data={data}
+                            reviewsData={reviewsData}
+                            reloadReviewsData={reloadReviewsData}
+                        />
                     </TabPanel>
                     <TabPanel></TabPanel>
                 </TabPanels>

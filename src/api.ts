@@ -109,3 +109,20 @@ export async function signUpUser({
     );
     return res.data;
 }
+
+export interface IpostReviewVariables {
+    pk: number;
+    rating: number;
+    payload: string;
+}
+
+export const postReview = ({ pk, rating, payload }: IpostReviewVariables) =>
+    instance.post(
+        `stores/${pk}/reviews`,
+        { rating, payload },
+        {
+            headers: {
+                "X-CSRFToken": Cookie.get("csrftoken") || "",
+            },
+        },
+    );

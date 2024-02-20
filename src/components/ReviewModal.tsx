@@ -1,23 +1,10 @@
 import {
-    AspectRatio,
     Box,
     Grid,
     HStack,
     Heading,
-    Skeleton,
-    Image,
     VStack,
-    Link,
-    Badge,
-    Tabs,
-    TabList,
-    Tab,
-    TabPanels,
-    TabPanel,
     Text,
-    List,
-    ListItem,
-    ListIcon,
     Avatar,
     Container,
     FormControl,
@@ -35,22 +22,31 @@ import {
     SliderFilledTrack,
     SliderThumb,
     Button,
+    useToast,
 } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaStar } from "react-icons/fa";
+import { postReview } from "../api";
 
 interface ReviewModalProps {
     data: IStoreDetail | undefined;
     reviewsData: IReview[] | undefined;
+    reloadReviewsData: () => void;
 }
 
-interface IForm {
-    rating: number;
-    payload: string;
+interface IReviewForm {
+    pk: number;
+    rating: number | undefined;
+    payload: string | undefined;
 }
 
-export default function ReviewModal({data, reviewsData}: ReviewModalProps) {
+export default function ReviewModal({
+    data,
+    reviewsData,
+    reloadReviewsData,
+}: ReviewModalProps) {
     const [value, setValue] = React.useState(5);
     const handleNumberInputChange = (
         valueAsString: string,
@@ -61,20 +57,32 @@ export default function ReviewModal({data, reviewsData}: ReviewModalProps) {
     const handleSliderChange = (newValue: number) => {
         setValue(newValue);
     };
+    const { register, handleSubmit, reset } = useForm<IReviewForm>();
+    const toast = useToast();
+    const queryClient = useQueryClient();
+    const mutation = useMutation(postReview, {
+        onSuccess: () => {
+            reloadReviewsData();
+            toast({
+                title: "댓글 달기 성공!",
+                status: "success",
+            });
+            // queryClient.invalidateQueries(["stores", data!.pk, "reviews"]);
+            reset();
+        },
+    });
+    const onSubmit = ({ rating, payload }: IReviewForm) => {
+        if (data && rating !== undefined && payload !== undefined) {
+            mutation.mutate({ pk: data.pk, rating, payload });
+        } else {
+            console.error("Data, rating, or payload is undefined");
+        }
+    };
 
-    const { register, handleSubmit } = useForm<IForm>();
-    
     return (
         <Box mt={10}>
-            <Heading mb={5} fontSize={"2xl"}>
-                <HStack>
-                    <FaStar /> <Text>{data?.rating} ·</Text>
-                    <Text>후기 {reviewsData?.length}개</Text>
-                </HStack>
-            </Heading>
-
             <Container mt={10} maxW="full" marginX="auto">
-                <Box as="form">
+                <Box mb={40} as="form" onSubmit={handleSubmit(onSubmit)}>
                     <Flex alignItems="flex-start" maxW="container.sm" mb={5}>
                         <Box mt={2.5} mr={2}>
                             <FaStar size={20} />
@@ -127,16 +135,23 @@ export default function ReviewModal({data, reviewsData}: ReviewModalProps) {
                             있습니다. ╚(•⌂•)╝
                         </FormHelperText>
                     </FormControl>
-                    <Button
-                        type="submit"
-                        colorScheme={"red"}
-                        size="lg"
-                        w="100%"
-                    >
-                        Upload Room
-                    </Button>
+                    <Flex justify="flex-end">
+                        <Button
+                            type="submit"
+                            colorScheme={"pink"}
+                            size="sm"
+                            ml="auto"
+                        >
+                            후기 등록
+                        </Button>
+                    </Flex>
                 </Box>
-
+                <Heading mb={5} fontSize={"2xl"}>
+                    <HStack>
+                        <FaStar /> <Text>{data?.rating} ·</Text>
+                        <Text>후기 {reviewsData?.length}개</Text>
+                    </HStack>
+                </Heading>
                 <Grid gap={40} templateColumns={"1fr 1fr"}>
                     {reviewsData?.map((review, index) => (
                         <VStack alignItems={"flex-start"} key={index}>
