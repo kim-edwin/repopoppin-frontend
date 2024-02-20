@@ -136,3 +136,16 @@ export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
         .get(`wishlists/${wishlistPk}`)
         .then((response) => response.data);
 };
+
+export interface IPutWishlistVariables {
+    wishlistPk : number;
+    storePk : number;
+}
+
+export const putWishlist = ({wishlistPk, storePk}: IPutWishlistVariables) => {
+    instance.put(`wishlists/${wishlistPk}/stores/${storePk}`, {
+        headers: {
+            "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+    });
+}

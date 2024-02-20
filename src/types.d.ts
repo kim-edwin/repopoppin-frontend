@@ -78,3 +78,8 @@ interface IWishlist {
     stores: IStoreDetail[];
     user: IUser;
 }
+
+interface IPutWishlist {
+    wishlistPk: number;
+    storePk: number;
+}

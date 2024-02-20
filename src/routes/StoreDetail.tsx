@@ -27,6 +27,7 @@ import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
 import { FaHeart } from "react-icons/fa";
 import { LuShare2 , LuSiren } from "react-icons/lu";
+import Threeicons from "../components/Threeicons";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
@@ -91,11 +92,7 @@ export default function StoreDetail() {
                     </AspectRatio>
                 </Box>
                 <VStack alignItems="flex-end">
-                    <HStack h="95px" gap={10} mr={10}>
-                        <FaHeart size={30} color={data?.is_liked ? "red" : "gray"} />
-                        <LuShare2 size={30} />
-                        <LuSiren size={35} />
-                    </HStack>
+                    <Threeicons data = {data}/>
                     <Box
                         flex={{ base: "none", lg: 1 }}
                         ml={{ base: 0, lg: 20 }}
