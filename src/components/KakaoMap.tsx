@@ -17,7 +17,7 @@ export default function KakaoMap({ frontLat, frontLon }: KakaoMapProps) {
                 }}
                 style={{
                     width: "550px",
-                    height: "550px",
+                    height: "450px",
                     borderRadius: "20px",
                 }}
             >

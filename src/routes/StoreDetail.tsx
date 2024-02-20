@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getStore, getStoreReviews, } from "../api";
+import { getStore, getStoreReviews } from "../api";
 import {
     AspectRatio,
     Box,
@@ -19,15 +19,16 @@ import {
     List,
     ListItem,
     ListIcon,
-
+    VStack,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
 import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
+import { FaHeart } from "react-icons/fa";
+import { LuShare2 , LuSiren } from "react-icons/lu";
 
 export default function StoreDetail() {
-    
     const { storePk } = useParams();
     const { isLoading, data } = useQuery<IStoreDetail>(
         [`stores`, storePk],
@@ -64,9 +65,7 @@ export default function StoreDetail() {
         return new Date(date).toLocaleDateString("ko-KR", options);
     }
 
-    console.log(data)
-    
-
+    console.log(data);
 
     return (
         <Box mt={10} px={{ base: 10, lg: 40 }}>
@@ -91,9 +90,24 @@ export default function StoreDetail() {
                         />
                     </AspectRatio>
                 </Box>
-                <Box flex={{ base: "none", lg: 1 }} ml={{ base: 0, lg: 20 }}>
-                    {data && <KakaoMap frontLat={data?.frontLat} frontLon={data?.frontLon} />}
-                </Box>
+                <VStack alignItems="flex-end">
+                    <HStack h="95px" gap={10} mr={10}>
+                        <FaHeart size={30} color={data?.is_liked ? "red" : "gray"} />
+                        <LuShare2 size={30} />
+                        <LuSiren size={35} />
+                    </HStack>
+                    <Box
+                        flex={{ base: "none", lg: 1 }}
+                        ml={{ base: 0, lg: 20 }}
+                    >
+                        {data && (
+                            <KakaoMap
+                                frontLat={data?.frontLat}
+                                frontLon={data?.frontLon}
+                            />
+                        )}
+                    </Box>
+                </VStack>
             </Box>
             <Skeleton height={43} mb={3} width="75%" isLoaded={!isLoading}>
                 <Heading>{data?.p_name}</Heading>
