@@ -2,17 +2,18 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { Box, Heading } from "@chakra-ui/react";
 
 interface KakaoMapProps {
-    p_name: string;
+    frontLat: number;
+    frontLon: number;
 }
 
-export default function KakaoMap({ p_name }: KakaoMapProps) {
-    // console.log({p_name})
-    return (
+export default function KakaoMap({ frontLat, frontLon }: KakaoMapProps) {
+    const isVisible = frontLat !== null && frontLon !== null;
+    return isVisible ? (
         <Box>
             <Map
                 center={{
-                    lat: 37.506320759000715,
-                    lng: 127.05368251210247,
+                    lat: frontLat,
+                    lng: frontLon,
                 }}
                 style={{
                     width: "550px",
@@ -22,12 +23,11 @@ export default function KakaoMap({ p_name }: KakaoMapProps) {
             >
                 <MapMarker
                     position={{
-                        lat: 37.506320759000715,
-                        lng: 127.05368251210247,
+                        lat: frontLat,
+                        lng: frontLon,
                     }}
                 ></MapMarker>
             </Map>
-            
         </Box>
-    );
+    ) : null;
 }

@@ -36,6 +36,8 @@ interface IStoreDetail {
     rating: number;
     status: string;
     thumbnail: string;
+    frontLat: number;
+    frontLon: number;
 }
 
 interface IUser {
@@ -66,4 +68,11 @@ interface ISignUpSuccess {
 
 interface ISignUpError {
     fail: string;
+}
+
+interface IWishlist {
+    pk: number;
+    name: string;
+    stores: IStore;
+    user: IUser;
 }

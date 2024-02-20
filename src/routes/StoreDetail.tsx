@@ -25,7 +25,6 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
 import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
-import { useState } from "react";
 
 export default function StoreDetail() {
     
@@ -64,6 +63,8 @@ export default function StoreDetail() {
         };
         return new Date(date).toLocaleDateString("ko-KR", options);
     }
+
+    console.log(data)
     
 
 
@@ -91,7 +92,7 @@ export default function StoreDetail() {
                     </AspectRatio>
                 </Box>
                 <Box flex={{ base: "none", lg: 1 }} ml={{ base: 0, lg: 20 }}>
-                    {data && <KakaoMap p_name={data.p_name} />}
+                    {data && <KakaoMap frontLat={data?.frontLat} frontLon={data?.frontLon} />}
                 </Box>
             </Box>
             <Skeleton height={43} mb={3} width="75%" isLoaded={!isLoading}>

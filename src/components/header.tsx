@@ -9,6 +9,7 @@ import {
     MenuItem,
     MenuList,
     Stack,
+    Text,
     ToastId,
     useColorMode,
     useColorModeValue,
@@ -108,6 +109,9 @@ export default function Header() {
                         </>
                     ) : (
                         <Menu>
+                            <MenuItem>
+                                <Text>{user?.username}님 반갑습니다!</Text>
+                            </MenuItem>
                             <MenuButton>
                                 <Avatar
                                     name={user?.name}
@@ -119,7 +123,9 @@ export default function Header() {
                                 <Link to="/wishlist">
                                     <MenuItem>Wishlist</MenuItem>
                                 </Link>
-                                <MenuItem bg={"pink"} onClick={onlogout}>Log out</MenuItem>
+                                <MenuItem bg={"pink"} onClick={onlogout}>
+                                    Log out
+                                </MenuItem>
                             </MenuList>
                         </Menu>
                     )

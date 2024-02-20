@@ -126,3 +126,6 @@ export const postReview = ({ pk, rating, payload }: IpostReviewVariables) =>
             },
         },
     );
+
+export const getWishlists = () =>
+    instance.get(`wishlists`).then((response) => response.data);

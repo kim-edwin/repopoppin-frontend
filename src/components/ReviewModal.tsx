@@ -59,7 +59,6 @@ export default function ReviewModal({
     };
     const { register, handleSubmit, reset } = useForm<IReviewForm>();
     const toast = useToast();
-    const queryClient = useQueryClient();
     const mutation = useMutation(postReview, {
         onSuccess: () => {
             reloadReviewsData();
