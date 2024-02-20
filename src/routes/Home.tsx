@@ -83,6 +83,7 @@ export default function Home() {
                         p_startdate={store.p_startdate}
                         p_enddate={store.p_enddate}
                         status={store.status}
+                        is_liked={store.is_liked}
                     />
                 ))}
             </Grid>

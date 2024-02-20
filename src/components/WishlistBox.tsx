@@ -16,9 +16,9 @@ export default function WishlistBox({ pk, name, stores }: IWishlistProps) {
             overflow="hidden"
             mb={2}
             rounded="3xl"
-            alignItems="center" // 상하 중앙 정렬
-            border="3px solid #FF69B4" // 윤곽선 추가
-            borderRadius="3xl" // 윤곽선의 둥근 모서리 설정
+            alignItems="center"
+            border="3px solid #FF69B4"
+            borderRadius="3xl"
         >
             <Box
                 w="100%"
@@ -31,17 +31,22 @@ export default function WishlistBox({ pk, name, stores }: IWishlistProps) {
             >
                 <Heading mb={3}>{name}</Heading>
                 <Text mb={10}>
-                    {storeName} 외 {stores.length - 1}개 팝업스토어
+                    {stores.length === 0 && "추가된 팝업스토어가 없습니다."}
+                    {stores.length === 1 && storeName}
+                    {stores.length > 1 &&
+                        `${storeName} 외 ${stores.length - 1}개 팝업스토어`}
                 </Text>
                 <Link to={`/wishlist/${pk}`}>
                     <Button>상세보기</Button>
                 </Link>
             </Box>
-            <Box width="100%" height="100%" alignItems="center">
-                <AspectRatio ratio={4 / 3}>
-                    <Image src={thumbnail} objectFit="cover" />
-                </AspectRatio>
-            </Box>
+            {stores.length !== 0 && (
+                <Box width="100%" height="100%" alignItems="center">
+                    <AspectRatio ratio={4 / 3}>
+                        <Image src={thumbnail} objectFit="cover" />
+                    </AspectRatio>
+                </Box>
+            )}
         </HStack>
     );
 }

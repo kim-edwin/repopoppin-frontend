@@ -16,6 +16,7 @@ interface IStore {
     rating: number;
     status: string;
     thumbnail: string;
+    is_liked: boolean;
 }
 
 interface IStoreDetail {
@@ -38,6 +39,7 @@ interface IStoreDetail {
     thumbnail: string;
     frontLat: number;
     frontLon: number;
+    is_liked: boolean;
 }
 
 interface IUser {

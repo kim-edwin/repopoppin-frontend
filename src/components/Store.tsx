@@ -10,7 +10,7 @@ import {
     VStack,
     useColorModeValue,
 } from "@chakra-ui/react";
-import { FaRegHeart, FaStar } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 interface StoreProps {
@@ -23,6 +23,7 @@ interface StoreProps {
     p_startdate: Date;
     p_enddate: Date;
     status: string;
+    is_liked: boolean;
 }
 
 export default function Store({
@@ -35,6 +36,7 @@ export default function Store({
     p_startdate,
     p_enddate,
     status,
+    is_liked,
 }: StoreProps) {
     const gray = useColorModeValue("gray.600", "gray.300");
     const getBadgeStyle = () => {
@@ -65,16 +67,17 @@ export default function Store({
                             variant={"unstyled"}
                             cursor={"pointer"}
                             position={"absolute"}
-                            top={2}
-                            right={2}
-                            color="white"
+                            top={8}
+                            right={8}
+                            color={is_liked ? "red" : "gray"}
                         >
-                            <FaRegHeart size="20px" />
+                            <FaHeart size="30px" />
                         </Button>
                         <Badge
                             position="absolute"
-                            top={5}
-                            left={5}
+                            top={10}
+                            left={10}
+                            fontSize="md"
                             {...{ bg, color }}
                         >
                             {status}
