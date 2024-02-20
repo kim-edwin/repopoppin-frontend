@@ -83,7 +83,7 @@ export default function Store({
                 </Box>
                 <Box w="100%">
                     <Grid gap={2} templateColumns={"1fr auto"}>
-                        <Text as="b" noOfLines={1} fontSize={"md"}>
+                        <Text as="b" noOfLines={1} fontSize={"2xl"}>
                             {p_name}
                         </Text>
                         <HStack

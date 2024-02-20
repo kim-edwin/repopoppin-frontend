@@ -6,6 +6,7 @@ import StoreDetail from "./routes/StoreDetail";
 import GithubConfirm from "./routes/GithubConfirm";
 import KakaoConfirm from "./routes/KakaoConfirm";
 import Wishlists from "./routes/Wishlists";
+import WishlistDetail from "./routes/WishlistDetail";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: "wishlist",
                 element: <Wishlists />,
+            },
+            {
+                path: "wishlist/:wishlistPk",
+                element: <WishlistDetail />, 
             },
         ],
     },

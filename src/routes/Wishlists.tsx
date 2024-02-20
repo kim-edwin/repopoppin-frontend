@@ -9,13 +9,13 @@ export default function Wishlists() {
         ["wishlists"],
         () => getWishlists(),
     );
-
     return (
         <ProtectedPage>
             <Box px={{ base: 10, lg: 40 }} py={{ base: 10, lg: 20 }}>
                 <Heading>Wishlists</Heading>
                 <Grid
                     w="100%"
+                    h="300px"
                     mt={10}
                     mb={20}
                     px={{
@@ -24,10 +24,9 @@ export default function Wishlists() {
                     }}
                     columnGap={16}
                     rowGap={20}
-                    templateColumns={{
-                        sm: "1fr",
-                        md: "1fr 1fr",
-                    }}
+                    templateColumns={
+                        "1fr"
+                    }
                     style={{ gridAutoRows: "auto", overflow: "hidden" }}
                 >
                     {data?.map((wishlist) => (

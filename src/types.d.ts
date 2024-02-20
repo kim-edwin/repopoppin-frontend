@@ -73,6 +73,6 @@ interface ISignUpError {
 interface IWishlist {
     pk: number;
     name: string;
-    stores: IStore;
+    stores: IStoreDetail[];
     user: IUser;
 }
