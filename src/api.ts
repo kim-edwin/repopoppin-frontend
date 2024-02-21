@@ -126,6 +126,14 @@ export const postReview = ({ pk, rating, payload }: IpostReviewVariables) =>
         },
     );
 
+export const deleteReview = (reviewPk: number) => {
+    return instance.delete(`reviews/${reviewPk}`, {
+        headers: {
+            "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+    });
+};
+
 export const getWishlists = () =>
     instance.get(`wishlists/`).then((response) => response.data);
 
@@ -174,3 +182,19 @@ export const deleteWishlist = (wishlistPk: number) => {
         },
     });
 };
+
+interface IpostReportVariables {
+    payload: string;
+    storePk: number;
+}
+
+export const postReport = ({ payload, storePk }: IpostReportVariables) =>
+    instance.post(
+        `stores/${storePk}/reports`,
+        { payload },
+        {
+            headers: {
+                "X-CSRFToken": Cookie.get("csrftoken") || "",
+            },
+        },
+    );

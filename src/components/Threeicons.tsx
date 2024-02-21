@@ -13,14 +13,28 @@ import { getWishlists, putWishlist } from "../api";
 import ProtectedPage from "./Protectedpage";
 import CreateDrawer from "./CreateDrawer";
 import DeleteDrawer from "./DeleteDrawer";
+import ReportModal from "./ReportModal";
 
 interface Iconprops {
     data: IStoreDetail | undefined;
     reloadStoreData: () => void;
 }
 
-export default function Threeicons({ data: storeData, reloadStoreData }: Iconprops) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+export default function Threeicons({
+    data: storeData,
+    reloadStoreData,
+}: Iconprops) {
+    const {
+        isOpen: modalIsOpen,
+        onOpen: onModalOpen,
+        onClose: onModalClose,
+    } = useDisclosure();
+    const {
+        isOpen: drawerIsOpen,
+        onOpen: onDrawerOpen,
+        onClose: onDrawerClose,
+    } = useDisclosure();
+
     const btnRef = useRef<HTMLButtonElement>(null);
     const { isLoading, data: wishlistsData } = useQuery<IWishlist[]>(
         ["wishlists"],
@@ -36,22 +50,22 @@ export default function Threeicons({ data: storeData, reloadStoreData }: Iconpro
         });
         reloadStoreData();
         console.log("다시 불러옴 !!!");
-        onClose();
+        onDrawerClose();
     };
-    const heartColor = useColorModeValue("black", "white");
+    const buttonColor = useColorModeValue("black", "white");
     return (
         <ProtectedPage>
             <HStack h="95px" gap={10} mr={10}>
-                <Button ref={btnRef} colorScheme="white" onClick={onOpen}>
+                <Button ref={btnRef} colorScheme="white" onClick={onDrawerOpen}>
                     <FaHeart
                         size={30}
-                        color={storeData?.is_liked ? "red" : heartColor}
+                        color={storeData?.is_liked ? "red" : buttonColor}
                     />
                 </Button>
                 {storeData?.is_liked ? (
                     <DeleteDrawer
-                        isOpen={isOpen}
-                        onClose={onClose}
+                        isOpen={drawerIsOpen}
+                        onClose={onDrawerOpen}
                         btnRef={btnRef}
                         wishlistsData={wishlistsData}
                         handleSave={handleSave}
@@ -60,8 +74,8 @@ export default function Threeicons({ data: storeData, reloadStoreData }: Iconpro
                     />
                 ) : (
                     <CreateDrawer
-                        isOpen={isOpen}
-                        onClose={onClose}
+                        isOpen={drawerIsOpen}
+                        onClose={onDrawerOpen}
                         btnRef={btnRef}
                         wishlistsData={wishlistsData}
                         handleSave={handleSave}
@@ -74,9 +88,23 @@ export default function Threeicons({ data: storeData, reloadStoreData }: Iconpro
                     <LuShare2 size={30} />
                 </Box>
                 <Box ml={4} mb={1}>
-                    <LuSiren size={35} />
+                    <Button
+                        onClick={onModalOpen}
+                        style={{
+                            backgroundColor: "transparent",
+                            boxShadow: "none",
+                        }}
+                    >
+                        <LuSiren size={35} color="buttonColor" />
+                    </Button>
                 </Box>
             </HStack>
+            <ReportModal
+                isOpen={modalIsOpen}
+                onClose={onModalClose}
+                storePk={storeData?.pk || 0}
+                reloadStoreData={reloadStoreData}
+            />
         </ProtectedPage>
     );
 }

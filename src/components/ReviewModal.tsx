@@ -32,7 +32,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaStar } from "react-icons/fa";
-import { postReview } from "../api";
+import { deleteReview, postReview } from "../api";
 import { Link } from "react-router-dom";
 
 interface ReviewModalProps {
@@ -83,6 +83,23 @@ export default function ReviewModal({
             mutation.mutate({ pk: data.pk, rating, payload });
         } else {
             console.error("Data, rating, or payload is undefined");
+        }
+    };
+    const handleDeleteReview = async (reviewPk: number) => {
+        try {
+            await deleteReview(reviewPk);
+            toast({
+                title: "후기 삭제 성공!",
+                status: "success",
+            });
+            reloadReviewsData();
+            reloadStoreData();
+        } catch (error) {
+            console.error("Error deleting review:", error);
+            toast({
+                title: "후기 삭제 실패",
+                status: "error",
+            });
         }
     };
 
@@ -160,14 +177,28 @@ export default function ReviewModal({
                     </HStack>
                 </Heading>
                 <Grid gap={40} templateColumns={"1fr 1fr"}>
-                    {reviewsData?.map((review, index) => (
-                        <VStack alignItems={"flex-start"} key={index}>
+                    {reviewsData?.map((review) => (
+                        <VStack alignItems={"flex-start"} key={review.pk}>
                             <HStack spacing={3}>
-                                <Avatar
-                                    name={review.user.name}
-                                    src={review.user.avatar}
-                                    size="md"
-                                />
+                                <Menu>
+                                    <MenuButton>
+                                        <Avatar
+                                            name={review.user.name}
+                                            src={review.user.avatar}
+                                            size="md"
+                                        />
+                                    </MenuButton>
+                                    <MenuList>
+                                        <MenuItem
+                                            onClick={() =>
+                                                handleDeleteReview(review.pk)
+                                            }
+                                        >
+                                            후기 삭제
+                                        </MenuItem>
+                                    </MenuList>
+                                </Menu>
+
                                 <VStack alignItems={"flex-start"}>
                                     <Heading fontSize={"md"}>
                                         {review.user.name}

@@ -52,6 +52,7 @@ interface IUser {
 }
 
 interface IReview {
+    pk: number;
     payload: string;
     rating: number;
     user: IUser;
