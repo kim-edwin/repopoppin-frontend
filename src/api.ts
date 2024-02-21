@@ -14,7 +14,6 @@ const instance = axios.create({
 export const getStores = (page: number) =>
     instance.get(`stores/?page=${page}`).then((response) => response.data);
 
-
 export const getStore = ({ queryKey }: QueryFunctionContext) => {
     const [_, storePk] = queryKey;
     return instance.get(`stores/${storePk}`).then((response) => response.data);
@@ -138,7 +137,7 @@ export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
 };
 
 interface IpostWishlistVariables {
-    name:string;
+    name: string;
 }
 
 export const postWishlist = ({ name }: IpostWishlistVariables) =>
@@ -153,17 +152,25 @@ export const postWishlist = ({ name }: IpostWishlistVariables) =>
     );
 
 export interface IPutWishlistVariables {
-    wishlistPk : number;
-    storePk : number;
+    wishlistPk: number;
+    storePk: number;
 }
 
-export const putWishlist = ({wishlistPk, storePk}: IPutWishlistVariables) =>
+export const putWishlist = ({ wishlistPk, storePk }: IPutWishlistVariables) =>
     instance.put(
         `wishlists/${wishlistPk}/stores/${storePk}`,
-        {}, 
+        {},
         {
             headers: {
                 "X-CSRFToken": Cookie.get("csrftoken") || "",
             },
-        }
+        },
     );
+
+export const deleteWishlist = (wishlistPk: number) => {
+    return instance.delete(`wishlists/${wishlistPk}`, {
+        headers: {
+            "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+    });
+};
