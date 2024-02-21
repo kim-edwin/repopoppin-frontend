@@ -25,8 +25,6 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
 import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
-import { FaHeart } from "react-icons/fa";
-import { LuShare2 , LuSiren } from "react-icons/lu";
 import Threeicons from "../components/Threeicons";
 
 export default function StoreDetail() {
@@ -37,7 +35,6 @@ export default function StoreDetail() {
     );
     const {
         data: reviewsData,
-        isLoading: isReviewsLoading,
         refetch:refetchReview,
     } = useQuery<IReview[]>([`stores`, storePk, `reviews`], getStoreReviews);
 

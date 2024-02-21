@@ -1,4 +1,9 @@
-import { Button, Grid, Stack, VStack, useEditable } from "@chakra-ui/react";
+import {
+    Button,
+    Grid,
+    Stack,
+    VStack,
+} from "@chakra-ui/react";
 import Store from "../components/Store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -6,6 +11,7 @@ import StoreSkeleton from "../components/StoreSkeleton";
 import { getStores } from "../api";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaHome } from "react-icons/fa";
+import Carousel from "../components/Carousel";
 
 export default function Home() {
     const [page, setPage] = useState(1);
@@ -42,6 +48,7 @@ export default function Home() {
 
     return (
         <VStack>
+            <Carousel />
             <Grid
                 w="100%"
                 mt={10}

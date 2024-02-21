@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     Modal,
     ModalOverlay,
@@ -8,7 +7,6 @@ import {
     ModalBody,
     ModalFooter,
     Textarea,
-    useDisclosure,
     useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";

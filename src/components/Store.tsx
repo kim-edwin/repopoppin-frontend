@@ -10,7 +10,7 @@ import {
     VStack,
     useColorModeValue,
 } from "@chakra-ui/react";
-import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
+import { FaHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 interface StoreProps {

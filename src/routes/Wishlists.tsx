@@ -11,11 +11,10 @@ import ProtectedPage from "../components/Protectedpage";
 import { useQuery } from "@tanstack/react-query";
 import { getWishlists, postWishlist } from "../api";
 import CreateWishlistModal from "../components/CreatWishlistModal";
-import { useState } from "react";
 import WishlistBox from "../components/WishlistBox";
 
 export default function Wishlists() {
-    const { isLoading, data, refetch } = useQuery<IWishlist[]>(
+    const { data, refetch } = useQuery<IWishlist[]>(
         ["wishlists"],
         () => getWishlists(),
     );

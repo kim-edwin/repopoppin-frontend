@@ -1,5 +1,5 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 interface KakaoMapProps {
     frontLat: number | null;
@@ -18,8 +18,8 @@ export default function KakaoMap({ frontLat, frontLon }: KakaoMapProps) {
                     lng: frontLon ?? defaultLon,
                 }}
                 style={{
-                    width:"550px",
-                    height:"450px",
+                    width: "550px",
+                    height: "450px",
                     borderRadius: "20px",
                 }}
             >

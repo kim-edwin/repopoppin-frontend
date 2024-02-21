@@ -50,7 +50,7 @@ export default function Threeicons({
     } = useDisclosure();
 
     const btnRef = useRef<HTMLButtonElement>(null);
-    const { isLoading, data: wishlistsData } = useQuery<IWishlist[]>(
+    const { data: wishlistsData } = useQuery<IWishlist[]>(
         ["wishlists"],
         () => getWishlists(),
     );

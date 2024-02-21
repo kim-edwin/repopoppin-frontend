@@ -8,9 +8,6 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-// export const getStores = () =>
-//     instance.get("stores/").then((response) => response.data);
-
 export const getStores = (page: number) =>
     instance.get(`stores/?page=${page}`).then((response) => response.data);
 
@@ -26,6 +23,7 @@ export const getStoreReviews = ({ queryKey }: QueryFunctionContext) => {
         .then((response) => response.data);
 };
 
+//로그인 및 로그아웃 시 필요한 api
 export const getMe = () =>
     instance.get(`users/me`).then((response) => response.data);
 

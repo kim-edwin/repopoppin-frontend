@@ -28,12 +28,11 @@ import {
     MenuList,
     MenuItem,
 } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaStar } from "react-icons/fa";
 import { deleteReview, postReview } from "../api";
-import { Link } from "react-router-dom";
 
 interface ReviewModalProps {
     data: IStoreDetail | undefined;

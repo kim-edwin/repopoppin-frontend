@@ -1,4 +1,4 @@
-import { Heading, VStack, Text, Button, Spinner, useToast } from "@chakra-ui/react";
+import { Heading, VStack, Text, Spinner, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { githubLogIn } from "../api";

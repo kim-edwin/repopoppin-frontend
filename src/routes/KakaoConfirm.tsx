@@ -2,7 +2,6 @@ import {
     Heading,
     VStack,
     Text,
-    Button,
     Spinner,
     useToast,
 } from "@chakra-ui/react";

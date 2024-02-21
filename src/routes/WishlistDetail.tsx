@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Heading, Stack, VStack } from "@chakra-ui/react";
+import { Button, Grid, Stack, VStack } from "@chakra-ui/react";
 import ProtectedPage from "../components/Protectedpage";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function WishlistDetail() {
     const { wishlistPk } = useParams();
-    const { isLoading, data } = useQuery<IWishlist>(
+    const { data } = useQuery<IWishlist>(
         [`wishlists`, wishlistPk],
         getWishlist,
     );
