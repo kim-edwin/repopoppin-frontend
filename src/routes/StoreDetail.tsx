@@ -31,18 +31,23 @@ import Threeicons from "../components/Threeicons";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
-    const { isLoading, data } = useQuery<IStoreDetail>(
+    const { isLoading, data, refetch:refetchStore } = useQuery<IStoreDetail>(
         [`stores`, storePk],
         getStore,
     );
     const {
         data: reviewsData,
         isLoading: isReviewsLoading,
-        refetch,
+        refetch:refetchReview,
     } = useQuery<IReview[]>([`stores`, storePk, `reviews`], getStoreReviews);
+
+    const reloadStoreData = async () => {
+        await refetchStore();
+        console.log("다시 불러옴 !")
+    };
     const reloadReviewsData = async () => {
-        // refetch 메서드를 호출하여 useQuery를 다시 실행합니다.
-        await refetch();
+        //  useQuery를 다시 실행
+        await refetchReview();
     };
     const getBadgeStyle = () => {
         switch (data?.status) {
@@ -65,8 +70,6 @@ export default function StoreDetail() {
         };
         return new Date(date).toLocaleDateString("ko-KR", options);
     }
-
-    console.log(data);
 
     return (
         <Box mt={10} px={{ base: 10, lg: 40 }}>
@@ -92,7 +95,7 @@ export default function StoreDetail() {
                     </AspectRatio>
                 </Box>
                 <VStack alignItems="flex-end">
-                    <Threeicons data = {data}/>
+                    <Threeicons data={data} reloadStoreData={reloadStoreData} />
                     <Box
                         flex={{ base: "none", lg: 1 }}
                         ml={{ base: 0, lg: 20 }}

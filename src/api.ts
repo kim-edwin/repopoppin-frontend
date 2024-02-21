@@ -137,15 +137,33 @@ export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
         .then((response) => response.data);
 };
 
+interface IpostWishlistVariables {
+    name:string;
+}
+
+export const postWishlist = ({ name }: IpostWishlistVariables) =>
+    instance.post(
+        `wishlists/`,
+        { name },
+        {
+            headers: {
+                "X-CSRFToken": Cookie.get("csrftoken") || "",
+            },
+        },
+    );
+
 export interface IPutWishlistVariables {
     wishlistPk : number;
     storePk : number;
 }
 
-export const putWishlist = ({wishlistPk, storePk}: IPutWishlistVariables) => {
-    instance.put(`wishlists/${wishlistPk}/stores/${storePk}`, {
-        headers: {
-            "X-CSRFToken": Cookie.get("csrftoken") || "",
-        },
-    });
-}
+export const putWishlist = ({wishlistPk, storePk}: IPutWishlistVariables) =>
+    instance.put(
+        `wishlists/${wishlistPk}/stores/${storePk}`,
+        {}, 
+        {
+            headers: {
+                "X-CSRFToken": Cookie.get("csrftoken") || "",
+            },
+        }
+    );

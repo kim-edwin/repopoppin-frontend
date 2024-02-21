@@ -1,4 +1,12 @@
-import { Box, Button, Heading, HStack, Text, Image, AspectRatio } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Heading,
+    HStack,
+    Text,
+    Image,
+    AspectRatio,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 interface IWishlistProps {
@@ -19,10 +27,9 @@ export default function WishlistBox({ pk, name, stores }: IWishlistProps) {
             alignItems="center"
             border="3px solid #FF69B4"
             borderRadius="3xl"
+            justifyContent="space-between"
         >
             <Box
-                w="100%"
-                h="auto"
                 textAlign="left"
                 display="flex"
                 flexDirection="column"
@@ -36,17 +43,21 @@ export default function WishlistBox({ pk, name, stores }: IWishlistProps) {
                     {stores.length > 1 &&
                         `${storeName} 외 ${stores.length - 1}개 팝업스토어`}
                 </Text>
-                <Link to={`/wishlist/${pk}`}>
-                    <Button>상세보기</Button>
-                </Link>
+                <HStack gap={3}>
+                    <Link to={`/wishlist/${pk}`}>
+                        <Button>상세보기</Button>
+                    </Link>
+                    <Button colorScheme="red">삭제</Button>
+                </HStack>
             </Box>
-            {stores.length !== 0 && (
-                <Box width="100%" height="100%" alignItems="center">
-                    <AspectRatio ratio={4 / 3}>
-                        <Image src={thumbnail} objectFit="cover" />
-                    </AspectRatio>
-                </Box>
-            )}
+            <Box>
+                <Image
+                    src={thumbnail}
+                    objectFit="cover"
+                    width="auto"
+                    height="250px"
+                />
+            </Box>
         </HStack>
     );
 }

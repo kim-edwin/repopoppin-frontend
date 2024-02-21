@@ -1,55 +1,82 @@
-import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    HStack,
+    useColorModeValue,
+    useDisclosure,
+} from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { LuShare2, LuSiren } from "react-icons/lu";
-import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-} from "@chakra-ui/react";
-import React, { useRef } from "react";
+import { useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getWishlists, putWishlist } from "../api";
+import ProtectedPage from "./Protectedpage";
+import CreateDrawer from "./CreateDrawer";
+import DeleteDrawer from "./DeleteDrawer";
 
 interface Iconprops {
     data: IStoreDetail | undefined;
+    reloadStoreData: () => void;
 }
 
-export default function Threeicons ( {data}: Iconprops ) {
+export default function Threeicons({ data: storeData, reloadStoreData }: Iconprops) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = useRef<HTMLButtonElement>(null);
+    const { isLoading, data: wishlistsData } = useQuery<IWishlist[]>(
+        ["wishlists"],
+        () => getWishlists(),
+    );
 
+    const [selectedPk, setselectedPk] = useState("");
+
+    const handleSave = async () => {
+        await putWishlist({
+            wishlistPk: Number(selectedPk),
+            storePk: storeData!.pk,
+        });
+        reloadStoreData();
+        console.log("다시 불러옴 !!!");
+        onClose();
+    };
+    const heartColor = useColorModeValue("black", "white");
     return (
-        <HStack h="95px" gap={10} mr={10}>
-            <Button ref={btnRef} colorScheme="white" onClick={onOpen}>
-                <FaHeart size={30} color={data?.is_liked ? "red" : "gray"} />
-            </Button>
-            <Drawer
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                finalFocusRef={btnRef}
-            >
-                <DrawerOverlay />
-                <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader>Create your account</DrawerHeader>
+        <ProtectedPage>
+            <HStack h="95px" gap={10} mr={10}>
+                <Button ref={btnRef} colorScheme="white" onClick={onOpen}>
+                    <FaHeart
+                        size={30}
+                        color={storeData?.is_liked ? "red" : heartColor}
+                    />
+                </Button>
+                {storeData?.is_liked ? (
+                    <DeleteDrawer
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        btnRef={btnRef}
+                        wishlistsData={wishlistsData}
+                        handleSave={handleSave}
+                        selectedPk={selectedPk}
+                        setselectedPk={setselectedPk}
+                    />
+                ) : (
+                    <CreateDrawer
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        btnRef={btnRef}
+                        wishlistsData={wishlistsData}
+                        handleSave={handleSave}
+                        selectedPk={selectedPk}
+                        setselectedPk={setselectedPk}
+                    />
+                )}
 
-                    <DrawerBody>
-                        <Input placeholder="Type here..." />
-                    </DrawerBody>
-
-                    <DrawerFooter>
-                        <Button variant="outline" mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme="blue">Save</Button>
-                    </DrawerFooter>
-                </DrawerContent>
-            </Drawer>
-            <LuShare2 size={30} />
-            <LuSiren size={35} />
-        </HStack>
+                <Box>
+                    <LuShare2 size={30} />
+                </Box>
+                <Box ml={4} mb={1}>
+                    <LuSiren size={35} />
+                </Box>
+            </HStack>
+        </ProtectedPage>
     );
 }
