@@ -1,7 +1,16 @@
 import {
     Box,
     Button,
+    ButtonGroup,
     HStack,
+    Popover,
+    PopoverArrow,
+    PopoverBody,
+    PopoverCloseButton,
+    PopoverContent,
+    PopoverFooter,
+    PopoverHeader,
+    PopoverTrigger,
     useColorModeValue,
     useDisclosure,
 } from "@chakra-ui/react";
@@ -34,6 +43,11 @@ export default function Threeicons({
         onOpen: onDrawerOpen,
         onClose: onDrawerClose,
     } = useDisclosure();
+    const {
+        isOpen: popIsOpen,
+        onOpen: onPopOpen,
+        onClose: onPopClose,
+    } = useDisclosure();
 
     const btnRef = useRef<HTMLButtonElement>(null);
     const { isLoading, data: wishlistsData } = useQuery<IWishlist[]>(
@@ -53,15 +67,28 @@ export default function Threeicons({
         onDrawerClose();
     };
     const buttonColor = useColorModeValue("black", "white");
+
+    const copyUrlToClipboard = () => {
+        const currentUrl = window.location.href;
+        navigator.clipboard.writeText(currentUrl);
+        onPopClose(); // 팝오버 닫기
+    };
     return (
         <ProtectedPage>
-            <HStack h="95px" gap={10} mr={10}>
-                <Button ref={btnRef} colorScheme="white" onClick={onDrawerOpen}>
-                    <FaHeart
-                        size={30}
-                        color={storeData?.is_liked ? "red" : buttonColor}
-                    />
-                </Button>
+            <HStack h="95px" mr={10}>
+                <Box>
+                    <Button
+                        ref={btnRef}
+                        colorScheme="white"
+                        onClick={onDrawerOpen}
+                        style={{ padding: "0" }}
+                    >
+                        <FaHeart
+                            size={30}
+                            color={storeData?.is_liked ? "red" : buttonColor}
+                        />
+                    </Button>
+                </Box>
                 {storeData?.is_liked ? (
                     <DeleteDrawer
                         isOpen={drawerIsOpen}
@@ -84,10 +111,57 @@ export default function Threeicons({
                     />
                 )}
 
-                <Box>
-                    <LuShare2 size={30} />
+                <Box ml={2}>
+                    <Popover
+                        returnFocusOnClose={false}
+                        isOpen={popIsOpen}
+                        onClose={onPopClose}
+                        placement="right"
+                        closeOnBlur={false}
+                    >
+                        <PopoverTrigger>
+                            <Button
+                                onClick={onPopOpen}
+                                style={{
+                                    backgroundColor: "transparent",
+                                    boxShadow: "none",
+                                }}
+                            >
+                                <LuShare2 size={30} />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <PopoverHeader fontWeight="semibold">
+                                링크 공유하기
+                            </PopoverHeader>
+                            <PopoverArrow />
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                                클립보드에 복사하시겠습니까?
+                            </PopoverBody>
+                            <PopoverFooter
+                                display="flex"
+                                justifyContent="flex-end"
+                            >
+                                <ButtonGroup size="sm">
+                                    <Button
+                                        variant="outline"
+                                        onClick={onPopClose}
+                                    >
+                                        아니오
+                                    </Button>
+                                    <Button
+                                        colorScheme="pink"
+                                        onClick={copyUrlToClipboard}
+                                    >
+                                        예
+                                    </Button>
+                                </ButtonGroup>
+                            </PopoverFooter>
+                        </PopoverContent>
+                    </Popover>
                 </Box>
-                <Box ml={4} mb={1}>
+                <Box mb={1}>
                     <Button
                         onClick={onModalOpen}
                         style={{
