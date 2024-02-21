@@ -23,17 +23,23 @@ import {
     SliderThumb,
     Button,
     useToast,
+    MenuButton,
+    Menu,
+    MenuList,
+    MenuItem,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaStar } from "react-icons/fa";
 import { postReview } from "../api";
+import { Link } from "react-router-dom";
 
 interface ReviewModalProps {
     data: IStoreDetail | undefined;
     reviewsData: IReview[] | undefined;
     reloadReviewsData: () => void;
+    reloadStoreData: () => void;
 }
 
 interface IReviewForm {
@@ -46,6 +52,7 @@ export default function ReviewModal({
     data,
     reviewsData,
     reloadReviewsData,
+    reloadStoreData,
 }: ReviewModalProps) {
     const [value, setValue] = React.useState(5);
     const handleNumberInputChange = (
@@ -62,6 +69,7 @@ export default function ReviewModal({
     const mutation = useMutation(postReview, {
         onSuccess: () => {
             reloadReviewsData();
+            reloadStoreData();
             toast({
                 title: "댓글 달기 성공!",
                 status: "success",

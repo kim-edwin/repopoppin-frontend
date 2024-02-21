@@ -169,6 +169,7 @@ export default function StoreDetail() {
                         <ReviewModal
                             data={data}
                             reviewsData={reviewsData}
+                            reloadStoreData={reloadStoreData}
                             reloadReviewsData={reloadReviewsData}
                         />
                     </TabPanel>

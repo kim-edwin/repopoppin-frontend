@@ -37,6 +37,7 @@ export default function Home() {
         };
 
         fetchData();
+        console.log("page num: " + page);
     }, [page]); // 페이지 번호가 변경될 때마다 데이터를 다시 가져옴
 
     return (
