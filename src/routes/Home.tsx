@@ -3,6 +3,7 @@ import {
     Grid,
     Stack,
     VStack,
+    useBreakpointValue,
 } from "@chakra-ui/react";
 import Store from "../components/Store";
 import { useQuery } from "@tanstack/react-query";
@@ -46,6 +47,13 @@ export default function Home() {
         console.log("page num: " + page);
     }, [page]); // 페이지 번호가 변경될 때마다 데이터를 다시 가져옴
 
+    const grid_template_column = useBreakpointValue({
+        base: "1fr 1fr",
+        md: "repeat(4, 1fr)",
+    });
+    const grid_px = useBreakpointValue({ base: "20px", md: "40px" });
+    const grid_column_gap = useBreakpointValue({ base: "20px", md: "40px" });
+    
     return (
         <VStack>
             <Carousel />
@@ -53,32 +61,12 @@ export default function Home() {
                 w="100%"
                 mt={10}
                 mb={20}
-                px={{
-                    base: 10,
-                    lg: 40,
-                }}
-                columnGap={16}
+                px={grid_px}
+                columnGap={grid_column_gap}
                 rowGap={20}
-                templateColumns={{
-                    sm: "1fr",
-                    md: "1fr 1fr",
-                    lg: "repeat(3, 1fr)",
-                }}
+                templateColumns={grid_template_column}
                 style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
-                {isLoading ? (
-                    <>
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                        <StoreSkeleton />
-                    </>
-                ) : null}
                 {data?.map((store) => (
                     <Store
                         key={store.id}

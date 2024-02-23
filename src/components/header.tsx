@@ -2,8 +2,10 @@ import {
     Avatar,
     Box,
     Button,
+    Flex,
     HStack,
     IconButton,
+    Image,
     Menu,
     MenuButton,
     MenuItem,
@@ -11,6 +13,7 @@ import {
     Stack,
     Text,
     ToastId,
+    useBreakpointValue,
     useColorMode,
     useColorModeValue,
     useDisclosure,
@@ -27,7 +30,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 
 export default function Header() {
-    
     const { userLoading, isLoggedIn, user } = useUser();
     const {
         isOpen: isLoginOpen,
@@ -67,35 +69,30 @@ export default function Header() {
     const onlogout = async () => {
         mutation.mutate();
     };
+
+    const logoSize = useBreakpointValue({ base: "30px", md: "60px" });
+    const header_px = useBreakpointValue({ base: "20px", md: "40px" });
+    const avatar_size = useBreakpointValue({ base: "sm", md: "md" });
     return (
-        <Stack
-            justifyContent={"space-between"}
-            alignItems={"center"}
+        <Flex
+            justifyContent="space-between"
+            alignItems="center"
             py={5}
-            px={40}
-            direction={{
-                base: "column",
-                md: "row",
-            }}
-            spacing={{
-                base: 4,
-                md: 0,
-            }}
+            px={header_px}
             borderBottomWidth={1}
         >
             <Link to={`/`}>
-                <Box
-                    as="img"
+                <Image
                     src={customLogo}
                     alt="Custom Logo"
-                    w="auto"
-                    h="48px"
+                    width={logoSize}
+                    mt={1}
                 />
             </Link>
             <HStack spacing={2}>
                 <IconButton
                     onClick={toggleColorMode}
-                    variant={"ghost"}
+                    variant="ghost"
                     aria-label="Toggle dark mode"
                     icon={<Icon />}
                 />
@@ -109,22 +106,22 @@ export default function Header() {
                         </>
                     ) : (
                         <Menu>
-                            <MenuItem>
-                                <Text>{user?.username}님 반갑습니다!</Text>
-                            </MenuItem>
                             <MenuButton>
                                 <Avatar
                                     name={user?.name}
                                     src={user?.avatar}
-                                    size={"md"}
+                                    size={avatar_size}
                                 />
                             </MenuButton>
-                            <MenuList>
+                            <MenuList width={"100px"}>
+                                <MenuItem>
+                                    <Text>{user?.name}님, 안녕하세요!</Text>
+                                </MenuItem>
                                 <Link to="/wishlist">
-                                    <MenuItem>Wishlist</MenuItem>
+                                    <MenuItem>위시리스트</MenuItem>
                                 </Link>
-                                <MenuItem bg={"pink"} onClick={onlogout}>
-                                    Log out
+                                <MenuItem bg="pink" onClick={onlogout}>
+                                    로그아웃
                                 </MenuItem>
                             </MenuList>
                         </Menu>
@@ -133,6 +130,6 @@ export default function Header() {
             </HStack>
             <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
             <SignupModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-        </Stack>
+        </Flex>
     );
 }
