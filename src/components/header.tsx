@@ -79,7 +79,7 @@ export default function Header() {
             alignItems="center"
             py={5}
             px={header_px}
-            borderBottomWidth={1}
+            borderBottomWidth={{base: "None", lg: 1}}
         >
             <Link to={`/`}>
                 <Image

@@ -105,7 +105,11 @@ export default function ReviewModal({
     return (
         <Box mt={10}>
             <Container mt={10} maxW="full" marginX="auto">
-                <Box mb={40} as="form" onSubmit={handleSubmit(onSubmit)}>
+                <Box
+                    mb={{ base: 20, lg: 40 }}
+                    as="form"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <Flex alignItems="flex-start" maxW="container.sm" mb={5}>
                         <Box mt={2.5} mr={2}>
                             <FaStar size={20} />
@@ -146,7 +150,7 @@ export default function ReviewModal({
                         </Slider>
                     </Flex>
                     <FormControl>
-                        <FormLabel>방문 후기를 남겨보세요!</FormLabel>
+                        <FormLabel fontSize={{base: "sm", lg: "md"}}>방문 후기를 남겨보세요!</FormLabel>
                         <Textarea
                             {...register("payload", {
                                 required: true,
@@ -158,7 +162,7 @@ export default function ReviewModal({
                             있습니다. ╚(•⌂•)╝
                         </FormHelperText>
                     </FormControl>
-                    <Flex justify="flex-end">
+                    <Flex mt={2} justify="flex-end">
                         <Button
                             type="submit"
                             colorScheme={"pink"}
@@ -169,13 +173,16 @@ export default function ReviewModal({
                         </Button>
                     </Flex>
                 </Box>
-                <Heading mb={5} fontSize={"2xl"}>
+                <Heading mb={5} fontSize={{ base: "lg", lg: "2xl" }}>
                     <HStack>
                         <FaStar /> <Text>{data?.rating} ·</Text>
                         <Text>후기 {reviewsData?.length}개</Text>
                     </HStack>
                 </Heading>
-                <Grid gap={40} templateColumns={"1fr 1fr"}>
+                <Grid
+                    gap={{ base: 20, lg: 40 }}
+                    templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
+                >
                     {reviewsData?.map((review) => (
                         <VStack alignItems={"flex-start"} key={review.pk}>
                             <HStack spacing={3}>
@@ -184,7 +191,7 @@ export default function ReviewModal({
                                         <Avatar
                                             name={review.user.name}
                                             src={review.user.avatar}
-                                            size="md"
+                                            size={{ base: "sm", lg: "md" }}
                                         />
                                     </MenuButton>
                                     <MenuList>
@@ -198,13 +205,22 @@ export default function ReviewModal({
                                     </MenuList>
                                 </Menu>
 
-                                <VStack alignItems={"flex-start"}>
-                                    <Heading fontSize={"md"}>
+                                <VStack
+                                    gap={{ base: 0, lg: 2 }}
+                                    alignItems={"flex-start"}
+                                >
+                                    <Heading
+                                        fontSize={{ base: "sm", lg: "md" }}
+                                    >
                                         {review.user.name}
                                     </Heading>
                                     <HStack spacing={1}>
                                         <FaStar size="12px" />
-                                        <Text>{review.rating}</Text>
+                                        <Text
+                                            fontSize={{ base: "sm", lg: "md" }}
+                                        >
+                                            {review.rating}
+                                        </Text>
                                     </HStack>
                                 </VStack>
                             </HStack>

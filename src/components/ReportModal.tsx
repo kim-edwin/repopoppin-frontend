@@ -60,7 +60,11 @@ const ReportModal: React.FC<ReportModalProps> = ({
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={{ base: "sm", lg: "md" }}
+        >
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>리포트 작성</ModalHeader>
@@ -72,15 +76,14 @@ const ReportModal: React.FC<ReportModalProps> = ({
                     />
                 </ModalBody>
                 <ModalFooter>
+                    <Button onClick={onClose}>취소</Button>
                     <Button
+                        ml={3}
                         colorScheme="pink"
                         onClick={handleReportSubmit}
                         isLoading={isSubmitting}
                     >
                         제출
-                    </Button>
-                    <Button ml={3} onClick={onClose}>
-                        취소
                     </Button>
                 </ModalFooter>
             </ModalContent>

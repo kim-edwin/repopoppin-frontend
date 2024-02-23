@@ -22,7 +22,7 @@ export default function Home() {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
         },
     );
-
+    
     const gridRef = useRef<HTMLDivElement | null>(null); // Grid의 ref 추가
 
     const handleNextPage = () => {
@@ -37,6 +37,13 @@ export default function Home() {
 
     const handle1stPage = () => {
         setPage(1); // 페이지 번호를 1로 만듦
+        // 페이지가 변경될 때마다 Grid의 시작점으로 자동 스크롤
+        if (gridRef.current) {
+            gridRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
     };
 
     useEffect(() => {
@@ -56,11 +63,11 @@ export default function Home() {
     }, [page, gridRef.current]);
 
     const grid_template_column = useBreakpointValue({
-        base: "1fr 1fr",
+        base: "1fr",
         md: "repeat(4, 1fr)",
     });
     const grid_px = useBreakpointValue({ base: "20px", md: "40px" });
-    const grid_column_gap = useBreakpointValue({ base: "20px", md: "40px" });
+    const grid_column_gap = useBreakpointValue({ base: "30px", md: "40px" });
 
     return (
         <VStack>
@@ -70,6 +77,7 @@ export default function Home() {
                 mt={10}
                 mb={20}
                 px={grid_px}
+                pt={10}
                 columnGap={grid_column_gap}
                 rowGap={20}
                 templateColumns={grid_template_column}

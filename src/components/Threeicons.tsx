@@ -11,6 +11,7 @@ import {
     PopoverFooter,
     PopoverHeader,
     PopoverTrigger,
+    useBreakpointValue,
     useColorModeValue,
     useDisclosure,
 } from "@chakra-ui/react";
@@ -73,9 +74,16 @@ export default function Threeicons({
         navigator.clipboard.writeText(currentUrl);
         onPopClose(); // 팝오버 닫기
     };
+
+    const main_h = useBreakpointValue({ base: "50px", md: "95px" });
+    const main_mr = useBreakpointValue({ base: "None", md: 10 });
+    const heart_size = useBreakpointValue({ base: 20, md: 30 });
+    const share_size = useBreakpointValue({ base: 20, md: 30 });
+    const siren_size = useBreakpointValue({ base: 25, md: 35 });
+
     return (
         <ProtectedPage>
-            <HStack h="95px" mr={10}>
+            <HStack h={main_h} mr={main_mr} gap={0}>
                 <Box>
                     <Button
                         ref={btnRef}
@@ -84,7 +92,7 @@ export default function Threeicons({
                         style={{ padding: "0" }}
                     >
                         <FaHeart
-                            size={30}
+                            size={heart_size}
                             color={storeData?.is_liked ? "red" : buttonColor}
                         />
                     </Button>
@@ -92,7 +100,7 @@ export default function Threeicons({
                 {storeData?.is_liked ? (
                     <DeleteDrawer
                         isOpen={drawerIsOpen}
-                        onClose={onDrawerOpen}
+                        onClose={onDrawerClose}
                         btnRef={btnRef}
                         wishlistsData={wishlistsData}
                         handleSave={handleSave}
@@ -102,7 +110,7 @@ export default function Threeicons({
                 ) : (
                     <CreateDrawer
                         isOpen={drawerIsOpen}
-                        onClose={onDrawerOpen}
+                        onClose={onDrawerClose}
                         btnRef={btnRef}
                         wishlistsData={wishlistsData}
                         handleSave={handleSave}
@@ -116,8 +124,9 @@ export default function Threeicons({
                         returnFocusOnClose={false}
                         isOpen={popIsOpen}
                         onClose={onPopClose}
-                        placement="right"
+                        placement="bottom"
                         closeOnBlur={false}
+                        
                     >
                         <PopoverTrigger>
                             <Button
@@ -127,7 +136,7 @@ export default function Threeicons({
                                     boxShadow: "none",
                                 }}
                             >
-                                <LuShare2 size={30} />
+                                <LuShare2 size={share_size} />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent>
@@ -169,7 +178,7 @@ export default function Threeicons({
                             boxShadow: "none",
                         }}
                     >
-                        <LuSiren size={35} color="buttonColor" />
+                        <LuSiren size={siren_size} color="buttonColor" />
                     </Button>
                 </Box>
             </HStack>

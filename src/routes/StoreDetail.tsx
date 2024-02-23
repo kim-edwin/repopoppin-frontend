@@ -20,6 +20,7 @@ import {
     ListItem,
     ListIcon,
     VStack,
+    useBreakpointValue,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
@@ -29,18 +30,19 @@ import Threeicons from "../components/Threeicons";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
-    const { isLoading, data, refetch:refetchStore } = useQuery<IStoreDetail>(
-        [`stores`, storePk],
-        getStore,
-    );
     const {
-        data: reviewsData,
-        refetch:refetchReview,
-    } = useQuery<IReview[]>([`stores`, storePk, `reviews`], getStoreReviews);
+        isLoading,
+        data,
+        refetch: refetchStore,
+    } = useQuery<IStoreDetail>([`stores`, storePk], getStore);
+    const { data: reviewsData, refetch: refetchReview } = useQuery<IReview[]>(
+        [`stores`, storePk, `reviews`],
+        getStoreReviews,
+    );
 
     const reloadStoreData = async () => {
         await refetchStore();
-        console.log("다시 불러옴 !")
+        console.log("다시 불러옴 !");
     };
     const reloadReviewsData = async () => {
         //  useQuery를 다시 실행
@@ -68,15 +70,19 @@ export default function StoreDetail() {
         return new Date(date).toLocaleDateString("ko-KR", options);
     }
 
+    const renderMapInsideTab = useBreakpointValue({ base: false, lg: true });
+
+    console.log({data})
+
     return (
-        <Box mt={10} px={{ base: 10, lg: 40 }}>
+        <Box mt={10} px={{ base: "20px", lg: 40 }}>
             <Box
                 display={{ base: "block", lg: "flex" }}
                 justifyContent="space-between"
                 mt={5}
             >
                 <Box
-                    mb={{ base: "30", lg: "none" }}
+                    mb={{ base: "1", lg: "none" }}
                     flex={{ base: "none", lg: 2 }}
                     mr={{ base: 0, lg: 2 }}
                 >
@@ -97,7 +103,7 @@ export default function StoreDetail() {
                         flex={{ base: "none", lg: 1 }}
                         ml={{ base: 0, lg: 20 }}
                     >
-                        {data && (
+                        {data && renderMapInsideTab && (
                             <KakaoMap
                                 frontLat={data?.frontLat}
                                 frontLon={data?.frontLon}
@@ -106,28 +112,40 @@ export default function StoreDetail() {
                     </Box>
                 </VStack>
             </Box>
-            <Skeleton height={43} mb={3} width="75%" isLoaded={!isLoading}>
-                <Heading>{data?.p_name}</Heading>
+            <Skeleton
+                height={{ base: 10, lg: 43 }}
+                mb={{ base: "None", lg: "3" }}
+                width="75%"
+                isLoaded={!isLoading}
+            >
+                <Heading fontSize={{ base: "2xl", lg: "4xl" }}>
+                    {data?.p_name}
+                </Heading>
             </Skeleton>
-            <Text ml={2} mb={3}>
+            <Text
+                fontSize={{ base: "sm", lg: "lg" }}
+                mb={{ base: "1", lg: "3" }}
+            >
                 {data?.p_hashtag}
             </Text>
             <Badge
-                px={2}
-                ml={2}
-                mb={10}
-                height={30}
+                px={{ base: "4px", lg: 2 }}
+                ml={{ base: 1, lg: 2 }}
+                mb={{ base: 10, lg: 10 }}
+                height={{ base: "None", lg: 30 }}
                 width="auto"
-                fontSize="20"
+                fontSize={{ base: "sm", lg: 20 }}
                 {...{ bg, color }}
             >
                 {data?.status}
             </Badge>
-            <Tabs mb={10}>
+            <Tabs mb={{ base: "None", lg: 10 }}>
                 <TabList>
-                    <Tab>팝업스토어 정보</Tab>
-                    <Tab>이용후기</Tab>
-                    <Tab>
+                    <Tab fontSize={{ base: "sm", lg: "lg" }}>
+                        팝업스토어 정보
+                    </Tab>
+                    <Tab fontSize={{ base: "sm", lg: "lg" }}>이용후기</Tab>
+                    <Tab fontSize={{ base: "sm", lg: "lg" }}>
                         <Link href={data?.news_url} isExternal>
                             원문 기사 이동 <ExternalLinkIcon mx="2px" />
                         </Link>
@@ -135,32 +153,44 @@ export default function StoreDetail() {
                 </TabList>
 
                 <TabPanels>
-                    <TabPanel mt={10}>
-                        <List spacing={3}>
-                            <ListItem>
-                                <HStack>
-                                    <ListIcon
-                                        as={MdCheckCircle}
-                                        color="green.500"
-                                    />
-                                    <Text fontSize={"lg"}>
-                                        {formatDate(data?.p_startdate)} ~{" "}
-                                        {formatDate(data?.p_enddate)}
-                                    </Text>
-                                </HStack>
-                            </ListItem>
-                            <ListItem>
-                                <HStack>
-                                    <ListIcon
-                                        as={MdCheckCircle}
-                                        color="green.500"
-                                    />
-                                    <Text fontSize={"lg"}>
-                                        {data?.p_location}
-                                    </Text>
-                                </HStack>
-                            </ListItem>
-                        </List>
+                    <TabPanel mt={{ base: 2, lg: 10 }}>
+                        <VStack alignItems="flex-start">
+                            <List spacing={3} mb={2}>
+                                <ListItem>
+                                    <HStack>
+                                        <ListIcon
+                                            as={MdCheckCircle}
+                                            color="green.500"
+                                        />
+                                        <Text
+                                            fontSize={{ base: "sm", lg: "lg" }}
+                                        >
+                                            {formatDate(data?.p_startdate)} ~{" "}
+                                            {formatDate(data?.p_enddate)}
+                                        </Text>
+                                    </HStack>
+                                </ListItem>
+                                <ListItem>
+                                    <HStack>
+                                        <ListIcon
+                                            as={MdCheckCircle}
+                                            color="green.500"
+                                        />
+                                        <Text
+                                            fontSize={{ base: "sm", lg: "lg" }}
+                                        >
+                                            {data?.p_location}
+                                        </Text>
+                                    </HStack>
+                                </ListItem>
+                            </List>
+                            {data && !renderMapInsideTab && (
+                                <KakaoMap
+                                    frontLat={data?.frontLat}
+                                    frontLon={data?.frontLon}
+                                />
+                            )}
+                        </VStack>
                     </TabPanel>
                     <TabPanel>
                         <ReviewModal

@@ -9,6 +9,7 @@ import {
     Text,
     VStack,
     useColorModeValue,
+    useBreakpointValue,
 } from "@chakra-ui/react";
 import { FaHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -50,6 +51,13 @@ export default function Store({
         }
     };
     const { bg, color } = getBadgeStyle();
+    const button_top = useBreakpointValue({ base: 4, md : 8 });
+    const button_right = useBreakpointValue({ base: 4, md: 8 });
+    const heart_size = useBreakpointValue({ base: "25px", md: "30px" });
+    const badge_top = useBreakpointValue({ base: 6, md: 10 });
+    const badge_left = useBreakpointValue({ base: 7, md: 10 });
+    const badge_fontsize = useBreakpointValue({ base: "sm", md: "md" });
+    
     return (
         <Link to={`/stores/${pk}`}>
             <VStack spacing={1} alignItems={"flex-start"}>
@@ -67,17 +75,17 @@ export default function Store({
                             variant={"unstyled"}
                             cursor={"pointer"}
                             position={"absolute"}
-                            top={8}
-                            right={8}
+                            top={button_top}
+                            right={button_right}
                             color={is_liked ? "red" : "gray"}
                         >
-                            <FaHeart size="30px" />
+                            <FaHeart size={heart_size} />
                         </Button>
                         <Badge
                             position="absolute"
-                            top={10}
-                            left={10}
-                            fontSize="md"
+                            top={badge_top}
+                            left={badge_left}
+                            fontSize={badge_fontsize}
                             {...{ bg, color }}
                         >
                             {status}
