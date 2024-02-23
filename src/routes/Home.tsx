@@ -7,12 +7,11 @@ import {
 } from "@chakra-ui/react";
 import Store from "../components/Store";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StoreSkeleton from "../components/StoreSkeleton";
 import { getStores } from "../api";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaHome } from "react-icons/fa";
-import Carousel from "../components/Carousel";
 
 export default function Home() {
     const [page, setPage] = useState(1);
@@ -23,6 +22,8 @@ export default function Home() {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
         },
     );
+
+    const gridRef = useRef<HTMLDivElement | null>(null); // Grid의 ref 추가
 
     const handleNextPage = () => {
         setPage((prevPage) => prevPage + 1); // 페이지 번호를 1 증가시킴
@@ -41,11 +42,18 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             await refetch();
+            // 페이지가 변경될 때마다 Grid의 시작점으로 자동 스크롤
+            if (gridRef.current) {
+                gridRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
         };
 
         fetchData();
         console.log("page num: " + page);
-    }, [page]); // 페이지 번호가 변경될 때마다 데이터를 다시 가져옴
+    }, [page, gridRef.current]);
 
     const grid_template_column = useBreakpointValue({
         base: "1fr 1fr",
@@ -53,11 +61,11 @@ export default function Home() {
     });
     const grid_px = useBreakpointValue({ base: "20px", md: "40px" });
     const grid_column_gap = useBreakpointValue({ base: "20px", md: "40px" });
-    
+
     return (
         <VStack>
-            <Carousel />
             <Grid
+                ref={gridRef}
                 w="100%"
                 mt={10}
                 mb={20}
