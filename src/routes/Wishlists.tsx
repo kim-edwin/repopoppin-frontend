@@ -9,14 +9,14 @@ import {
 } from "@chakra-ui/react";
 import ProtectedPage from "../components/Protectedpage";
 import { useQuery } from "@tanstack/react-query";
-import { getWishlists, postWishlist } from "../api";
+import { getWishlist, postWishlist } from "../api";
 import CreateWishlistModal from "../components/CreatWishlistModal";
 import WishlistBox from "../components/WishlistBox";
 
 export default function Wishlists() {
     const { data, refetch } = useQuery<IWishlist[]>(
         ["wishlists"],
-        () => getWishlists(),
+        () => getWishlist(),
     );
 
     const reloadWishlists = async () => {
@@ -61,7 +61,6 @@ export default function Wishlists() {
                             <WishlistBox
                                 key={wishlist.pk}
                                 pk={wishlist.pk}
-                                name={wishlist.name}
                                 stores={wishlist.stores}
                                 reloadWishlists={reloadWishlists}
                             />

@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, VStack } from "@chakra-ui/react";
+import { Button, Grid, Stack, VStack, useBreakpointValue } from "@chakra-ui/react";
 import ProtectedPage from "../components/Protectedpage";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -6,15 +6,28 @@ import { getWishlist } from "../api";
 import Store from "../components/Store";
 import { FaHome } from "react-icons/fa";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function WishlistDetail() {
+    const wish_gridRef = useRef<HTMLDivElement | null>(null); // Grid의 ref 추가
+
+    const wish_grid_template_column = useBreakpointValue({
+        base: "1fr",
+        md: "repeat(3, 1fr)",
+    });
+    const wish_grid_px = useBreakpointValue({ base: "20px", md: "300px" });
+    const wish_grid_column_gap = useBreakpointValue({
+        base: "30px",
+        md: "40px",
+    });
+
+
     const { wishlistPk } = useParams();
     const { data } = useQuery<IWishlist>(
         [`wishlists`, wishlistPk],
         getWishlist,
     );
-    const wishstores = data?.stores
+    const wishstores = data?.stores;
     const [page, setPage] = useState(1);
     const handleNextPage = () => {
         setPage((prevPage) => prevPage + 1); // 페이지 번호를 1 증가시킴
@@ -34,24 +47,20 @@ export default function WishlistDetail() {
         return null; // 데이터가 로드되지 않았을 때는 null을 반환하여 렌더링을 하지 않음
     }
 
+    
     return (
         <ProtectedPage>
             <VStack>
                 <Grid
+                    ref={wish_gridRef}
                     w="100%"
                     mt={10}
                     mb={20}
-                    px={{
-                        base: 10,
-                        lg: 40,
-                    }}
-                    columnGap={16}
+                    px={wish_grid_px}
+                    pt={10}
+                    columnGap={wish_grid_column_gap}
                     rowGap={20}
-                    templateColumns={{
-                        sm: "1fr",
-                        md: "1fr 1fr",
-                        lg: "repeat(3, 1fr)",
-                    }}
+                    templateColumns={wish_grid_template_column}
                     style={{ gridAutoRows: "auto", overflow: "hidden" }}
                 >
                     {wishstores

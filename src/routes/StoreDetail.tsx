@@ -71,21 +71,20 @@ export default function StoreDetail() {
     }
 
     const renderMapInsideTab = useBreakpointValue({ base: false, lg: true });
+    const map_width = useBreakpointValue({ base: 80, lg: 500 }) || 80;
+    const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
 
     console.log({data})
 
     return (
-        <Box mt={10} px={{ base: "20px", lg: 40 }}>
+        <Box mt={10} px={{ base: "20px", lg: "300px" }}>
             <Box
                 display={{ base: "block", lg: "flex" }}
                 justifyContent="space-between"
                 mt={5}
+                mb={10}
             >
-                <Box
-                    mb={{ base: "1", lg: "none" }}
-                    flex={{ base: "none", lg: 2 }}
-                    mr={{ base: 0, lg: 2 }}
-                >
+                <Box flex={{ base: "none", lg: 2 }} mr={{ base: 0, lg: 2 }}>
                     <AspectRatio ratio={14 / 9}>
                         <Image
                             src={data?.thumbnail}
@@ -101,12 +100,14 @@ export default function StoreDetail() {
                     <Threeicons data={data} reloadStoreData={reloadStoreData} />
                     <Box
                         flex={{ base: "none", lg: 1 }}
-                        ml={{ base: 0, lg: 20 }}
+                        ml={{ base: 0, lg: 10 }}
                     >
                         {data && renderMapInsideTab && (
                             <KakaoMap
                                 frontLat={data?.frontLat}
                                 frontLon={data?.frontLon}
+                                map_width={map_width}
+                                map_height={map_height}
                             />
                         )}
                     </Box>
@@ -188,6 +189,8 @@ export default function StoreDetail() {
                                 <KakaoMap
                                     frontLat={data?.frontLat}
                                     frontLon={data?.frontLon}
+                                    map_width={map_width}
+                                    map_height={map_height}
                                 />
                             )}
                         </VStack>

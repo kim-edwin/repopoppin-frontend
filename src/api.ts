@@ -132,15 +132,18 @@ export const deleteReview = (reviewPk: number) => {
     });
 };
 
-export const getWishlists = () =>
-    instance.get(`wishlists/`).then((response) => response.data);
+// export const getWishlists = () =>
+//     instance.get(`wishlists/`).then((response) => response.data);
 
-export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
-    const [_, wishlistPk] = queryKey;
-    return instance
-        .get(`wishlists/${wishlistPk}`)
-        .then((response) => response.data);
-};
+// export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
+//     const [_, wishlistPk] = queryKey;
+//     return instance
+//         .get(`wishlists/${wishlistPk}`)
+//         .then((response) => response.data);
+// };
+
+export const getWishlist = () =>
+    instance.get(`wishlists/`).then((response) => response.data);
 
 interface IpostWishlistVariables {
     name: string;
@@ -158,13 +161,12 @@ export const postWishlist = ({ name }: IpostWishlistVariables) =>
     );
 
 export interface IPutWishlistVariables {
-    wishlistPk: number;
     storePk: number;
 }
 
-export const putWishlist = ({ wishlistPk, storePk }: IPutWishlistVariables) =>
+export const putWishlist = ({ storePk }: IPutWishlistVariables) =>
     instance.put(
-        `wishlists/${wishlistPk}/stores/${storePk}`,
+        `wishlists/stores/${storePk}`,
         {},
         {
             headers: {

@@ -18,14 +18,12 @@ import { Link } from "react-router-dom";
 
 interface IWishlistProps {
     pk: number;
-    name: string;
     stores: IStoreDetail[];
     reloadWishlists: () => void;
 }
 
 export default function WishlistBox({
     pk,
-    name,
     stores,
     reloadWishlists,
 }: IWishlistProps) {
@@ -66,7 +64,7 @@ export default function WishlistBox({
                     justifyContent="center"
                     px={10}
                 >
-                    <Heading mb={3}>{name}</Heading>
+                    <Heading mb={3}>name</Heading>
                     <Text mb={10}>
                         {stores.length === 0 && "추가된 팝업스토어가 없습니다."}
                         {stores.length === 1 && storeName}

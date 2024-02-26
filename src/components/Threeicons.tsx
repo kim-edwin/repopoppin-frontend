@@ -3,6 +3,13 @@ import {
     Button,
     ButtonGroup,
     HStack,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     Popover,
     PopoverArrow,
     PopoverBody,
@@ -14,15 +21,14 @@ import {
     useBreakpointValue,
     useColorModeValue,
     useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { LuShare2, LuSiren } from "react-icons/lu";
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getWishlists, putWishlist } from "../api";
+import { getWishlist, putWishlist } from "../api";
 import ProtectedPage from "./Protectedpage";
-import CreateDrawer from "./CreateDrawer";
-import DeleteDrawer from "./DeleteDrawer";
 import ReportModal from "./ReportModal";
 
 interface Iconprops {
@@ -39,34 +45,60 @@ export default function Threeicons({
         onOpen: onModalOpen,
         onClose: onModalClose,
     } = useDisclosure();
-    const {
-        isOpen: drawerIsOpen,
-        onOpen: onDrawerOpen,
-        onClose: onDrawerClose,
-    } = useDisclosure();
+    
     const {
         isOpen: popIsOpen,
         onOpen: onPopOpen,
         onClose: onPopClose,
     } = useDisclosure();
-
+    
     const btnRef = useRef<HTMLButtonElement>(null);
-    const { data: wishlistsData } = useQuery<IWishlist[]>(
-        ["wishlists"],
-        () => getWishlists(),
-    );
 
-    const [selectedPk, setselectedPk] = useState("");
+    const toast = useToast();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSave = async () => {
+        if (storeData?.is_liked) {
+            // 위시리스트에서 삭제하는 경우
+            setIsModalOpen(true);
+        } else {
+            // 위시리스트에 추가하는 경우
+            try {
+                await putWishlist({
+                    storePk: storeData!.pk,
+                });
+                reloadStoreData();
+                // 성공적으로 추가되었음을 사용자에게 알림
+                toast({
+                    title: "성공!",
+                    description: "위시리스트에 추가되었습니다.",
+                    status: "success",
+                    position: "bottom-right",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            } catch (error) {
+                // 오류 발생 시 사용자에게 알림
+                toast({
+                    title: "오류가 발생했습니다.",
+                    description: "위시리스트에 추가하지 못했습니다.",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        setIsModalOpen(false);
         await putWishlist({
-            wishlistPk: Number(selectedPk),
             storePk: storeData!.pk,
         });
         reloadStoreData();
-        console.log("다시 불러옴 !!!");
-        onDrawerClose();
     };
+
     const buttonColor = useColorModeValue("black", "white");
 
     const copyUrlToClipboard = () => {
@@ -88,8 +120,8 @@ export default function Threeicons({
                     <Button
                         ref={btnRef}
                         colorScheme="white"
-                        onClick={onDrawerOpen}
                         style={{ padding: "0" }}
+                        onClick={handleSave}
                     >
                         <FaHeart
                             size={heart_size}
@@ -97,27 +129,6 @@ export default function Threeicons({
                         />
                     </Button>
                 </Box>
-                {storeData?.is_liked ? (
-                    <DeleteDrawer
-                        isOpen={drawerIsOpen}
-                        onClose={onDrawerClose}
-                        btnRef={btnRef}
-                        wishlistsData={wishlistsData}
-                        handleSave={handleSave}
-                        selectedPk={selectedPk}
-                        setselectedPk={setselectedPk}
-                    />
-                ) : (
-                    <CreateDrawer
-                        isOpen={drawerIsOpen}
-                        onClose={onDrawerClose}
-                        btnRef={btnRef}
-                        wishlistsData={wishlistsData}
-                        handleSave={handleSave}
-                        selectedPk={selectedPk}
-                        setselectedPk={setselectedPk}
-                    />
-                )}
 
                 <Box ml={2}>
                     <Popover
@@ -126,7 +137,6 @@ export default function Threeicons({
                         onClose={onPopClose}
                         placement="bottom"
                         closeOnBlur={false}
-                        
                     >
                         <PopoverTrigger>
                             <Button
@@ -188,6 +198,28 @@ export default function Threeicons({
                 storePk={storeData?.pk || 0}
                 reloadStoreData={reloadStoreData}
             />
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>삭제 확인</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>정말 위시리스트에서 제거하시겠습니까?</ModalBody>
+                    <ModalFooter>
+                        <Button
+                            colorScheme="pink"
+                            onClick={handleConfirmDelete}
+                        >
+                            확인
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            취소
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </ProtectedPage>
     );
 }

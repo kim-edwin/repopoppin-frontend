@@ -51,7 +51,7 @@ const DeleteDrawer: React.FC<DelteDrawerProps> = ({
                         if (wishlist.stores.length > 0) {
                             return (
                                 <option key={wishlist.pk} value={wishlist.pk}>
-                                    {wishlist.name}
+                                    
                                 </option>
                             );
                         } else {

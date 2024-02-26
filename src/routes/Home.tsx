@@ -22,7 +22,7 @@ export default function Home() {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
         },
     );
-    
+
     const gridRef = useRef<HTMLDivElement | null>(null); // Grid의 ref 추가
 
     const handleNextPage = () => {
@@ -64,9 +64,9 @@ export default function Home() {
 
     const grid_template_column = useBreakpointValue({
         base: "1fr",
-        md: "repeat(4, 1fr)",
+        md: "repeat(3, 1fr)",
     });
-    const grid_px = useBreakpointValue({ base: "20px", md: "40px" });
+    const grid_px = useBreakpointValue({ base: "20px", md: "300px" });
     const grid_column_gap = useBreakpointValue({ base: "30px", md: "40px" });
 
     return (

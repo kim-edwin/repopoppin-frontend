@@ -49,7 +49,7 @@ const CreateDrawer: React.FC<CreateDrawerProps> = ({
                 >
                     {wishlistsData?.map((wishlist) => (
                         <option key={wishlist.pk} value={wishlist.pk}>
-                            {wishlist.name}
+                            
                         </option>
                     ))}
                 </Select>

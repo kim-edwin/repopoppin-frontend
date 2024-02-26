@@ -70,8 +70,8 @@ export default function Header() {
         mutation.mutate();
     };
 
-    const logoSize = useBreakpointValue({ base: "30px", md: "60px" });
-    const header_px = useBreakpointValue({ base: "20px", md: "40px" });
+    const logoSize = useBreakpointValue({ base: "30px", md: "40px" });
+    const header_px = useBreakpointValue({ base: "20px", md: "300px" });
     const avatar_size = useBreakpointValue({ base: "sm", md: "md" });
     return (
         <Flex

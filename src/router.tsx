@@ -29,13 +29,13 @@ const router = createBrowserRouter([
                     { path: "kakao", element: <KakaoConfirm /> },
                 ],
             },
+            // {
+            //     path: "wishlist",
+            //     element: <Wishlists />,
+            // },
             {
                 path: "wishlist",
-                element: <Wishlists />,
-            },
-            {
-                path: "wishlist/:wishlistPk",
-                element: <WishlistDetail />, 
+                element: <WishlistDetail />,
             },
         ],
     },
