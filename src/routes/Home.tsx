@@ -83,6 +83,10 @@ export default function Home() {
                 templateColumns={grid_template_column}
                 style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
+                {isLoading &&
+                    Array.from({ length: 9 }).map((_, index) => (
+                        <StoreSkeleton key={index} />
+                    ))}
                 {data?.map((store) => (
                     <Store
                         key={store.id}

@@ -79,7 +79,6 @@ export default function Header() {
             alignItems="center"
             py={5}
             px={header_px}
-            borderBottomWidth={{base: "None", lg: 1}}
         >
             <Link to={`/`}>
                 <Image
@@ -117,6 +116,9 @@ export default function Header() {
                                 <MenuItem>
                                     <Text>{user?.name}님, 안녕하세요!</Text>
                                 </MenuItem>
+                                <Link to="/recentview">
+                                    <MenuItem>최근 조회한 스토어</MenuItem>
+                                </Link>
                                 <Link to="/wishlist">
                                     <MenuItem>위시리스트</MenuItem>
                                 </Link>

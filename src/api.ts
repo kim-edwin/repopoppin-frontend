@@ -198,3 +198,6 @@ export const postReport = ({ payload, storePk }: IpostReportVariables) =>
             },
         },
     );
+
+export const getRecentViews = (page: number) =>
+    instance.get(`recentviews/?page=${page}`).then((response) => response.data);

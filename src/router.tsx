@@ -7,6 +7,7 @@ import GithubConfirm from "./routes/GithubConfirm";
 import KakaoConfirm from "./routes/KakaoConfirm";
 import Wishlists from "./routes/Wishlists";
 import WishlistDetail from "./routes/WishlistDetail";
+import RecentView from "./routes/RecentView";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: "wishlist",
                 element: <WishlistDetail />,
+            },
+            {
+                path: "recentview",
+                element: <RecentView />,
             },
         ],
     },
