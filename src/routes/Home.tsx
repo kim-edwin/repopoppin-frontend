@@ -1,6 +1,8 @@
 import {
+    Box,
     Button,
     Grid,
+    Heading,
     Stack,
     VStack,
     useBreakpointValue,
@@ -12,6 +14,7 @@ import StoreSkeleton from "../components/StoreSkeleton";
 import { getStores } from "../api";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaHome } from "react-icons/fa";
+import Autocomplete from "../components/MyAutoComplete";
 
 export default function Home() {
     const [page, setPage] = useState(1);
@@ -71,6 +74,7 @@ export default function Home() {
 
     return (
         <VStack>
+            <Autocomplete />
             <Grid
                 ref={gridRef}
                 w="100%"

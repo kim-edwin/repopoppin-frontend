@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Flex,
     Grid,
@@ -35,8 +36,10 @@ export default function WishlistDetail() {
         [`wishlists`, wishlistPk],
         getWishlist,
     );
-    
+
     const wishstores = data?.stores;
+    const data_length =
+        wishstores?.length === null ? 0 : Number(wishstores?.length);
     const [page, setPage] = useState(1);
     const handleNextPage = () => {
         setPage((prevPage) => prevPage + 1); // 페이지 번호를 1 증가시킴
@@ -61,70 +64,85 @@ export default function WishlistDetail() {
             <Flex mt={20} px={wish_grid_px} justifyContent="flex-start">
                 <Heading justifyContent="flex-start">위시리스트</Heading>
             </Flex>
-            <VStack>
-                <Grid
-                    ref={wish_gridRef}
-                    w="100%"
-                    mt={10}
-                    mb={20}
-                    px={wish_grid_px}
-                    pt={10}
-                    columnGap={wish_grid_column_gap}
-                    rowGap={20}
-                    templateColumns={wish_grid_template_column}
-                    style={{ gridAutoRows: "auto", overflow: "hidden" }}
+            {data_length > 0 ? (
+                <VStack>
+                    <Grid
+                        ref={wish_gridRef}
+                        w="100%"
+                        mt={10}
+                        mb={20}
+                        px={wish_grid_px}
+                        pt={10}
+                        columnGap={wish_grid_column_gap}
+                        rowGap={20}
+                        templateColumns={wish_grid_template_column}
+                        style={{ gridAutoRows: "auto", overflow: "hidden" }}
+                    >
+                        {isLoading &&
+                            Array.from({ length: 9 }).map((_, index) => (
+                                <StoreSkeleton key={index} />
+                            ))}
+                        {wishstores
+                            .slice()
+                            .reverse()
+                            .map((store) => (
+                                <Store
+                                    key={store.id}
+                                    pk={store.pk}
+                                    thumbnail={store.thumbnail}
+                                    p_name={store.p_name}
+                                    rating={store.rating}
+                                    p_location={store.p_location}
+                                    p_hashtag={store.p_hashtag}
+                                    p_startdate={store.p_startdate}
+                                    p_enddate={store.p_enddate}
+                                    status={store.status}
+                                    is_liked={store.is_liked}
+                                />
+                            ))}
+                    </Grid>
+                    <Stack direction="row" spacing={4} mb={30}>
+                        <Button
+                            onClick={handle1stPage}
+                            leftIcon={<FaHome />}
+                            colorScheme="pink"
+                            variant="outline"
+                        >
+                            Home
+                        </Button>
+                        <Button
+                            onClick={handlePreviousPage}
+                            leftIcon={<ArrowBackIcon />}
+                            colorScheme="pink"
+                            variant="outline"
+                            display={page === 1 ? "none" : "block"} // 페이지가 1일 때는 버튼을 숨김
+                        >
+                            Previous
+                        </Button>
+                        <Button
+                            onClick={handleNextPage}
+                            rightIcon={<ArrowForwardIcon />}
+                            colorScheme="pink"
+                            variant="solid"
+                        >
+                            Next
+                        </Button>
+                    </Stack>
+                </VStack>
+            ) : (
+                <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    w={"100%"}
+                    h={"70vh"}
                 >
-                    {isLoading &&
-                        Array.from({ length: 9 }).map((_, index) => (
-                            <StoreSkeleton key={index} />
-                        ))}
-                    {wishstores
-                        .slice()
-                        .reverse()
-                        .map((store) => (
-                            <Store
-                                key={store.id}
-                                pk={store.pk}
-                                thumbnail={store.thumbnail}
-                                p_name={store.p_name}
-                                rating={store.rating}
-                                p_location={store.p_location}
-                                p_hashtag={store.p_hashtag}
-                                p_startdate={store.p_startdate}
-                                p_enddate={store.p_enddate}
-                                status={store.status}
-                                is_liked={store.is_liked}
-                            />
-                        ))}
-                </Grid>
-                <Stack direction="row" spacing={4} mb={30}>
-                    <Button
-                        onClick={handle1stPage}
-                        leftIcon={<FaHome />}
-                        colorScheme="pink"
-                        variant="outline"
-                    >
-                        Home
-                    </Button>
-                    <Button
-                        onClick={handlePreviousPage}
-                        leftIcon={<ArrowBackIcon />}
-                        colorScheme="pink"
-                        variant="outline"
-                        display={page === 1 ? "none" : "block"} // 페이지가 1일 때는 버튼을 숨김
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        onClick={handleNextPage}
-                        rightIcon={<ArrowForwardIcon />}
-                        colorScheme="pink"
-                        variant="solid"
-                    >
-                        Next
-                    </Button>
-                </Stack>
-            </VStack>
+                    <VStack>
+                        <Heading size={"md"}>
+                            현재 위시리스트에 담긴 스토어가 없습니다!
+                        </Heading>
+                    </VStack>
+                </Flex>
+            )}
         </ProtectedPage>
     );
 }

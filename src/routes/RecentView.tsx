@@ -38,6 +38,9 @@ export default function RecentView() {
         () => getRecentViews(page), // 페이지 번호 1로 초기 데이터를 가져옴
     );
 
+    const data_length =
+        data?.length === null ? 0 : Number(data?.length);
+
     const handleNextPage = () => {
         setPage((prevPage) => prevPage + 1); // 페이지 번호를 1 증가시킴
     };
@@ -76,71 +79,84 @@ export default function RecentView() {
                 </Heading>
             </Flex>
             <Flex mt={5} px={recent_grid_px} justifyContent="flex-start">
-                <Text size={"md"}>
-                    3일 이내 조회한 스토어만 표시됩니다.
-                </Text>
+                <Text size={"md"}>3일 이내 조회한 스토어만 표시됩니다.</Text>
             </Flex>
-            <VStack>
-                <Grid
-                    ref={recent_gridRef}
-                    w="100%"
-                    mt={10}
-                    mb={20}
-                    px={recent_grid_px}
-                    pt={10}
-                    columnGap={recent_grid_column_gap}
-                    rowGap={20}
-                    templateColumns={recent_grid_template_column}
-                    style={{ gridAutoRows: "auto", overflow: "hidden" }}
-                >
-                    {isLoading &&
-                        Array.from({ length: 9 }).map((_, index) => (
-                            <StoreSkeleton key={index} />
+            {data_length > 0 ? (
+                <VStack>
+                    <Grid
+                        ref={recent_gridRef}
+                        w="100%"
+                        mt={10}
+                        mb={20}
+                        px={recent_grid_px}
+                        pt={10}
+                        columnGap={recent_grid_column_gap}
+                        rowGap={20}
+                        templateColumns={recent_grid_template_column}
+                        style={{ gridAutoRows: "auto", overflow: "hidden" }}
+                    >
+                        {isLoading &&
+                            Array.from({ length: 9 }).map((_, index) => (
+                                <StoreSkeleton key={index} />
+                            ))}
+                        {data?.map((store) => (
+                            <Store
+                                key={store.id}
+                                pk={store.pk}
+                                thumbnail={store.thumbnail}
+                                p_name={store.p_name}
+                                rating={store.rating}
+                                p_location={store.p_location}
+                                p_hashtag={store.p_hashtag}
+                                p_startdate={store.p_startdate}
+                                p_enddate={store.p_enddate}
+                                status={store.status}
+                                is_liked={store.is_liked}
+                            />
                         ))}
-                    {data?.map((store) => (
-                        <Store
-                            key={store.id}
-                            pk={store.pk}
-                            thumbnail={store.thumbnail}
-                            p_name={store.p_name}
-                            rating={store.rating}
-                            p_location={store.p_location}
-                            p_hashtag={store.p_hashtag}
-                            p_startdate={store.p_startdate}
-                            p_enddate={store.p_enddate}
-                            status={store.status}
-                            is_liked={store.is_liked}
-                        />
-                    ))}
-                </Grid>
-                <Stack direction="row" spacing={4} mb={30}>
-                    <Button
-                        onClick={handle1stPage}
-                        leftIcon={<FaHome />}
-                        colorScheme="pink"
-                        variant="outline"
-                    >
-                        Home
-                    </Button>
-                    <Button
-                        onClick={handlePreviousPage}
-                        leftIcon={<ArrowBackIcon />}
-                        colorScheme="pink"
-                        variant="outline"
-                        display={page === 1 ? "none" : "block"} // 페이지가 1일 때는 버튼을 숨김
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        onClick={handleNextPage}
-                        rightIcon={<ArrowForwardIcon />}
-                        colorScheme="pink"
-                        variant="solid"
-                    >
-                        Next
-                    </Button>
-                </Stack>
-            </VStack>
+                    </Grid>
+                    <Stack direction="row" spacing={4} mb={30}>
+                        <Button
+                            onClick={handle1stPage}
+                            leftIcon={<FaHome />}
+                            colorScheme="pink"
+                            variant="outline"
+                        >
+                            Home
+                        </Button>
+                        <Button
+                            onClick={handlePreviousPage}
+                            leftIcon={<ArrowBackIcon />}
+                            colorScheme="pink"
+                            variant="outline"
+                            display={page === 1 ? "none" : "block"} // 페이지가 1일 때는 버튼을 숨김
+                        >
+                            Previous
+                        </Button>
+                        <Button
+                            onClick={handleNextPage}
+                            rightIcon={<ArrowForwardIcon />}
+                            colorScheme="pink"
+                            variant="solid"
+                        >
+                            Next
+                        </Button>
+                    </Stack>
+                </VStack>
+            ) : (
+                <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    w={"100%"}
+                    h={"70vh"}
+                >
+                    <VStack>
+                        <Heading size={"md"}>
+                            최근 조회한 스토어가 없습니다!
+                        </Heading>
+                    </VStack>
+                </Flex>
+            )}
         </ProtectedPage>
     );
 }
