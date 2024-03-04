@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/kim-edwin/repopoppin-frontend/static/js/main.f542292e.js",
+    "main.js": "/kim-edwin/repopoppin-frontend/static/js/main.5c3b72be.js",
     "static/media/poppin_logo.png": "/kim-edwin/repopoppin-frontend/static/media/poppin_logo.46ee95bf16ea3b0f5dd1.png",
     "index.html": "/kim-edwin/repopoppin-frontend/index.html",
-    "main.f542292e.js.map": "/kim-edwin/repopoppin-frontend/static/js/main.f542292e.js.map"
+    "main.5c3b72be.js.map": "/kim-edwin/repopoppin-frontend/static/js/main.5c3b72be.js.map"
   },
   "entrypoints": [
-    "static/js/main.f542292e.js"
+    "static/js/main.5c3b72be.js"
   ]
 }
