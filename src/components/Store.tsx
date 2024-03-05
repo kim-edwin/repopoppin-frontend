@@ -51,13 +51,13 @@ export default function Store({
         }
     };
     const { bg, color } = getBadgeStyle();
-    const button_top = useBreakpointValue({ base: 4, md : 6 });
+    const button_top = useBreakpointValue({ base: 4, md: 6 });
     const button_right = useBreakpointValue({ base: 4, md: 6 });
     const heart_size = useBreakpointValue({ base: "25px", md: "30px" });
     const badge_top = useBreakpointValue({ base: 6, md: 8 });
     const badge_left = useBreakpointValue({ base: 7, md: 8 });
     const badge_fontsize = useBreakpointValue({ base: "sm", md: "md" });
-    
+
     return (
         <Link to={`/stores/${pk}`}>
             <VStack spacing={1} alignItems={"flex-start"}>
@@ -115,8 +115,9 @@ export default function Store({
                 <Box>
                     <Text fontSize={"sm"} color={gray}>
                         <Text as="b">
-                            {p_startdate.toLocaleString()} ~{" "}
-                            {p_enddate.toLocaleString()}
+                            {p_startdate && p_enddate
+                                ? `${p_startdate.toLocaleString()} ~ ${p_enddate.toLocaleString()}`
+                                : "Invalid Date"}
                         </Text>
                     </Text>
                     <Text fontSize={"sm"} color={gray}>
