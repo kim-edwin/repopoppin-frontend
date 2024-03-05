@@ -3,8 +3,6 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const instance = axios.create({
-    // baseURL: "http://127.0.0.1:8000/api/v1/",
-    // baseURL: "https://13.209.106.73:8000/api/v1/",
     baseURL: "https://api.api-poppin.com/api/v1",
     withCredentials: true,
 });
