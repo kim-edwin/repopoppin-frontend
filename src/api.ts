@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const instance = axios.create({
-    baseURL: "https://backend.pop-pin.store/api/v1",
+    baseURL: "https://api.api-poppin.com/api/v1",
     withCredentials: true,
 });
 
