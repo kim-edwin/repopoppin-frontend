@@ -43,6 +43,8 @@ export default function Threeicons() {
         onClose: onPopClose,
     } = useDisclosure();
 
+    const btnRef = useRef<HTMLButtonElement>(null);
+
     const toast = useToast();
 
     const copyUrlToClipboard = () => {
@@ -56,6 +58,7 @@ export default function Threeicons() {
     const heart_size = useBreakpointValue({ base: 20, md: 30 });
     const share_size = useBreakpointValue({ base: 20, md: 30 });
     const siren_size = useBreakpointValue({ base: 25, md: 35 });
+    const buttonColor = useColorModeValue("black", "white");
 
     return (
         <>
@@ -63,8 +66,15 @@ export default function Threeicons() {
                 <Box>
                     <Popover>
                         <PopoverTrigger>
-                            <Button style={{ padding: "0" }}>
-                                <FaHeart size={heart_size} />
+                            <Button
+                                ref={btnRef}
+                                colorScheme="white"
+                                style={{ padding: "0" }}
+                            >
+                                <FaHeart
+                                    size={heart_size}
+                                    color={buttonColor}
+                                />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent>
@@ -72,7 +82,8 @@ export default function Threeicons() {
                             <PopoverCloseButton />
                             <PopoverHeader>로그인 해주세요!</PopoverHeader>
                             <PopoverBody>
-                                위시리스트에 담고 내게 맞는 팝업스토어를 추천받아보세요!
+                                위시리스트에 담고 내게 맞는 팝업스토어를
+                                추천받아보세요!
                             </PopoverBody>
                         </PopoverContent>
                     </Popover>
@@ -130,8 +141,16 @@ export default function Threeicons() {
                 <Box mb={1}>
                     <Popover>
                         <PopoverTrigger>
-                            <Button style={{ padding: "0" }}>
-                                <LuSiren size={siren_size} />
+                            <Button
+                                style={{
+                                    backgroundColor: "transparent",
+                                    boxShadow: "none",
+                                }}
+                            >
+                                <LuSiren
+                                    size={siren_size}
+                                    color="buttonColor"
+                                />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent>
