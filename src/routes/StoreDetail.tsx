@@ -27,6 +27,8 @@ import { MdCheckCircle } from "react-icons/md";
 import KakaoMap from "../components/KakaoMap";
 import ReviewModal from "../components/ReviewModal";
 import Threeicons from "../components/Threeicons";
+import useUser from "../lib/useUser";
+import FakeIcons from "../components/Fakeicons";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
@@ -39,6 +41,7 @@ export default function StoreDetail() {
         [`stores`, storePk, `reviews`],
         getStoreReviews,
     );
+    const { userLoading, isLoggedIn, user } = useUser();
 
     const reloadStoreData = async () => {
         await refetchStore();
@@ -74,8 +77,6 @@ export default function StoreDetail() {
     const map_width = useBreakpointValue({ base: 80, lg: 500 }) || 80;
     const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
 
-    console.log({data})
-
     return (
         <Box mt={10} px={{ base: "20px", lg: "300px" }}>
             <Box
@@ -97,7 +98,15 @@ export default function StoreDetail() {
                     </AspectRatio>
                 </Box>
                 <VStack alignItems="flex-end">
-                    <Threeicons data={data} reloadStoreData={reloadStoreData} />
+                    {isLoggedIn ? (
+                        <Threeicons
+                            data={data}
+                            reloadStoreData={reloadStoreData}
+                        />
+                    ) : (
+                        <FakeIcons />
+                    )}
+
                     <Box
                         flex={{ base: "none", lg: 1 }}
                         ml={{ base: 0, lg: 10 }}
