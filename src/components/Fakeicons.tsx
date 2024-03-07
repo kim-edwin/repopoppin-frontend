@@ -72,7 +72,7 @@ export default function Threeicons() {
                             <PopoverCloseButton />
                             <PopoverHeader>로그인 해주세요!</PopoverHeader>
                             <PopoverBody>
-                                Are you sure you want to have that milkshake?
+                                위시리스트에 담고 내게 맞는 팝업스토어를 추천받아보세요!
                             </PopoverBody>
                         </PopoverContent>
                     </Popover>
