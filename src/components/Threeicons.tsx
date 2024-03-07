@@ -116,7 +116,7 @@ export default function Threeicons({
     return (
         <ProtectedPage>
             <HStack h={main_h} mr={main_mr} gap={0}>
-                <Box>
+                {/* <Box>
                     <Button
                         ref={btnRef}
                         colorScheme="white"
@@ -128,7 +128,7 @@ export default function Threeicons({
                             color={storeData?.is_liked ? "red" : buttonColor}
                         />
                     </Button>
-                </Box>
+                </Box> */}
 
                 <Box ml={2}>
                     <Popover

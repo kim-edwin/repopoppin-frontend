@@ -4,7 +4,7 @@ import { FaComment, FaGithub } from "react-icons/fa";
 export default function SocialLogin() {
     let kakaoParams = {
         client_id: "d166f87c9d3f4176d1b79841064ba8d4",
-        redirect_uri: "http://pop-pin.store/social/kakao",
+        redirect_uri: "https://pop-pin.store/social/kakao",
         response_type: "code",
     };
     const githubParams = {
