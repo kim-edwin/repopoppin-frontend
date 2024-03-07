@@ -97,7 +97,7 @@ export default function StoreDetail() {
                     </AspectRatio>
                 </Box>
                 <VStack alignItems="flex-end">
-                    <Threeicons data={data} reloadStoreData={reloadStoreData} />
+                    {/* <Threeicons data={data} reloadStoreData={reloadStoreData} /> */}
                     <Box
                         flex={{ base: "none", lg: 1 }}
                         ml={{ base: 0, lg: 10 }}
