@@ -42,6 +42,10 @@ const router = createBrowserRouter([
                 path: "recentview",
                 element: <RecentView />,
             },
+            // {
+            //     path: "search",
+            //     element: <RecentView />,
+            // },
         ],
     },
 ]);

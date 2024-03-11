@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { Search2Icon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IoCloseCircle } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { getSearch } from "../api";
 
 interface SearchModalProps {
     isOpen: boolean;
@@ -31,10 +33,13 @@ const SearchModal: React.FC<SearchModalProps> = ({
     onClose,
 }) => {
     const [keyword, setKeyword] = useState("");
-    const [region1, setRegion1] = useState("");
-    const [region2, setRegion2] = useState("");
+    const [upperAddrName, setupperAddrName] = useState("");
+    const [middleAddrName, setmiddleAddrName] = useState("");
     const [searchDate, setSearchDate] = useState("");
-    const [region2Options, setRegion2Options] = useState<string[]>([]);
+    const [middleAddrNameOptions, setmiddleAddrNameOptions] = useState<
+        string[]
+    >([]);
+    const navigate = useNavigate();
 
     const handleKeywordChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -42,29 +47,44 @@ const SearchModal: React.FC<SearchModalProps> = ({
         setKeyword(event.target.value);
     };
 
-    const handleRegion1Change = (
+    const handleupperAddrNameChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        const selectedRegion1 = event.target.value;
-        setRegion1(selectedRegion1);
+        const selectedupperAddrName = event.target.value;
+        setupperAddrName(selectedupperAddrName);
 
-        // Reset region2 when region1 changes
-        setRegion2("");
-        // Update region2 options based on selected region1
-        const region2OptionsForRegion1 = regions[selectedRegion1] || [];
-        setRegion2Options(region2OptionsForRegion1);
+        // Reset middleAddrName when upperAddrName changes
+        setmiddleAddrName("");
+        // Update middleAddrName options based on selected upperAddrName
+        const middleAddrNameOptionsForupperAddrName =
+            regions[selectedupperAddrName] || [];
+        setmiddleAddrNameOptions(middleAddrNameOptionsForupperAddrName);
     };
 
-    const handleRegion2Change = (
+    const handlemiddleAddrNameChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        setRegion2(event.target.value);
+        setmiddleAddrName(event.target.value);
     };
 
     const handleSearchDateChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setSearchDate(event.target.value);
+    };
+
+    const handleClearInput = () => {
+        setKeyword("");
+    };
+
+    const handleSearch = () => {
+        // Call API to perform search
+        getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1).then(
+            (data) => {
+                // Log the search results to the console
+                console.log(data);
+            },
+        );
     };
 
     return (
@@ -87,7 +107,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                                 placeholder="검색어를 입력하세요."
                             />
                             <InputRightElement>
-                                <SmallCloseIcon />
+                                <SmallCloseIcon onClick={handleClearInput} />
                             </InputRightElement>
                         </InputGroup>
                         <Heading size="sm" mb={"10px"}>
@@ -105,33 +125,41 @@ const SearchModal: React.FC<SearchModalProps> = ({
                         </Heading>
                         <Select
                             mb={"5px"}
-                            value={region1}
-                            onChange={handleRegion1Change}
+                            value={upperAddrName}
+                            onChange={handleupperAddrNameChange}
                             placeholder="지역을 선택하세요."
                         >
-                            {Object.keys(regions).map((region1) => (
-                                <option key={region1} value={region1}>
-                                    {region1}
+                            {Object.keys(regions).map((upperAddrName) => (
+                                <option
+                                    key={upperAddrName}
+                                    value={upperAddrName}
+                                >
+                                    {upperAddrName}
                                 </option>
                             ))}
                         </Select>
-                        {region1 && ( // Render region2 select only if region1 is selected
+                        {upperAddrName && ( // Render middleAddrName select only if upperAddrName is selected
                             <Select
                                 mb={"10px"}
-                                value={region2}
-                                onChange={handleRegion2Change}
+                                value={middleAddrName}
+                                onChange={handlemiddleAddrNameChange}
                                 placeholder="세부지역을 선택하세요."
-                                disabled={!region1}
+                                disabled={!upperAddrName}
                             >
-                                {region2Options.map((region2Option, index) => (
-                                    <option key={index} value={region2Option}>
-                                        {region2Option}
-                                    </option>
-                                ))}
+                                {middleAddrNameOptions.map(
+                                    (middleAddrNameOption, index) => (
+                                        <option
+                                            key={index}
+                                            value={middleAddrNameOption}
+                                        >
+                                            {middleAddrNameOption}
+                                        </option>
+                                    ),
+                                )}
                             </Select>
                         )}
                         <Flex justifyContent="flex-end">
-                            <Button colorScheme="pink">
+                            <Button colorScheme="pink" onClick={handleSearch}>
                                 검색
                             </Button>
                         </Flex>

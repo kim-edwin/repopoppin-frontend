@@ -198,15 +198,23 @@ export const getSearch = (
     middleAddrName: string,
     searchDate: string,
     page: number,
-) =>
-    instance
-        .get(`stores/search`, {
-            params: {
-                keyword,
-                upperAddrName,
-                middleAddrName,
-                searchDate,
-                page,
-            },
-        })
+) => {
+    const params: Record<string, string | number> = {
+        keyword,
+        page,
+    };
+
+    if (upperAddrName !== "") {
+        params.upperAddrName = upperAddrName;
+    }
+    if (middleAddrName !== "") {
+        params.middleAddrName = middleAddrName;
+    }
+    if (searchDate !== "") {
+        params.searchDate = searchDate;
+    }
+
+    return instance
+        .get(`stores/search`, { params })
         .then((response) => response.data);
+};
