@@ -52,18 +52,18 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             await refetch();
-            // 페이지가 변경될 때마다 Grid의 시작점으로 자동 스크롤
-            if (gridRef.current) {
-                gridRef.current.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            }
         };
 
         fetchData();
-        console.log("page num: " + page);
-    }, [page, gridRef.current]);
+
+        // 페이지가 변경될 때마다 Grid의 시작점으로 자동 스크롤
+        if (gridRef.current && page !== 1) {
+            gridRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    }, [page]);
 
     const grid_template_column = useBreakpointValue({
         base: "1fr",
@@ -74,7 +74,6 @@ export default function Home() {
 
     return (
         <VStack>
-            <Autocomplete />
             <Grid
                 ref={gridRef}
                 w="100%"

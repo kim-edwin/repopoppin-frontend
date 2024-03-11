@@ -3,7 +3,8 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const instance = axios.create({
-    baseURL: "https://backend.pop-pin.store/api/v1",
+    baseURL: "http://127.0.0.1:8000/api/v1",
+    // baseURL: "https://backend.pop-pin.store/api/v1",
     withCredentials: true,
 });
 
@@ -131,16 +132,6 @@ export const deleteReview = (reviewPk: number) => {
     });
 };
 
-// export const getWishlists = () =>
-//     instance.get(`wishlists/`).then((response) => response.data);
-
-// export const getWishlist = ({ queryKey }: QueryFunctionContext) => {
-//     const [_, wishlistPk] = queryKey;
-//     return instance
-//         .get(`wishlists/${wishlistPk}`)
-//         .then((response) => response.data);
-// };
-
 export const getWishlist = () =>
     instance.get(`wishlists/`).then((response) => response.data);
 
@@ -200,3 +191,22 @@ export const postReport = ({ payload, storePk }: IpostReportVariables) =>
 
 export const getRecentViews = (page: number) =>
     instance.get(`recentviews/?page=${page}`).then((response) => response.data);
+
+export const getSearch = (
+    keyword: string,
+    upperAddrName: string,
+    middleAddrName: string,
+    searchDate: string,
+    page: number,
+) =>
+    instance
+        .get(`stores/search`, {
+            params: {
+                keyword,
+                upperAddrName,
+                middleAddrName,
+                searchDate,
+                page,
+            },
+        })
+        .then((response) => response.data);

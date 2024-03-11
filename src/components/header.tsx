@@ -27,7 +27,8 @@ import { Link } from "react-router-dom";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import SearchModal from "./SearchModal";
 
 export default function Header() {
     const { userLoading, isLoggedIn, user } = useUser();
@@ -41,6 +42,15 @@ export default function Header() {
         onClose: onSignUpClose,
         onOpen: onSignUpOpen,
     } = useDisclosure();
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달의 열림 상태
+
+    const openSearchModal = () => {
+        setIsSearchModalOpen(true);
+    };
+
+    const closeSearchModal = () => {
+        setIsSearchModalOpen(false);
+    };
     const { toggleColorMode } = useColorMode();
     const Icon = useColorModeValue(FaMoon, FaSun);
     const toast = useToast();
@@ -89,6 +99,11 @@ export default function Header() {
                 />
             </Link>
             <HStack spacing={2}>
+                <SearchModal
+                    isOpen={isSearchModalOpen}
+                    onOpen={openSearchModal}
+                    onClose={closeSearchModal}
+                />
                 <IconButton
                     onClick={toggleColorMode}
                     variant="ghost"
@@ -98,10 +113,23 @@ export default function Header() {
                 {!userLoading ? (
                     !isLoggedIn ? (
                         <>
-                            <Button onClick={onLoginOpen}>Log in</Button>
-                            <Button onClick={onSignUpOpen} colorScheme="pink">
-                                Sign up
-                            </Button>
+                            <Menu>
+                                <MenuButton>
+                                    <Avatar size={avatar_size} />
+                                </MenuButton>
+                                <MenuList alignSelf={"right"} minWidth="100px">
+                                    <MenuItem>
+                                        <Text onClick={onLoginOpen}>
+                                            로그인
+                                        </Text>
+                                    </MenuItem>
+                                    <MenuItem bg="pink">
+                                        <Text onClick={onSignUpOpen}>
+                                            회원가입
+                                        </Text>
+                                    </MenuItem>
+                                </MenuList>
+                            </Menu>
                         </>
                     ) : (
                         <Menu>
