@@ -91,13 +91,13 @@ export default function WishlistDetail() {
                                     pk={store.pk}
                                     thumbnail={store.thumbnail}
                                     p_name={store.p_name}
-                                    rating={store.rating}
+                                    // rating={store.rating}
                                     p_location={store.p_location}
                                     p_hashtag={store.p_hashtag}
                                     p_startdate={store.p_startdate}
                                     p_enddate={store.p_enddate}
                                     status={store.status}
-                                    is_liked={store.is_liked}
+                                    // is_liked={store.is_liked}
                                 />
                             ))}
                     </Grid>
