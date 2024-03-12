@@ -18,26 +18,26 @@ interface StoreProps {
     pk: number;
     thumbnail: string;
     p_name: string;
-    rating: number;
+    // rating: number;
     p_location: string;
     p_hashtag: string;
     p_startdate: Date;
     p_enddate: Date;
     status: string;
-    is_liked: boolean;
+    // is_liked: boolean;
 }
 
 export default function Store({
     pk,
     thumbnail,
     p_name,
-    rating,
+    // rating,
     p_location,
     p_hashtag,
     p_startdate,
     p_enddate,
     status,
-    is_liked,
+    // is_liked,
 }: StoreProps) {
     const gray = useColorModeValue("gray.600", "gray.300");
     const getBadgeStyle = () => {
@@ -71,7 +71,7 @@ export default function Store({
                         <AspectRatio ratio={4 / 3}>
                             <Image src={thumbnail} objectFit="cover" />
                         </AspectRatio>
-                        <Button
+                        {/* <Button
                             variant={"unstyled"}
                             cursor={"pointer"}
                             position={"absolute"}
@@ -80,7 +80,7 @@ export default function Store({
                             color={is_liked ? "red" : "gray"}
                         >
                             <FaHeart size={heart_size} />
-                        </Button>
+                        </Button> */}
                         <Badge
                             position="absolute"
                             top={badge_top}
@@ -104,8 +104,8 @@ export default function Store({
                             spacing={1}
                             justifyContent="flex-end"
                         >
-                            <FaStar />
-                            <Text>{rating}</Text>
+                            {/* <FaStar />
+                            <Text>{rating}</Text> */}
                         </HStack>
                     </Grid>
                     <Text fontSize={"md"} color={gray}>
