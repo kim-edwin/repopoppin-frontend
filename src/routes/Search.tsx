@@ -15,7 +15,7 @@ import { getSearch } from "../api";
 
 const Search: React.FC = () => {
     const location = useLocation();
-    const { keyword, upperAddrName, middleAddrName, searchDate } =
+    const { keyword, upperAddrName, middleAddrName, searchDate, isEnd } =
         location.state || {};
     const [searchData, setSearchData] = useState<any[]>([]);
     const [page, setPage] = useState(1);
@@ -46,6 +46,7 @@ const Search: React.FC = () => {
                     middleAddrName,
                     searchDate,
                     page,
+                    isEnd,
                 );
                 setSearchData(data); // 검색 결과 데이터를 설정
             } catch (error) {

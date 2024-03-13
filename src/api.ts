@@ -198,10 +198,12 @@ export const getSearch = (
     middleAddrName: string,
     searchDate: string,
     page: number,
+    isEnd: boolean = true,
 ) => {
-    const params: Record<string, string | number> = {
+    const params: Record<string, string | number | boolean> = {
         keyword,
         page,
+        isEnd,
     };
 
     if (upperAddrName !== "") {

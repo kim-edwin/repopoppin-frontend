@@ -16,6 +16,9 @@ import {
     Flex,
     Button,
     IconButton,
+    FormControl,
+    FormLabel,
+    Switch,
 } from "@chakra-ui/react";
 import { RepeatIcon, Search2Icon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IoCloseCircle } from "react-icons/io5";
@@ -40,6 +43,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
     const [middleAddrNameOptions, setmiddleAddrNameOptions] = useState<
         string[]
     >([]);
+    const [isEnd, setIsEnd] = useState(true);
     const navigate = useNavigate();
 
     const handleKeywordChange = (
@@ -83,11 +87,16 @@ const SearchModal: React.FC<SearchModalProps> = ({
         setupperAddrName("");
         setmiddleAddrName("");
         setSearchDate("");
+        setIsEnd(true);
+    };
+
+    const handleSwitchChange = () => {
+        setIsEnd(!isEnd); // Switch 값 반전
     };
 
     const handleSearch = () => {
         // Call API to perform search
-        getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1).then(
+        getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1, isEnd).then(
             (data) => {
                 // Navigate to the search results page ("/search") with the search parameters
                 console.log({ data });
@@ -120,6 +129,22 @@ const SearchModal: React.FC<SearchModalProps> = ({
                                 <SmallCloseIcon onClick={handleClearInput} />
                             </InputRightElement>
                         </InputGroup>
+                        <Flex justifyContent="flex-end" mb={"5px"}>
+                            <FormControl
+                                display="flex"
+                                alignItems="center"
+                                ml="auto"
+                            >
+                                <FormLabel htmlFor="email-alerts" mb="0">
+                                    종료된 팝업스토어 숨기기
+                                </FormLabel>
+                                <Switch
+                                    id="is_end"
+                                    isChecked={isEnd}
+                                    onChange={handleSwitchChange}
+                                />
+                            </FormControl>
+                        </Flex>
                         <Heading size="sm" mb={"10px"}>
                             언제 방문하시나요?
                         </Heading>
