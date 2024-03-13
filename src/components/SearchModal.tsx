@@ -129,22 +129,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
                                 <SmallCloseIcon onClick={handleClearInput} />
                             </InputRightElement>
                         </InputGroup>
-                        <Flex justifyContent="flex-end" mb={"5px"}>
-                            <FormControl
-                                display="flex"
-                                alignItems="center"
-                                ml="auto"
-                            >
-                                <FormLabel htmlFor="email-alerts" mb="0">
-                                    종료된 팝업스토어 숨기기
-                                </FormLabel>
-                                <Switch
-                                    id="is_end"
-                                    isChecked={isEnd}
-                                    onChange={handleSwitchChange}
-                                />
-                            </FormControl>
-                        </Flex>
                         <Heading size="sm" mb={"10px"}>
                             언제 방문하시나요?
                         </Heading>
@@ -175,7 +159,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                         </Select>
                         {upperAddrName && ( // Render middleAddrName select only if upperAddrName is selected
                             <Select
-                                mb={"10px"}
+                                mb={"20px"}
                                 value={middleAddrName}
                                 onChange={handlemiddleAddrNameChange}
                                 placeholder="세부지역을 선택하세요."
@@ -193,6 +177,22 @@ const SearchModal: React.FC<SearchModalProps> = ({
                                 )}
                             </Select>
                         )}
+                        <Flex justifyContent="flex-end" mb={"15px"}>
+                            <FormControl
+                                display="flex"
+                                alignItems="center"
+                                ml="auto"
+                            >
+                                <FormLabel fontSize={"sm"} htmlFor="email-alerts" mb="0">
+                                    종료된 팝업스토어 숨기기
+                                </FormLabel>
+                                <Switch
+                                    id="is_end"
+                                    isChecked={isEnd}
+                                    onChange={handleSwitchChange}
+                                />
+                            </FormControl>
+                        </Flex>
                         <Flex justifyContent="flex-end">
                             <IconButton
                                 mr={"5px"}
