@@ -15,8 +15,9 @@ import {
     Divider,
     Flex,
     Button,
+    IconButton,
 } from "@chakra-ui/react";
-import { Search2Icon, SmallCloseIcon } from "@chakra-ui/icons";
+import { RepeatIcon, Search2Icon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IoCloseCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { getSearch } from "../api";
@@ -77,12 +78,21 @@ const SearchModal: React.FC<SearchModalProps> = ({
         setKeyword("");
     };
 
+    const handleReset = () => {
+        setKeyword("");
+        setupperAddrName("");
+        setmiddleAddrName("");
+        setSearchDate("");
+    };
+
     const handleSearch = () => {
         // Call API to perform search
         getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1).then(
             (data) => {
-                // Log the search results to the console
-                console.log(data);
+                // Navigate to the search results page ("/search") with the search parameters
+                console.log({ data });
+                onClose();
+                navigate("/search", { state: { searchData: data } });
             },
         );
     };
@@ -124,7 +134,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                             어디로 방문하시나요?
                         </Heading>
                         <Select
-                            mb={"5px"}
+                            mb={"10px"}
                             value={upperAddrName}
                             onChange={handleupperAddrNameChange}
                             placeholder="지역을 선택하세요."
@@ -159,6 +169,20 @@ const SearchModal: React.FC<SearchModalProps> = ({
                             </Select>
                         )}
                         <Flex justifyContent="flex-end">
+                            <IconButton
+                                mr={"5px"}
+                                colorScheme="gray"
+                                aria-label="reset"
+                                icon={<RepeatIcon />}
+                                onClick={handleReset}
+                            ></IconButton>
+                            <Button
+                                mr={"5px"}
+                                colorScheme="gray"
+                                onClick={onClose}
+                            >
+                                닫기
+                            </Button>
                             <Button colorScheme="pink" onClick={handleSearch}>
                                 검색
                             </Button>

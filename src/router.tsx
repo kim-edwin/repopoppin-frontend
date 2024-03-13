@@ -5,9 +5,9 @@ import NotFound from "./routes/NotFound";
 import StoreDetail from "./routes/StoreDetail";
 import GithubConfirm from "./routes/GithubConfirm";
 import KakaoConfirm from "./routes/KakaoConfirm";
-import Wishlists from "./routes/Wishlists";
 import WishlistDetail from "./routes/WishlistDetail";
 import RecentView from "./routes/RecentView";
+import Search from "./routes/Search";
 
 const router = createBrowserRouter([
     {
@@ -42,10 +42,10 @@ const router = createBrowserRouter([
                 path: "recentview",
                 element: <RecentView />,
             },
-            // {
-            //     path: "search",
-            //     element: <RecentView />,
-            // },
+            {
+                path: "search",
+                element: <Search />,
+            },
         ],
     },
 ]);
