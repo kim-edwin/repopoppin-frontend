@@ -99,9 +99,17 @@ const SearchModal: React.FC<SearchModalProps> = ({
         getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1, isEnd).then(
             (data) => {
                 // Navigate to the search results page ("/search") with the search parameters
-                console.log({ data });
                 onClose();
-                navigate("/search", { state: { searchData: data } });
+                navigate("/search", {
+                    state: {
+                        searchData: data,
+                        keyword,
+                        upperAddrName,
+                        middleAddrName,
+                        searchDate,
+                        isEnd,
+                    },
+                });
             },
         );
     };

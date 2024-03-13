@@ -15,6 +15,7 @@ import { getSearch } from "../api";
 
 const Search: React.FC = () => {
     const location = useLocation();
+    console.log(location.state)
     const { keyword, upperAddrName, middleAddrName, searchDate, isEnd } =
         location.state || {};
     const [searchData, setSearchData] = useState<any[]>([]);
@@ -36,27 +37,30 @@ const Search: React.FC = () => {
     }, [location.state]);
 
     useEffect(() => {
-        // 검색 결과 데이터를 가져오는 함수
-        const fetchSearchData = async () => {
-            setIsLoading(true); // 로딩 상태를 true로 변경
-            try {
-                const data = await getSearch(
-                    keyword,
-                    upperAddrName,
-                    middleAddrName,
-                    searchDate,
-                    page,
-                    isEnd,
-                );
-                setSearchData(data); // 검색 결과 데이터를 설정
-            } catch (error) {
-                console.error("Error fetching search data:", error);
-            } finally {
-                setIsLoading(false); // 로딩 상태를 false로 변경
-            }
-        };
+        // 최초 렌더링 시에는 검색 데이터를 가져오지 않음
+        if (page !== 1) {
+            // 검색 결과 데이터를 가져오는 함수
+            const fetchSearchData = async () => {
+                setIsLoading(true); // 로딩 상태를 true로 변경
+                try {
+                    const data = await getSearch(
+                        keyword,
+                        upperAddrName,
+                        middleAddrName,
+                        searchDate,
+                        page,
+                        isEnd,
+                    );
+                    setSearchData(data); // 검색 결과 데이터를 설정
+                } catch (error) {
+                    console.error("Error fetching search data:", error);
+                } finally {
+                    setIsLoading(false); // 로딩 상태를 false로 변경
+                }
+            };
 
-        fetchSearchData(); // 검색 결과 데이터를 가져오는 함수 호출
+            fetchSearchData(); // 검색 결과 데이터를 가져오는 함수 호출
+        }
     }, [keyword, upperAddrName, middleAddrName, searchDate, page]);
 
     const gridRef = useRef<HTMLDivElement | null>(null); // Grid의 ref 추가
@@ -150,6 +154,7 @@ const Search: React.FC = () => {
                     rightIcon={<ArrowForwardIcon />}
                     colorScheme="pink"
                     variant="solid"
+                    display={searchData.length < 9 ? "none" : "block"}
                 >
                     Next
                 </Button>
