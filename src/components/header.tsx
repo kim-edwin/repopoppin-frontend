@@ -96,6 +96,7 @@ export default function Header() {
                     alt="Custom Logo"
                     width={logoSize}
                     mt={1}
+                    mr={"10px"}
                 />
             </Link>
             <HStack spacing={2}>

@@ -117,7 +117,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
     return (
         <>
             <Input
-                width={{ base: "250px" }}
+                width={{ base: "100%" }}
                 onClick={onOpen}
                 placeholder="팝업스토어 검색"
             />
