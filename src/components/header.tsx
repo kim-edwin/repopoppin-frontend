@@ -1,3 +1,4 @@
+import React, { useState, useRef, useEffect } from "react";
 import {
     Avatar,
     Box,
@@ -13,6 +14,7 @@ import {
     Stack,
     Text,
     ToastId,
+    Tooltip,
     useBreakpointValue,
     useColorMode,
     useColorModeValue,
@@ -20,14 +22,13 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
-import customLogo from "../sources/poppin_logo.png";
+import customLogo from "../sources/poppin_logo2.png";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignUpModal";
 import { Link } from "react-router-dom";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
 import SearchModal from "./SearchModal";
 
 export default function Header() {
@@ -80,9 +81,36 @@ export default function Header() {
         mutation.mutate();
     };
 
-    const logoSize = useBreakpointValue({ base: "30px", md: "40px" });
+    const [isOpen, setIsOpen] = useState(true);
+
+    useEffect(() => {
+        const handleDocumentClick = (event: MouseEvent) => {
+            if (!(event.target instanceof HTMLElement)) return;
+            if (!event.target.closest(".avatar-tooltip")) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener("click", handleDocumentClick);
+        }
+
+        return () => {
+            document.removeEventListener("click", handleDocumentClick);
+        };
+    }, [isOpen]);
+    const handleTooltipClose = () => {
+        setIsOpen(false);
+    };
+
+    const handleAvatarClick = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const logoSize = useBreakpointValue({ base: "45px", md: "40px" });
     const header_px = useBreakpointValue({ base: "20px", md: "300px" });
     const avatar_size = useBreakpointValue({ base: "sm", md: "md" });
+
     return (
         <Flex
             justifyContent="space-between"
@@ -96,7 +124,7 @@ export default function Header() {
                     alt="Custom Logo"
                     width={logoSize}
                     mt={1}
-                    mr={"10px"}
+                    // mr={"10px"}
                 />
             </Link>
             <HStack spacing={2}>
@@ -116,9 +144,28 @@ export default function Header() {
                         <>
                             <Menu>
                                 <MenuButton>
-                                    <Avatar size={avatar_size} />
+                                    <Tooltip
+                                        isOpen={isOpen}
+                                        hasArrow
+                                        label={
+                                            <Stack mt={"1px"} gap={"0"}>
+                                                <Text>회원가입하고 </Text>
+                                                <Text>
+                                                    팝업스토어 추천받기 📌
+                                                </Text>
+                                            </Stack>
+                                        }
+                                        placement="bottom-end"
+                                        onClose={handleTooltipClose}
+                                        className="avatar-tooltip" // 추가된 부분
+                                    >
+                                        <Avatar
+                                            size={avatar_size}
+                                            onClick={handleAvatarClick}
+                                        />
+                                    </Tooltip>
                                 </MenuButton>
-                                <MenuList alignSelf={"right"} minWidth="100px">
+                                <MenuList alignSelf={"right"} minWidth="100px" zIndex={9999}>
                                     <MenuItem>
                                         <Text onClick={onLoginOpen}>
                                             로그인

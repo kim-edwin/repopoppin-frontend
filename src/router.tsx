@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Home />,
+                element: <NewHome />,
             },
             {
                 path: "stores/:storePk",

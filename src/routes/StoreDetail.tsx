@@ -225,7 +225,7 @@ export default function StoreDetail() {
             <Heading size={"md"} mb={"40px"}>
                 이런 팝업스토어는 어떠세요?
             </Heading>
-            <Box mb={"40px"}>
+            <Box mb={"80px"}>
                 <Swiper
                     pagination={true}
                     // modules={[Pagination]}

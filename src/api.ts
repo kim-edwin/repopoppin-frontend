@@ -25,7 +25,9 @@ export const getStoreReviews = ({ queryKey }: QueryFunctionContext) => {
 
 export const getStoreSim = ({ queryKey }: QueryFunctionContext) => {
     const [_, storePk] = queryKey;
-    return instance.get(`stores/${storePk}/sim`).then((response) => response.data);
+    return instance
+        .get(`stores/${storePk}/sim`)
+        .then((response) => response.data);
 };
 
 //로그인 및 로그아웃 시 필요한 api
