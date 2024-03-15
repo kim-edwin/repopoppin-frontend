@@ -23,6 +23,11 @@ export const getStoreReviews = ({ queryKey }: QueryFunctionContext) => {
         .then((response) => response.data);
 };
 
+export const getStoreSim = ({ queryKey }: QueryFunctionContext) => {
+    const [_, storePk] = queryKey;
+    return instance.get(`stores/${storePk}/sim`).then((response) => response.data);
+};
+
 //로그인 및 로그아웃 시 필요한 api
 export const getMe = () =>
     instance.get(`users/me`).then((response) => response.data);

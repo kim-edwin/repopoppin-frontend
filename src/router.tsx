@@ -8,6 +8,7 @@ import KakaoConfirm from "./routes/KakaoConfirm";
 import WishlistDetail from "./routes/WishlistDetail";
 import RecentView from "./routes/RecentView";
 import Search from "./routes/Search";
+import NewHome from "./routes/NewHome";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "search",
                 element: <Search />,
+            },
+            {
+                path: "new",
+                element: <NewHome />,
             },
         ],
     },

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getStore, getStoreReviews } from "../api";
+import { getStore, getStoreReviews, getStoreSim } from "../api";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
     AspectRatio,
     Box,
@@ -29,22 +30,28 @@ import ReviewModal from "../components/ReviewModal";
 import Threeicons from "../components/Threeicons";
 import useUser from "../lib/useUser";
 import FakeIcons from "../components/Fakeicons";
+import SwipeStore from "../components/SwipeStore";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
     const {
         isLoading,
         data,
-        refetch: refetchStore,
+        refetch,
     } = useQuery<IStoreDetail>([`stores`, storePk], getStore);
     const { data: reviewsData, refetch: refetchReview } = useQuery<IReview[]>(
         [`stores`, storePk, `reviews`],
         getStoreReviews,
     );
+    const {
+        isLoading:simLoading,
+        data:simData,
+        refetch: refetchSim,
+    } = useQuery<IStore[]>([`stores`, storePk, `sim`], getStoreSim);
     const { userLoading, isLoggedIn, user } = useUser();
 
     const reloadStoreData = async () => {
-        await refetchStore();
+        await refetch();
         console.log("다시 불러옴 !");
     };
     const reloadReviewsData = async () => {
@@ -74,7 +81,7 @@ export default function StoreDetail() {
     }
 
     const renderMapInsideTab = useBreakpointValue({ base: false, lg: true });
-    const map_width = useBreakpointValue({ base: 80, lg: 500 }) || 80;
+    const map_width =  useBreakpointValue({ base: 80, lg: 500 }) || 80;
     const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
 
     return (
@@ -124,11 +131,11 @@ export default function StoreDetail() {
             </Box>
             <Skeleton
                 height={{ base: 10, lg: 43 }}
-                mb={{ base: "None", lg: "3" }}
+                mb={{ base: "7", lg: "3" }}
                 width="75%"
                 isLoaded={!isLoading}
             >
-                <Heading fontSize={{ base: "2xl", lg: "4xl" }}>
+                <Heading  fontSize={{ base: "2xl", lg: "4xl" }}>
                     {data?.p_name}
                 </Heading>
             </Skeleton>
@@ -194,7 +201,7 @@ export default function StoreDetail() {
                                     </HStack>
                                 </ListItem>
                             </List>
-                            {data && !renderMapInsideTab && (
+                            {data?.frontLat !== undefined && !renderMapInsideTab && (
                                 <KakaoMap
                                     frontLat={data?.frontLat}
                                     frontLon={data?.frontLon}
@@ -215,6 +222,35 @@ export default function StoreDetail() {
                     <TabPanel></TabPanel>
                 </TabPanels>
             </Tabs>
+            <Heading size={"md"} mb={"40px"}>
+                이런 팝업스토어는 어떠세요?
+            </Heading>
+            <Box mb={"40px"}>
+                <Swiper
+                    pagination={true}
+                    // modules={[Pagination]}
+                    className="mySwiper"
+                >
+                    {Array.isArray(simData) &&
+                        simData?.map((store) => (
+                            <SwiperSlide>
+                                <SwipeStore
+                                    key={store.id}
+                                    pk={store.pk}
+                                    thumbnail={store.thumbnail}
+                                    p_name={store.p_name}
+                                    // rating={store.rating}
+                                    p_location={store.p_location}
+                                    p_hashtag={store.p_hashtag}
+                                    p_startdate={store.p_startdate}
+                                    p_enddate={store.p_enddate}
+                                    status={store.status}
+                                    // is_liked={store.is_liked}
+                                />
+                            </SwiperSlide>
+                        ))}
+                </Swiper>
+            </Box>
         </Box>
     );
 }

@@ -27,7 +27,7 @@ interface StoreProps {
     // is_liked: boolean;
 }
 
-export default function Store({
+export default function SwipeStore({
     pk,
     thumbnail,
     p_name,
@@ -63,7 +63,7 @@ StoreProps) {
             <VStack spacing={1} alignItems={"flex-start"}>
                 <Box w="100%" height="100%">
                     <Box
-                        position={"relative"}
+                        // position={"relative"}
                         overflow="hidden"
                         mb={2}
                         rounded="3xl"
