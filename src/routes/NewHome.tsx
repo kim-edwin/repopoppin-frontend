@@ -12,6 +12,7 @@ import {
     useBreakpointValue,
     Image,
     Text,
+    Button,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getTopStores } from "../api";
@@ -37,9 +38,12 @@ export default function NewHome() {
     const [userLocation, setUserLocation] = useState<{
         latitude: number;
         longitude: number;
-    } | null>(null);
+    }>({
+        latitude: 37.498095,
+        longitude: 127.02761,
+    });
 
-    useEffect(() => {
+    const handleGetUserLocation = () => {
         const options = {
             enableHighAccuracy: true,
             timeout: 5000,
@@ -56,14 +60,11 @@ export default function NewHome() {
 
         const error = (err: GeolocationPositionError) => {
             console.warn(`ERROR(${err.code}): ${err.message}`);
-            // 위치를 가져오는데 실패한 경우 기본값을 설정
-            setUserLocation({ latitude: 37.498095, longitude: 127.02761 });
+            // 위치를 가져오는데 실패한 경우 기본값을 유지
         };
 
         navigator.geolocation.getCurrentPosition(success, error, options);
-    }, []); // useEffect가 컴포넌트가 마운트될 때만 실행되도록 빈 배열을 두 번째 인자로 전달
-
-    console.log(userLocation);
+    };
 
     return (
         <Box pt={15} px={grid_px}>
@@ -116,6 +117,9 @@ export default function NewHome() {
             <Heading size={"md"} mt={20} mb={5}>
                 내 주변 가까운 팝업스토어
             </Heading>
+            <Button onClick={handleGetUserLocation} mb={4}>
+                내 위치
+            </Button>
             <Text>
                 당신의 위치는 {userLocation?.["latitude"]},
                 {userLocation?.["longitude"]} 입니다.
