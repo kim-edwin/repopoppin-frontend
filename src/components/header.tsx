@@ -165,7 +165,11 @@ export default function Header() {
                                         />
                                     </Tooltip>
                                 </MenuButton>
-                                <MenuList alignSelf={"right"} minWidth="100px" zIndex={9999}>
+                                <MenuList
+                                    alignSelf={"right"}
+                                    minWidth="100px"
+                                    zIndex={9999}
+                                >
                                     <MenuItem>
                                         <Text onClick={onLoginOpen}>
                                             로그인
@@ -188,7 +192,7 @@ export default function Header() {
                                     size={avatar_size}
                                 />
                             </MenuButton>
-                            <MenuList width={"100px"}>
+                            <MenuList width={"100px"} zIndex={9999}>
                                 <MenuItem>
                                     <Text>{user?.name}님, 안녕하세요!</Text>
                                 </MenuItem>
