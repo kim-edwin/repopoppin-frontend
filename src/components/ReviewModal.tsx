@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     Box,
     Grid,
@@ -29,7 +30,6 @@ import {
     MenuItem,
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { FaStar } from "react-icons/fa";
 import { deleteReview, postReview } from "../api";
@@ -53,16 +53,7 @@ export default function ReviewModal({
     reloadReviewsData,
     reloadStoreData,
 }: ReviewModalProps) {
-    const [value, setValue] = React.useState(5);
-    const handleNumberInputChange = (
-        valueAsString: string,
-        valueAsNumber: number,
-    ) => {
-        setValue(valueAsNumber);
-    };
-    const handleSliderChange = (newValue: number) => {
-        setValue(newValue);
-    };
+    const [value, setValue] = useState(5); // useState로 상태값을 관리합니다.
     const { register, handleSubmit, reset } = useForm<IReviewForm>();
     const toast = useToast();
     const mutation = useMutation(postReview, {
@@ -73,10 +64,10 @@ export default function ReviewModal({
                 title: "댓글 달기 성공!",
                 status: "success",
             });
-            // queryClient.invalidateQueries(["stores", data!.pk, "reviews"]);
             reset();
         },
     });
+
     const onSubmit = ({ rating, payload }: IReviewForm) => {
         if (data && rating !== undefined && payload !== undefined) {
             mutation.mutate({ pk: data.pk, rating, payload });
@@ -84,6 +75,7 @@ export default function ReviewModal({
             console.error("Data, rating, or payload is undefined");
         }
     };
+
     const handleDeleteReview = async (reviewPk: number) => {
         try {
             await deleteReview(reviewPk);
@@ -100,6 +92,17 @@ export default function ReviewModal({
                 status: "error",
             });
         }
+    };
+
+    const handleNumberInputChange = (
+        valueAsString: string,
+        valueAsNumber: number,
+    ) => {
+        setValue(valueAsNumber); // NumberInput 값 변경 시 상태값 업데이트
+    };
+
+    const handleSliderChange = (newValue: number) => {
+        setValue(newValue); // Slider 값 변경 시 상태값 업데이트
     };
 
     return (
@@ -120,7 +123,7 @@ export default function ReviewModal({
                             })}
                             maxW="100px"
                             mr="2rem"
-                            value={value}
+                            value={value} // 상태값을 사용하여 표시
                             onChange={handleNumberInputChange}
                             min={1}
                             max={5}
@@ -134,7 +137,7 @@ export default function ReviewModal({
                         <Slider
                             flex="1"
                             focusThumbOnChange={false}
-                            value={value}
+                            value={value} // 상태값을 사용하여 표시
                             onChange={handleSliderChange}
                             min={1}
                             max={5}
@@ -150,7 +153,9 @@ export default function ReviewModal({
                         </Slider>
                     </Flex>
                     <FormControl>
-                        <FormLabel fontSize={{base: "sm", lg: "md"}}>방문 후기를 남겨보세요!</FormLabel>
+                        <FormLabel fontSize={{ base: "sm", lg: "md" }}>
+                            방문 후기를 남겨보세요!
+                        </FormLabel>
                         <Textarea
                             {...register("payload", {
                                 required: true,

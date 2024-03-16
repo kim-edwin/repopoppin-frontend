@@ -11,6 +11,9 @@ const instance = axios.create({
 export const getStores = (page: number) =>
     instance.get(`stores/?page=${page}`).then((response) => response.data);
 
+export const getTopStores = () =>
+    instance.get(`topstores/`).then((response) => response.data);
+
 export const getStore = ({ queryKey }: QueryFunctionContext) => {
     const [_, storePk] = queryKey;
     return instance.get(`stores/${storePk}`).then((response) => response.data);
