@@ -33,6 +33,20 @@ export const getStoreSim = ({ queryKey }: QueryFunctionContext) => {
         .then((response) => response.data);
 };
 
+export const getNearStores = (userLocation: {
+    latitude: number;
+    longitude: number;
+}) => {
+    const params = {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+    };
+
+    return instance
+        .get(`stores/near`, { params })
+        .then((response) => response.data);
+};
+
 //로그인 및 로그아웃 시 필요한 api
 export const getMe = () =>
     instance.get(`users/me`).then((response) => response.data);
