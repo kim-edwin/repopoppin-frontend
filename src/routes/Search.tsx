@@ -2,8 +2,11 @@ import {
     Button,
     Grid,
     Stack,
+    Heading,
     VStack,
     useBreakpointValue,
+    Box,
+    Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -15,7 +18,6 @@ import { getSearch } from "../api";
 
 const Search: React.FC = () => {
     const location = useLocation();
-    console.log(location.state)
     const { keyword, upperAddrName, middleAddrName, searchDate, isEnd } =
         location.state || {};
     const [searchData, setSearchData] = useState<any[]>([]);
@@ -98,13 +100,29 @@ const Search: React.FC = () => {
     }, [page]);
 
     return (
-        <VStack>
+        <Box pt={100} px={grid_px} ref={gridRef}>
+            <Heading pb={10}>검색 결과</Heading>
+            {keyword !== "" ? (
+                <Text> 📌 "{keyword}" 키워드로 검색한 결과입니다. </Text>
+            ) : (
+                <Text> 📌 키워드로 검색해보세요!</Text>
+            )}
+            {searchDate !== "" ? (
+                <Text> 📌 방문 일자는 {searchDate}입니다. </Text>
+            ) : (
+                <Text> 📌 방문할 일자를 넣어 검색해보세요!</Text>
+            )}
+            {upperAddrName !== "" ? (
+                <Text>
+                    📌 방문 지역은 {upperAddrName} {middleAddrName}입니다.
+                </Text>
+            ) : (
+                <Text> 📌 지역으로 검색해보세요!</Text>
+            )}
             <Grid
-                ref={gridRef}
                 w="100%"
                 mt={10}
                 mb={20}
-                px={grid_px}
                 pt={10}
                 columnGap={grid_column_gap}
                 rowGap={20}
@@ -131,7 +149,12 @@ const Search: React.FC = () => {
                     />
                 ))}
             </Grid>
-            <Stack direction="row" spacing={4} mb={30}>
+            <Stack
+                justifyContent={"center"}
+                direction="row"
+                spacing={4}
+                mb={30}
+            >
                 <Button
                     onClick={handle1stPage}
                     leftIcon={<FaHome />}
@@ -159,7 +182,7 @@ const Search: React.FC = () => {
                     Next
                 </Button>
             </Stack>
-        </VStack>
+        </Box>
     );
 };
 export default Search;

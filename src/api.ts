@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const instance = axios.create({
-    // baseURL: "http://127.0.0.1:8000/api/v1",
-    baseURL: "https://backend.pop-pin.store/api/v1",
+    baseURL: "http://127.0.0.1:8000/api/v1",
+    // baseURL: "https://backend.pop-pin.store/api/v1",
     withCredentials: true,
 });
 
@@ -46,6 +46,9 @@ export const getNearStores = (userLocation: {
         .get(`stores/near`, { params })
         .then((response) => response.data);
 };
+
+export const getCommingStores = () =>
+    instance.get(`stores/comming`).then((response) => response.data);
 
 //로그인 및 로그아웃 시 필요한 api
 export const getMe = () =>

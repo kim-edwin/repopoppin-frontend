@@ -17,7 +17,7 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { getNearStores, getTopStores } from "../api";
+import { getCommingStores, getNearStores, getTopStores } from "../api";
 import SwipeStore from "../components/SwipeStore";
 import png001 from "../sources/carousel/001.png";
 import png002 from "../sources/carousel/002.png";
@@ -32,6 +32,14 @@ export default function NewHome() {
     const { isLoading, data, refetch } = useQuery<IStore[]>(
         ["topstores"],
         () => getTopStores(), // 페이지 번호 1로 초기 데이터를 가져옴
+        {
+            refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
+        },
+    );
+
+    const { isLoading:isLoadingComm, data:Commingdata, refetch:refetchComm } = useQuery<IStore[]>(
+        ["comming"],
+        () => getCommingStores(), // 페이지 번호 1로 초기 데이터를 가져옴
         {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
         },
@@ -59,12 +67,6 @@ export default function NewHome() {
         },
     );
 
-    useEffect(() => {
-        console.log("stores:", nearStores);
-    }, [nearStores]);
-
-    
-
     const handleGetUserLocation = () => {
         const options = {
             enableHighAccuracy: true,
@@ -89,7 +91,7 @@ export default function NewHome() {
     };
 
     return (
-        <Box pt={15} px={grid_px}>
+        <Box pt={100} pb={15} px={grid_px}>
             <Swiper
                 modules={[Autoplay]}
                 autoplay={{
@@ -110,7 +112,7 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Heading size={"md"} mb={5}>
+            <Heading size={"md"} mt={20} mb={5}>
                 지금 가장 🔥핫🔥한 팝업스토어{" "}
             </Heading>
             <Swiper
@@ -136,7 +138,7 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Flex justify="space-between" align="center" mt={10} mb={5}>
+            <Flex justify="space-between" align="center" mt={20} mb={5}>
                 <Heading size="md">내 주변 가까운 팝업스토어</Heading>
                 <Button
                     size={"sm"}
@@ -170,14 +172,14 @@ export default function NewHome() {
                 ))}
             </Swiper>
             <Heading size={"md"} mt={20} mb={5}>
-                커밍 쑨! 조만간 열려요
+                커밍 쑨! 조만간 열려요 🏃‍♀️🏃‍♂️
             </Heading>
             <Swiper
                 pagination={true}
                 // modules={[Pagination]}
                 className="mySwiper"
             >
-                {data?.map((store) => (
+                {Commingdata?.map((store) => (
                     <SwiperSlide key={store.id}>
                         <SwipeStore
                             key={store.id}

@@ -54,6 +54,7 @@ export default function Header() {
     };
     const { toggleColorMode } = useColorMode();
     const Icon = useColorModeValue(FaMoon, FaSun);
+    const bgColor = useColorModeValue("white", "gray.800");
     const toast = useToast();
     const queryClient = useQueryClient();
     const toastId = useRef<ToastId>();
@@ -113,10 +114,14 @@ export default function Header() {
 
     return (
         <Flex
+            w={"100%"}
+            position={"fixed"}
+            zIndex={100}
             justifyContent="space-between"
             alignItems="center"
             py={5}
             px={header_px}
+            bg={bgColor}
         >
             <Link to={`/`}>
                 <Image
@@ -124,7 +129,7 @@ export default function Header() {
                     alt="Custom Logo"
                     width={logoSize}
                     mt={1}
-                    // mr={"10px"}
+                    mr={"25px"}
                 />
             </Link>
             <HStack spacing={2}>

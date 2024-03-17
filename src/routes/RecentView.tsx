@@ -73,8 +73,8 @@ export default function RecentView() {
 
     return (
         <ProtectedPage>
-            <Flex mt={20} px={recent_grid_px} justifyContent="flex-start">
-                <Heading justifyContent="flex-start">
+            <Flex px={recent_grid_px} justifyContent="flex-start">
+                <Heading pt={100} justifyContent="flex-start">
                     최근 조회한 스토어
                 </Heading>
             </Flex>

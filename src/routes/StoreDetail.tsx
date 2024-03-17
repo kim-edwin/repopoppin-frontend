@@ -85,11 +85,10 @@ export default function StoreDetail() {
     const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
 
     return (
-        <Box mt={10} px={{ base: "20px", lg: "300px" }}>
+        <Box pt={100} px={{ base: "20px", lg: "300px" }}>
             <Box
                 display={{ base: "block", lg: "flex" }}
                 justifyContent="space-between"
-                mt={5}
                 mb={10}
             >
                 <Box flex={{ base: "none", lg: 2 }} mr={{ base: 0, lg: 2 }}>
@@ -135,7 +134,7 @@ export default function StoreDetail() {
                 width="75%"
                 isLoaded={!isLoading}
             >
-                <Heading  fontSize={{ base: "2xl", lg: "4xl" }}>
+                <Heading fontSize={{ base: "2xl", lg: "4xl" }}>
                     {data?.p_name}
                 </Heading>
             </Skeleton>
@@ -201,14 +200,15 @@ export default function StoreDetail() {
                                     </HStack>
                                 </ListItem>
                             </List>
-                            {data?.frontLat !== undefined && !renderMapInsideTab && (
-                                <KakaoMap
-                                    frontLat={data?.frontLat}
-                                    frontLon={data?.frontLon}
-                                    map_width={map_width}
-                                    map_height={map_height}
-                                />
-                            )}
+                            {data?.frontLat !== undefined &&
+                                !renderMapInsideTab && (
+                                    <KakaoMap
+                                        frontLat={data?.frontLat}
+                                        frontLon={data?.frontLon}
+                                        map_width={map_width}
+                                        map_height={map_height}
+                                    />
+                                )}
                         </VStack>
                     </TabPanel>
                     <TabPanel>
