@@ -48,8 +48,8 @@ const router = createBrowserRouter([
                 element: <Search />,
             },
             {
-                path: "new",
-                element: <NewHome />,
+                path: "all",
+                element: <Home />,
             },
         ],
     },

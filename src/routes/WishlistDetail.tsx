@@ -61,7 +61,7 @@ export default function WishlistDetail() {
 
     return (
         <ProtectedPage>
-            <Flex mt={20} px={wish_grid_px} justifyContent="flex-start">
+            <Flex px={wish_grid_px} justifyContent="flex-start">
                 <Heading justifyContent="flex-start">위시리스트</Heading>
             </Flex>
             {data_length > 0 ? (

@@ -37,14 +37,13 @@ export default function Wishlists() {
 
     return (
         <ProtectedPage>
-            <Box px={{ base: 10, lg: 40 }} py={{ base: 10, lg: 20 }}>
+            <Box>
                 <Heading>위시리스트</Heading>
                 <Flex justify="space-between" alignItems="center" mr={40}>
                     <Text></Text>
                     <Button onClick={onOpen}>위시리스트 생성하기</Button>
                 </Flex>
                 <Grid
-                    mt={10}
                     mb={20}
                     px={{
                         base: 10,

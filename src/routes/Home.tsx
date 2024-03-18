@@ -65,6 +65,11 @@ export default function Home() {
         }
     }, [page]);
 
+    useEffect(() => {
+        // 페이지가 로드될 때 스크롤을 맨 위로 이동
+        window.scrollTo(0, 0);
+    }, []);
+
     const grid_template_column = useBreakpointValue({
         base: "1fr",
         md: "repeat(3, 1fr)",
@@ -73,14 +78,14 @@ export default function Home() {
     const grid_column_gap = useBreakpointValue({ base: "30px", md: "40px" });
 
     return (
-        <VStack>
+        <Box pt={100} ref={gridRef}>
+            <Heading px={grid_px} pb={10}>
+                Let's get poppin'🤩
+            </Heading>
             <Grid
-                ref={gridRef}
                 w="100%"
-                mt={10}
                 mb={20}
                 px={grid_px}
-                pt={10}
                 columnGap={grid_column_gap}
                 rowGap={20}
                 templateColumns={grid_template_column}
@@ -106,7 +111,7 @@ export default function Home() {
                     />
                 ))}
             </Grid>
-            <Stack direction="row" spacing={4} mb={30}>
+            <Stack justifyContent={"center"} direction="row" spacing={4} mb={30}>
                 <Button
                     onClick={handle1stPage}
                     leftIcon={<FaHome />}
@@ -129,10 +134,11 @@ export default function Home() {
                     rightIcon={<ArrowForwardIcon />}
                     colorScheme="pink"
                     variant="solid"
+                    display={(data?.length ?? 0) < 9 ? "none" : "block"}
                 >
                     Next
                 </Button>
             </Stack>
-        </VStack>
+        </Box>
     );
 }

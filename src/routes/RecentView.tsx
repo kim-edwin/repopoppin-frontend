@@ -73,7 +73,11 @@ export default function RecentView() {
 
     return (
         <ProtectedPage>
-            <Flex px={recent_grid_px} justifyContent="flex-start">
+            <Flex
+                px={recent_grid_px}
+                ref={recent_gridRef}
+                justifyContent="flex-start"
+            >
                 <Heading pt={100} justifyContent="flex-start">
                     최근 조회한 스토어
                 </Heading>
@@ -84,7 +88,6 @@ export default function RecentView() {
             {data_length > 0 ? (
                 <VStack>
                     <Grid
-                        ref={recent_gridRef}
                         w="100%"
                         mt={10}
                         mb={20}

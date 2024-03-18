@@ -19,12 +19,12 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getCommingStores, getNearStores, getTopStores } from "../api";
 import SwipeStore from "../components/SwipeStore";
-import png001 from "../sources/carousel/001.png";
-import png002 from "../sources/carousel/002.png";
-import png003 from "../sources/carousel/003.png";
-import png004 from "../sources/carousel/004.png";
+import svg001 from "../sources/carousel/001.svg";
+import svg002 from "../sources/carousel/002.svg";
+import svg003 from "../sources/carousel/003.svg";
 import { MdOutlineLocationSearching } from "react-icons/md";
 import SwipeNearStore from "../components/SwipeNearStore";
+import { Link } from "react-router-dom";
 
 // import "./styles.css";
 
@@ -37,7 +37,11 @@ export default function NewHome() {
         },
     );
 
-    const { isLoading:isLoadingComm, data:Commingdata, refetch:refetchComm } = useQuery<IStore[]>(
+    const {
+        isLoading: isLoadingComm,
+        data: Commingdata,
+        refetch: refetchComm,
+    } = useQuery<IStore[]>(
         ["comming"],
         () => getCommingStores(), // 페이지 번호 1로 초기 데이터를 가져옴
         {
@@ -45,7 +49,11 @@ export default function NewHome() {
         },
     );
     const grid_px = useBreakpointValue({ base: "20px", md: "300px" });
-    const pngFiles = [png001, png002, png003, png004];
+    const pngFiles = [
+        { image: svg001, storeid: 5818 },
+        { image: svg002, storeid: 5817 },
+        { image: svg003, storeid: 5573 },
+    ];
 
     const [userLocation, setUserLocation] = useState<{
         latitude: number;
@@ -99,20 +107,22 @@ export default function NewHome() {
                     disableOnInteraction: false,
                 }}
             >
-                {pngFiles.map((image, index) => (
+                {pngFiles.map(({ image, storeid }, index) => (
                     <SwiperSlide key={index}>
-                        <Image
-                            position={"relative"}
-                            boxSize="100%"
-                            // objectFit="cover"
-                            src={image}
-                            alt={`Image ${index + 1}`}
-                            zIndex={1}
-                        />
+                        <Link to={`/stores/${storeid}`}>
+                            <Image
+                                position={"relative"}
+                                boxSize="100%"
+                                // objectFit="cover"
+                                src={image}
+                                alt={`Image ${index + 1}`}
+                                zIndex={1}
+                            />
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Heading size={"md"} mt={20} mb={5}>
+            <Heading size={"md"} mt={10} mb={5}>
                 지금 가장 🔥핫🔥한 팝업스토어{" "}
             </Heading>
             <Swiper
@@ -138,7 +148,7 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Flex justify="space-between" align="center" mt={20} mb={5}>
+            <Flex justify="space-between" align="center" mt={10} mb={5}>
                 <Heading size="md">내 주변 가까운 팝업스토어</Heading>
                 <Button
                     size={"sm"}
@@ -171,7 +181,7 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Heading size={"md"} mt={20} mb={5}>
+            <Heading size={"md"} mt={10} mb={5}>
                 커밍 쑨! 조만간 열려요 🏃‍♀️🏃‍♂️
             </Heading>
             <Swiper
@@ -197,6 +207,16 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <Link to="/all">
+                <Button
+                    mt={10}
+                    colorScheme="pink"
+                    variant="outline"
+                    width={"100%"}
+                >
+                    모든 팝업스토어 보기
+                </Button>
+            </Link>
         </Box>
     );
 }

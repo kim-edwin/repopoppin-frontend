@@ -19,8 +19,17 @@ import {
     FormControl,
     FormLabel,
     Switch,
+    HStack,
+    Tag,
+    TagLeftIcon,
+    TagLabel,
 } from "@chakra-ui/react";
-import { RepeatIcon, Search2Icon, SmallCloseIcon } from "@chakra-ui/icons";
+import {
+    AddIcon,
+    RepeatIcon,
+    Search2Icon,
+    SmallCloseIcon,
+} from "@chakra-ui/icons";
 import { IoCloseCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { getSearch } from "../api";
@@ -96,22 +105,31 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
     const handleSearch = () => {
         // Call API to perform search
-        getSearch(keyword, upperAddrName, middleAddrName, searchDate, 1, isEnd).then(
-            (data) => {
-                // Navigate to the search results page ("/search") with the search parameters
-                onClose();
-                navigate("/search", {
-                    state: {
-                        searchData: data,
-                        keyword,
-                        upperAddrName,
-                        middleAddrName,
-                        searchDate,
-                        isEnd,
-                    },
-                });
-            },
-        );
+        getSearch(
+            keyword,
+            upperAddrName,
+            middleAddrName,
+            searchDate,
+            1,
+            isEnd,
+        ).then((data) => {
+            // Navigate to the search results page ("/search") with the search parameters
+            onClose();
+            navigate("/search", {
+                state: {
+                    searchData: data,
+                    keyword,
+                    upperAddrName,
+                    middleAddrName,
+                    searchDate,
+                    isEnd,
+                },
+            });
+        });
+    };
+
+    const handleRecommendationClick = (recommend: string) => {
+        setKeyword(recommend); // 클릭된 추천 검색어를 검색어 상태에 설정
     };
 
     return (
@@ -191,7 +209,11 @@ const SearchModal: React.FC<SearchModalProps> = ({
                                 alignItems="center"
                                 ml="auto"
                             >
-                                <FormLabel fontSize={"sm"} htmlFor="email-alerts" mb="0">
+                                <FormLabel
+                                    fontSize={"sm"}
+                                    htmlFor="email-alerts"
+                                    mb="0"
+                                >
                                     종료된 팝업스토어 숨기기
                                 </FormLabel>
                                 <Switch
@@ -221,10 +243,30 @@ const SearchModal: React.FC<SearchModalProps> = ({
                             </Button>
                         </Flex>
                         <Divider mt={"100px"} mb={"20px"} />
-                        <Heading mb={"5px"} size={"sm"}>
-                            실시간 인기 검색어
+                        <Heading mb={"10px"} size={"sm"}>
+                            추천 검색어
                         </Heading>
-                        <Text color={"gray"}> 2024. 03. 11. 18:00 기준 </Text>
+                        <HStack spacing={4}>
+                            {["네이버웹툰", "웡카", "하리보"].map(
+                                (recommend) => (
+                                    <Tag
+                                        size={"lg"}
+                                        variant="outline"
+                                        colorScheme="pink"
+                                        onClick={() =>
+                                            handleRecommendationClick(recommend)
+                                        }
+                                        cursor="pointer"
+                                    >
+                                        <TagLeftIcon
+                                            boxSize="12px"
+                                            as={AddIcon}
+                                        />
+                                        <TagLabel>{recommend}</TagLabel>
+                                    </Tag>
+                                ),
+                            )}
+                        </HStack>
                     </ModalBody>
                 </ModalContent>
             </Modal>
