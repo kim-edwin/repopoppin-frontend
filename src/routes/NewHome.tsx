@@ -147,7 +147,7 @@ export default function NewHome() {
             {isLoggedIn ? (
                 <>
                     <Heading size={"md"} mt={10} mb={5}>
-                        {user?.name}님을 위한 맞춤 팝업스토어
+                        {user?.name}님을 위한 맞춤📌 팝업스토어
                     </Heading>
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
@@ -186,7 +186,7 @@ export default function NewHome() {
             ) : null}
 
             <Heading size={"md"} mt={10} mb={5}>
-                지금 가장 🔥핫🔥한 팝업스토어{" "}
+                가장 많이 보고 있어요 👀
             </Heading>
             <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
