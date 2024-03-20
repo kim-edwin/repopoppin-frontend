@@ -50,6 +50,10 @@ export const getNearStores = (userLocation: {
 export const getCommingStores = () =>
     instance.get(`stores/comming`).then((response) => response.data);
 
+    
+export const getRecommend = () =>
+    instance.get(`stores/recommend`).then((response) => response.data);
+
 //로그인 및 로그아웃 시 필요한 api
 export const getMe = () =>
     instance.get(`users/me`).then((response) => response.data);

@@ -17,7 +17,7 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { getCommingStores, getNearStores, getTopStores } from "../api";
+import { getCommingStores, getNearStores, getRecommend, getTopStores } from "../api";
 import SwipeStore from "../components/SwipeStore";
 import svg001 from "../sources/carousel/001.svg";
 import svg002 from "../sources/carousel/002.svg";
@@ -25,10 +25,13 @@ import svg003 from "../sources/carousel/003.svg";
 import { MdOutlineLocationSearching } from "react-icons/md";
 import SwipeNearStore from "../components/SwipeNearStore";
 import { Link } from "react-router-dom";
+import useUser from "../lib/useUser";
 
 // import "./styles.css";
 
 export default function NewHome() {
+    const { userLoading, isLoggedIn, user } = useUser();
+    
     const { isLoading, data, refetch } = useQuery<IStore[]>(
         ["topstores"],
         () => getTopStores(), // 페이지 번호 1로 초기 데이터를 가져옴
@@ -48,6 +51,19 @@ export default function NewHome() {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
         },
     );
+
+    const {
+        isLoading: isLoadingRecommend,
+        data: Recommenddata,
+        refetch: refetchRecommend,
+    } = useQuery<IStore[]>(
+        ["comming"],
+        () => getRecommend(), // 페이지 번호 1로 초기 데이터를 가져옴
+        {
+            refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
+        },
+    );
+
     const grid_px = useBreakpointValue({ base: "20px", md: "300px" });
     const pngFiles = [
         { image: svg001, storeid: 5818 },
@@ -119,6 +135,32 @@ export default function NewHome() {
                                 zIndex={1}
                             />
                         </Link>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+            <Heading size={"md"} mt={10} mb={5}>
+                {user?.name}님을 위한 맞춤 팝업스토어
+            </Heading>
+            <Swiper
+                pagination={true}
+                // modules={[Pagination]}
+                className="mySwiper"
+            >
+                {Recommenddata?.map((store) => (
+                    <SwiperSlide key={store.id}>
+                        <SwipeStore
+                            key={store.id}
+                            pk={store.pk}
+                            thumbnail={store.thumbnail}
+                            p_name={store.p_name}
+                            // rating={store.rating}
+                            p_location={store.p_location}
+                            p_hashtag={store.p_hashtag}
+                            p_startdate={store.p_startdate}
+                            p_enddate={store.p_enddate}
+                            status={store.status}
+                            // is_liked={store.is_liked}
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
