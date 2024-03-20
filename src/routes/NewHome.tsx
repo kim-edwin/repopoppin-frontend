@@ -139,42 +139,47 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <Heading size={"md"} mt={10} mb={5}>
-                {user?.name}님을 위한 맞춤 팝업스토어
-            </Heading>
-            <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
+            {isLoggedIn ? (
+                <>
+                    <Heading size={"md"} mt={10} mb={5}>
+                        {user?.name}님을 위한 맞춤 팝업스토어
+                    </Heading>
+                    <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        rewind={true}
+                        navigation={true}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{ clickable: true }}
+                        spaceBetween={10}
+                        slidesPerView={1}
+                        className={`
                             w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
                             `}
-            >
-                {Recommenddata?.map((store) => (
-                    <SwiperSlide key={store.id}>
-                        <SwipeStore
-                            key={store.id}
-                            pk={store.pk}
-                            thumbnail={store.thumbnail}
-                            p_name={store.p_name}
-                            // rating={store.rating}
-                            p_location={store.p_location}
-                            p_hashtag={store.p_hashtag}
-                            p_startdate={store.p_startdate}
-                            p_enddate={store.p_enddate}
-                            status={store.status}
-                            // is_liked={store.is_liked}
-                        />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                    >
+                        {Recommenddata?.map((store) => (
+                            <SwiperSlide key={store.id}>
+                                <SwipeStore
+                                    key={store.id}
+                                    pk={store.pk}
+                                    thumbnail={store.thumbnail}
+                                    p_name={store.p_name}
+                                    // rating={store.rating}
+                                    p_location={store.p_location}
+                                    p_hashtag={store.p_hashtag}
+                                    p_startdate={store.p_startdate}
+                                    p_enddate={store.p_enddate}
+                                    status={store.status}
+                                    // is_liked={store.is_liked}
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </>
+            ) : null}
+
             <Heading size={"md"} mt={10} mb={5}>
                 지금 가장 🔥핫🔥한 팝업스토어{" "}
             </Heading>
