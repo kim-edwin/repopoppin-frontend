@@ -32,21 +32,22 @@ import Threeicons from "../components/Threeicons";
 import useUser from "../lib/useUser";
 import FakeIcons from "../components/Fakeicons";
 import SwipeStore from "../components/SwipeStore";
+import { useEffect } from "react";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
-    const {
-        isLoading,
-        data,
-        refetch,
-    } = useQuery<IStoreDetail>([`stores`, storePk], getStore);
+
+    const { isLoading, data, refetch } = useQuery<IStoreDetail>(
+        [`stores`, storePk],
+        getStore,
+    );
     const { data: reviewsData, refetch: refetchReview } = useQuery<IReview[]>(
         [`stores`, storePk, `reviews`],
         getStoreReviews,
     );
     const {
-        isLoading:simLoading,
-        data:simData,
+        isLoading: simLoading,
+        data: simData,
         refetch: refetchSim,
     } = useQuery<IStore[]>([`stores`, storePk, `sim`], getStoreSim);
     const { userLoading, isLoggedIn, user } = useUser();
@@ -59,6 +60,12 @@ export default function StoreDetail() {
         //  useQuery를 다시 실행
         await refetchReview();
     };
+
+    useEffect(() => {
+        // 페이지가 로드될 때 스크롤을 맨 위로 이동
+        window.scrollTo(0, 0);
+    }, []);
+
     const getBadgeStyle = () => {
         switch (data?.status) {
             case "진행중":
@@ -82,7 +89,7 @@ export default function StoreDetail() {
     }
 
     const renderMapInsideTab = useBreakpointValue({ base: false, lg: true });
-    const map_width =  useBreakpointValue({ base: 80, lg: 500 }) || 80;
+    const map_width = useBreakpointValue({ base: 80, lg: 500 }) || 80;
     const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
 
     return (
