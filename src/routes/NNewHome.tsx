@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
+// import { Pagination } from "swiper";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./NewHome.css";
 import {
     Box,
     Heading,
@@ -30,7 +30,7 @@ import useUser from "../lib/useUser";
 
 // import "./styles.css";
 
-export default function NewHome() {
+export default function NNewHome() {
     const { userLoading, isLoggedIn, user } = useUser();
     
     const { isLoading, data, refetch } = useQuery<IStore[]>(
@@ -143,19 +143,9 @@ export default function NewHome() {
                 {user?.name}님을 위한 맞춤 팝업스토어
             </Heading>
             <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+                pagination={true}
+                // modules={[Pagination]}
+                className="mySwiper"
             >
                 {Recommenddata?.map((store) => (
                     <SwiperSlide key={store.id}>
@@ -179,19 +169,9 @@ export default function NewHome() {
                 지금 가장 🔥핫🔥한 팝업스토어{" "}
             </Heading>
             <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+                pagination={true}
+                // modules={[Pagination]}
+                className="mySwiper"
             >
                 {data?.map((store) => (
                     <SwiperSlide key={store.id}>
@@ -223,19 +203,9 @@ export default function NewHome() {
                 </Button>
             </Flex>
             <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+                pagination={true}
+                // modules={[Pagination]}
+                className="mySwiper"
             >
                 {nearStores?.map((store) => (
                     <SwiperSlide key={store.id}>
@@ -258,19 +228,9 @@ export default function NewHome() {
                 커밍 쑨! 조만간 열려요 🏃‍♀️🏃‍♂️
             </Heading>
             <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+                pagination={true}
+                // modules={[Pagination]}
+                className="mySwiper"
             >
                 {Commingdata?.map((store) => (
                     <SwiperSlide key={store.id}>

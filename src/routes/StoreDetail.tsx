@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getStore, getStoreReviews, getStoreSim } from "../api";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
     AspectRatio,
@@ -227,9 +228,19 @@ export default function StoreDetail() {
             </Heading>
             <Box mb={"80px"}>
                 <Swiper
-                    pagination={true}
-                    // modules={[Pagination]}
-                    className="mySwiper"
+                    modules={[Navigation, Pagination, Autoplay]}
+                    rewind={true}
+                    navigation={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{ clickable: true }}
+                    spaceBetween={10}
+                    slidesPerView={1}
+                    className={`
+                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
+                            `}
                 >
                     {Array.isArray(simData) &&
                         simData?.map((store) => (

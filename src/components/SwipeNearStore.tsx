@@ -61,7 +61,7 @@ StoreProps) {
 
     return (
         <Link to={`/stores/${pk}`}>
-            <VStack spacing={1} alignItems={"flex-start"}>
+            <VStack spacing={1} alignItems={"flex-start"} mb={"30px"}>
                 <Box w="100%" height="100%">
                     <Box
                         // position={"relative"}
