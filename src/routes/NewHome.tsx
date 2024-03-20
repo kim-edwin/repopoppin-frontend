@@ -58,7 +58,7 @@ export default function NewHome() {
         data: Recommenddata,
         refetch: refetchRecommend,
     } = useQuery<IStore[]>(
-        ["comming"],
+        ["recommend"],
         () => getRecommend(), // 페이지 번호 1로 초기 데이터를 가져옴
         {
             refetchOnMount: false, // 컴포넌트가 마운트될 때만 쿼리를 새로고침하지 않음
