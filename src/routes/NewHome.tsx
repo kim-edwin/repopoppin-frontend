@@ -18,7 +18,12 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { getCommingStores, getNearStores, getRecommend, getTopStores } from "../api";
+import {
+    getCommingStores,
+    getNearStores,
+    getRecommend,
+    getTopStores,
+} from "../api";
 import SwipeStore from "../components/SwipeStore";
 import svg001 from "../sources/carousel/001.svg";
 import svg002 from "../sources/carousel/002.svg";
@@ -32,7 +37,7 @@ import useUser from "../lib/useUser";
 
 export default function NewHome() {
     const { userLoading, isLoggedIn, user } = useUser();
-    
+
     const { isLoading, data, refetch } = useQuery<IStore[]>(
         ["topstores"],
         () => getTopStores(), // 페이지 번호 1로 초기 데이터를 가져옴
@@ -67,9 +72,9 @@ export default function NewHome() {
 
     const grid_px = useBreakpointValue({ base: "20px", md: "300px" });
     const pngFiles = [
-        { image: svg001, storeid: 5818 },
-        { image: svg002, storeid: 5817 },
-        { image: svg003, storeid: 5573 },
+        { image: svg001, storeid: 6316 },
+        { image: svg002, storeid: 6315 },
+        { image: svg003, storeid: 6086 },
     ];
 
     const [userLocation, setUserLocation] = useState<{
