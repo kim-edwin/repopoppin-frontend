@@ -23,6 +23,7 @@ import {
     ListIcon,
     VStack,
     useBreakpointValue,
+    Grid,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MdCheckCircle } from "react-icons/md";
@@ -33,6 +34,8 @@ import useUser from "../lib/useUser";
 import FakeIcons from "../components/Fakeicons";
 import SwipeStore from "../components/SwipeStore";
 import { useEffect } from "react";
+import NewSkeleton from "../components/NewSkeleton";
+import NewStore from "../components/NewStore";
 
 export default function StoreDetail() {
     const { storePk } = useParams();
@@ -91,6 +94,15 @@ export default function StoreDetail() {
     const renderMapInsideTab = useBreakpointValue({ base: false, lg: true });
     const map_width = useBreakpointValue({ base: 80, lg: 500 }) || 80;
     const map_height = useBreakpointValue({ base: 80, lg: 380 }) || 80;
+    const grid_column_gap = useBreakpointValue({
+        base: "30px",
+        md: "40px",
+    });
+
+    const grid_template_column = useBreakpointValue({
+        base: "1fr",
+        md: "repeat(3, 1fr)",
+    });
 
     return (
         <Box pt={100} px={{ base: "20px", lg: "300px" }}>
@@ -234,40 +246,34 @@ export default function StoreDetail() {
                 이런 팝업스토어는 어떠세요?
             </Heading>
             <Box mb={"80px"}>
-                <Swiper
-                    modules={[Navigation, Pagination, Autoplay]}
-                    rewind={true}
-                    navigation={true}
-                    autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                    }}
-                    pagination={{ clickable: true }}
-                    spaceBetween={10}
-                    slidesPerView={1}
-                    className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+                <Grid
+                    w="100%"
+                    mb={20}
+                    columnGap={grid_column_gap}
+                    rowGap={5}
+                    templateColumns={grid_template_column}
+                    style={{ gridAutoRows: "auto", overflow: "hidden" }}
                 >
-                    {Array.isArray(simData) &&
-                        simData?.map((store) => (
-                            <SwiperSlide>
-                                <SwipeStore
-                                    key={store.id}
-                                    pk={store.pk}
-                                    thumbnail={store.thumbnail}
-                                    p_name={store.p_name}
-                                    // rating={store.rating}
-                                    p_location={store.p_location}
-                                    p_hashtag={store.p_hashtag}
-                                    p_startdate={store.p_startdate}
-                                    p_enddate={store.p_enddate}
-                                    status={store.status}
-                                    // is_liked={store.is_liked}
-                                />
-                            </SwiperSlide>
+                    {isLoading &&
+                        Array.from({ length: 5 }).map((_, index) => (
+                            <NewSkeleton key={index} />
                         ))}
-                </Swiper>
+                    {simData?.map((store) => (
+                        <NewStore
+                            key={store.id}
+                            pk={store.pk}
+                            thumbnail={store.thumbnail}
+                            p_name={store.p_name}
+                            // rating={store.rating}
+                            p_location={store.p_location}
+                            p_hashtag={store.p_hashtag}
+                            p_startdate={store.p_startdate}
+                            p_enddate={store.p_enddate}
+                            status={store.status}
+                            // is_liked={store.is_liked}
+                        />
+                    ))}
+                </Grid>
             </Box>
         </Box>
     );
