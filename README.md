@@ -1,8 +1,9 @@
-# :pushpin: poppin
+# :pushpin: POPPIN'
 
-![poppinlogo](https://github.com/kim-edwin/RepoPoppin/assets/145823967/7ee8f01e-1e22-48b1-8830-33faf47a3eda)
+![image](https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/39e24ab1-09e6-40f9-aba6-2f039c954e34)
 
-\# 팝핀
+
+## WE CONNECT POP-UP CULTURE
 
 "팝핀"은 **팝업 스토어 데이터를 한 곳에 모아 검색 및 저장**하고, 저장된 팝업스토어를 기반으로 **새로운 팝업 스토어를 추천**받을 수 있는 `팝업 스토어 정보 저장 & 추천 모바일 웹 서비스`입니다
 
@@ -18,6 +19,8 @@
 |                                                  `Full stack`                                                   |                                                 `Data Analysis`                                                 |                                                   `Back-end`                                                    |                                                    `Modeler`                                                    |                                                    `Modeler`                                                    |
 |                                            `AWS`, `React`, `Django`                                             |                                                `Python, MariaDB`                                                |                                                `Python, Airflow`                                                |                                                       ` `                                                       |                                           `Python, tensorflow, keras`                                           |
 
+<br/>
+<br/>
 
 ## 1. 프로젝트 개요
 
@@ -36,6 +39,8 @@
 > 팝업 스토어에 대한 `종합적인 정보를 제공하고 추천하는 모바일 웹 서비스`를 구축함으로써, 고객들이 원하는 팝업 스토어를 손쉽게 찾을 수 있도록 지원하며, 개인화된 추천 시스템을 구축하여 고객들의 취향과 관심사에 맞춘 새로운 팝업 스토어를 발견할 수 있도록 합니다. 기업들에게는 `효율적인 팝업 스토어 홍보 채널을 제공`하여 고객에게 보다 직접적으로 접근할 수 있도록 하여 `마케팅 효과를 극대화`하도록 합니다.
 
 > 본 프로젝트는 상품성 또한 염두에 두었습니다. `브랜드와의 제휴를 통해 광고 수익`을 얻을 수 있으며, `데이터 수집 전 과정을 자동화` 를 통해 인건비를 절감시킬 수 있습니다.
+<br/>
+<br/>
 
 ## 2. 주요 기능
 
@@ -75,6 +80,8 @@
 ```
 좋아요한 스토어 목록
 ```
+<br/>
+<br/>
 
 ## 3. 기획 및 개발 일정 (WBS) 
 
@@ -87,6 +94,8 @@
 <img width="755" alt="WBS" src="https://github.com/limmyou/poppin/assets/145823967/fb2bdbd4-bb63-4102-b4ce-1920d1e76e87">
 
 
+<br/>
+<br/>
 
 ## 4. 개발
 
@@ -111,15 +120,29 @@
 **DBMS**<br>
 <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white">
 
+<br/>
+<br/>
 
 
 
-### 아키텍처
+
+### 시스템 아키텍처
 
 > 백엔드 서버는 Django Rest Framework를 사용하였고 웹은 React로 구현하였습니다. 
 
 > 데이터 수집 자동화 및 적재를 위해 EC2 인스턴스를 활용하였습니다.
+```mermaid
+graph LR
+N(News Archive) --> A[Crawling Service] --Daily batch / Contetns--> D((DataBase))
+D --News contents--> ML(ML Service)
+ML --Model--> API(API/Inference Server)
+D --Contents--> API
+D --Service info --> API
+API --> W(Web Client)
+```
 
+<br/>
+<br/>
 
 
 ### 모델
@@ -128,9 +151,12 @@
 
 > 또한, 사용자의 후기 및 평점을 기반으로 팝업스토어를 추천해주기 위해 Keras를 사용하여 협업 필터링 모델을 구현하였습니다.
 
+![image](https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/27d57352-56aa-4645-a682-81f7d5efa0a6)
 :arrow_right: 모델 설계서 [확인하기](https://repeated-sidewalk-fe0.notion.site/a65bc33b48dc488aac44eabf462dbadb)
 
 
+<br/>
+<br/>
 
 ### UI
 
@@ -138,16 +164,23 @@
 
 > React 환경에서 적용이 우수한 Chakra UI를 사용하여 구현하였습니다.
 
+![image](https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/61b6ea9c-8d24-4804-9a44-ee8afc03ff4a)
 :arrow_right: 화면 정의서 [확인하기](https://repeated-sidewalk-fe0.notion.site/5669337e534e4bf3992bddacb22ae52e)
 
 
+<br/>
+<br/>
 
 ### API
 
 > Django Rest Framework의 APIView 라이브러리를 활용하여 API 서버를 구축하였고 Render 서비스를 이용해 배포하였습니다. 
 
+![image](https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/9e8d66c8-5db1-4ff3-bf35-c60e0134c1dd)
+
 :arrow_right: API 정의서 [확인하기](https://repeated-sidewalk-fe0.notion.site/API-4deebee8804c43caa68b1657e631126e)
 
+<br/>
+<br/>
 
 ## 5. 회고
 
@@ -163,6 +196,8 @@
 
 :pizza:최민환 :
 
+<br/>
+<br/>
 
 ### 아쉬웠던점
 
