@@ -16,6 +16,7 @@ import {
     Button,
     HStack,
     Flex,
+    Grid,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -32,6 +33,9 @@ import { MdOutlineLocationSearching } from "react-icons/md";
 import SwipeNearStore from "../components/SwipeNearStore";
 import { Link } from "react-router-dom";
 import useUser from "../lib/useUser";
+import StoreSkeleton from "../components/StoreSkeleton";
+import NewStore from "../components/NewStore";
+import NewSkeleton from "../components/NewSkeleton";
 
 // import "./styles.css";
 
@@ -120,6 +124,16 @@ export default function NewHome() {
         navigator.geolocation.getCurrentPosition(success, error, options);
     };
 
+    const grid_column_gap = useBreakpointValue({
+        base: "30px",
+        md: "40px",
+    });
+    
+    const grid_template_column = useBreakpointValue({
+        base: "1fr",
+        md: "repeat(3, 1fr)",
+    });
+
     return (
         <Box pt={100} pb={15} px={grid_px}>
             <Swiper
@@ -144,47 +158,6 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            {isLoggedIn ? (
-                <>
-                    <Heading size={"md"} mt={10} mb={5}>
-                        {user?.name}님을 위한 맞춤📌 팝업스토어
-                    </Heading>
-                    <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
-                        rewind={true}
-                        navigation={true}
-                        autoplay={{
-                            delay: 2500,
-                            disableOnInteraction: false,
-                        }}
-                        pagination={{ clickable: true }}
-                        spaceBetween={10}
-                        slidesPerView={1}
-                        className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
-                    >
-                        {Recommenddata?.map((store) => (
-                            <SwiperSlide key={store.id}>
-                                <SwipeStore
-                                    key={store.id}
-                                    pk={store.pk}
-                                    thumbnail={store.thumbnail}
-                                    p_name={store.p_name}
-                                    // rating={store.rating}
-                                    p_location={store.p_location}
-                                    p_hashtag={store.p_hashtag}
-                                    p_startdate={store.p_startdate}
-                                    p_enddate={store.p_enddate}
-                                    status={store.status}
-                                    // is_liked={store.is_liked}
-                                />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </>
-            ) : null}
-
             <Heading size={"md"} mt={10} mb={5}>
                 가장 많이 보고 있어요 👀
             </Heading>
@@ -221,6 +194,42 @@ export default function NewHome() {
                     </SwiperSlide>
                 ))}
             </Swiper>
+
+            {isLoggedIn ? (
+                <>
+                    <Heading size={"md"} mt={10} mb={5}>
+                        {user?.name}님을 위한 맞춤📌 팝업스토어
+                    </Heading>
+                    <Grid
+                        w="100%"
+                        mb={20}
+                        columnGap={grid_column_gap}
+                        rowGap={5}
+                        templateColumns={grid_template_column}
+                        style={{ gridAutoRows: "auto", overflow: "hidden" }}
+                    >
+                        {isLoading &&
+                            Array.from({ length: 5 }).map((_, index) => (
+                                <NewSkeleton key={index} />
+                            ))}
+                        {Recommenddata?.map((store) => (
+                            <NewStore
+                                key={store.id}
+                                pk={store.pk}
+                                thumbnail={store.thumbnail}
+                                p_name={store.p_name}
+                                // rating={store.rating}
+                                p_location={store.p_location}
+                                p_hashtag={store.p_hashtag}
+                                p_startdate={store.p_startdate}
+                                p_enddate={store.p_enddate}
+                                status={store.status}
+                                // is_liked={store.is_liked}
+                            />
+                        ))}
+                    </Grid>
+                </>
+            ) : null}
             <Flex justify="space-between" align="center" mt={10} mb={5}>
                 <Heading size="md">내 주변 가까운 팝업스토어</Heading>
                 <Button
@@ -232,77 +241,69 @@ export default function NewHome() {
                     내 위치
                 </Button>
             </Flex>
-            <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+            <Grid
+                w="100%"
+                mb={20}
+                columnGap={grid_column_gap}
+                rowGap={5}
+                templateColumns={grid_template_column}
+                style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
+                {isLoading &&
+                    Array.from({ length: 5 }).map((_, index) => (
+                        <NewSkeleton key={index} />
+                    ))}
                 {nearStores?.map((store) => (
-                    <SwiperSlide key={store.id}>
-                        <SwipeNearStore
-                            key={store.id}
-                            pk={store.pk}
-                            thumbnail={store.thumbnail}
-                            p_name={store.p_name}
-                            p_location={store.p_location}
-                            p_hashtag={store.p_hashtag}
-                            p_startdate={store.p_startdate}
-                            p_enddate={store.p_enddate}
-                            status={store.status}
-                            distance={store.distance}
-                        />
-                    </SwiperSlide>
+                    <NewStore
+                        key={store.id}
+                        pk={store.pk}
+                        thumbnail={store.thumbnail}
+                        p_name={store.p_name}
+                        // rating={store.rating}
+                        p_location={store.p_location}
+                        p_hashtag={store.p_hashtag}
+                        p_startdate={store.p_startdate}
+                        p_enddate={store.p_enddate}
+                        status={store.status}
+                        // is_liked={store.is_liked}
+                    />
                 ))}
-            </Swiper>
+            </Grid>
+
             <Heading size={"md"} mt={10} mb={5}>
                 커밍 쑨! 조만간 열려요 🏃‍♀️🏃‍♂️
             </Heading>
-            <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                rewind={true}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                className={`
-                            w-[20rem] h-[10rem] md:w-[30rem] md:h-[15rem] lg:w-[61rem] my-6 max-w-[500px] md:max-w-[976px] max-h-[15rem] 
-                            `}
+            <Grid
+                w="100%"
+                mb={10}
+                columnGap={grid_column_gap}
+                rowGap={5}
+                templateColumns={grid_template_column}
+                style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
+                {isLoading &&
+                    Array.from({ length: 5 }).map((_, index) => (
+                        <NewSkeleton key={index} />
+                    ))}
                 {Commingdata?.map((store) => (
-                    <SwiperSlide key={store.id}>
-                        <SwipeStore
-                            key={store.id}
-                            pk={store.pk}
-                            thumbnail={store.thumbnail}
-                            p_name={store.p_name}
-                            // rating={store.rating}
-                            p_location={store.p_location}
-                            p_hashtag={store.p_hashtag}
-                            p_startdate={store.p_startdate}
-                            p_enddate={store.p_enddate}
-                            status={store.status}
-                            // is_liked={store.is_liked}
-                        />
-                    </SwiperSlide>
+                    <NewStore
+                        key={store.id}
+                        pk={store.pk}
+                        thumbnail={store.thumbnail}
+                        p_name={store.p_name}
+                        // rating={store.rating}
+                        p_location={store.p_location}
+                        p_hashtag={store.p_hashtag}
+                        p_startdate={store.p_startdate}
+                        p_enddate={store.p_enddate}
+                        status={store.status}
+                        // is_liked={store.is_liked}
+                    />
                 ))}
-            </Swiper>
+            </Grid>
+            
             <Link to="/all">
                 <Button
-                    mt={10}
                     colorScheme="pink"
                     variant="outline"
                     width={"100%"}

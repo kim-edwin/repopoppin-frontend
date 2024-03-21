@@ -50,7 +50,6 @@ export const getNearStores = (userLocation: {
 export const getCommingStores = () =>
     instance.get(`stores/comming`).then((response) => response.data);
 
-    
 export const getRecommend = () =>
     instance.get(`stores/recommend`).then((response) => response.data);
 

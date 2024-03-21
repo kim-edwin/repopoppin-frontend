@@ -15,6 +15,7 @@ import { getStores } from "../api";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaHome } from "react-icons/fa";
 import Autocomplete from "../components/MyAutoComplete";
+import NewStore from "../components/NewStore";
 
 export default function Home() {
     const [page, setPage] = useState(1);
@@ -80,14 +81,14 @@ export default function Home() {
     return (
         <Box pt={100} ref={gridRef}>
             <Heading px={grid_px} pb={10}>
-                Let's get poppin'🤩
+                Let's get poppin' !
             </Heading>
             <Grid
                 w="100%"
                 mb={20}
                 px={grid_px}
                 columnGap={grid_column_gap}
-                rowGap={20}
+                rowGap={5}
                 templateColumns={grid_template_column}
                 style={{ gridAutoRows: "auto", overflow: "hidden" }}
             >
@@ -96,7 +97,7 @@ export default function Home() {
                         <StoreSkeleton key={index} />
                     ))}
                 {data?.map((store) => (
-                    <Store
+                    <NewStore
                         key={store.id}
                         pk={store.pk}
                         thumbnail={store.thumbnail}
