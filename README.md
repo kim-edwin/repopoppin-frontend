@@ -15,7 +15,7 @@
 
 |                                  [:crown:김현우](https://github.com/kim-edwin)                                  |                                [:smiley_cat:강희림](https://github.com/limmyou)                                 |                             [:hatching_chick:장경민](https://github.com/wkdrudals)                              |                                 [:rabbit:이윤아](https://github.com/YoooonaLee)                                 |                                   [:pizza:최민환](https://github.com/Hwannni)                                   |
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| <img width="500" src="https://github.com/limmyou/poppin/assets/145823967/de192276-80e5-43e6-962e-25f906ad28d6"> | <img width="500" src="https://github.com/limmyou/poppin/assets/145823967/cb38a500-5672-40cc-a331-e518697b66aa"> | <img width="500" src="https://github.com/limmyou/poppin/assets/145823967/cb38a500-5672-40cc-a331-e518697b66aa"> | <img width="500" src="https://github.com/limmyou/poppin/assets/145823967/cb38a500-5672-40cc-a331-e518697b66aa"> | <img width="500" src="https://github.com/limmyou/poppin/assets/145823967/de192276-80e5-43e6-962e-25f906ad28d6"> |
+| <img width="500" src="https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/2dfce76e-4893-4f8a-9736-befd68706875"> | <img width="500" src="https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/66fb1095-3265-4341-9842-305129f4473e"> | <img width="500" src="https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/a261de1f-64f2-41c2-947b-67704948a85f"> | <img width="500" src="https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/4f64ae9f-ff44-41f1-a97f-27dc26d8229f"> | <img width="500" src="https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/e461138e-f1fa-40e3-9084-f96cbc7409af"> |
 |                                                  `Full stack`                                                   |                                                 `Data Analysis`                                                 |                                                   `Back-end`                                                    |                                                    `Modeler`                                                    |                                                    `Modeler`                                                    |
 |                                            `AWS`, `React`, `Django`                                             |                                                `Python, MariaDB`                                                |                                                `Python, Airflow`                                                |                                                       ` `                                                       |                                           `Python, tensorflow, keras`                                           |
 
@@ -182,31 +182,19 @@ API --> W(Web Client)
 <br/>
 <br/>
 
-## 5. 회고
+## 5. 발표자료
 
-### 느낀점
+![image](https://github.com/kim-edwin/repopoppin-frontend/assets/113911630/065eb010-d792-4ddc-a808-867957677cf6)
 
-:crown:김현우 :
-
-:smiley_cat:강희림 :
-
-:hatching_chick:장경민 :
-
-:rabbit:이윤아 :
-
-:pizza:최민환 :
+[팀 팝핀_발표자료_최종.pdf](https://github.com/kim-edwin/repopoppin-frontend/files/14731324/_._.pdf)
 
 <br/>
 <br/>
 
-### 아쉬웠던점
+## 6. 발표영상
 
-:crown:김현우 :
+### 발표영상
+[![Video Label](http://img.youtube.com/vi/9O1aDqaiPWU/0.jpg)](https://youtu.be/9O1aDqaiPWU)
 
-:smiley_cat:강희림 :
-
-:hatching_chick:장경민 :
-
-:rabbit:이윤아 :
-
-:pizza:최민환 :
+### 피드백영상
+[![Video Label](http://img.youtube.com/vi/D_p8ycRy0HM/0.jpg)](https://youtu.be/D_p8ycRy0HM)
